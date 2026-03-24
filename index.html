@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calaf Transparència · Despesa Municipal</title>
+<meta name="description" content="Portal de transparència de la despesa municipal de Calaf (2019-2025). 14.449 registres, 923 proveïdors, 19M€.">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:    #4040ff;
+  --teal:    #00c9a3;
+  --orange:  #ff9800;
+  --dark:    #1a1a1a;
+  --mid:     #666;
+  --light:   #ddd;
+  --bg:      #fafbfc;
+  --white:   #fff;
+  --radius:  10px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── HEADER ─────────────────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid var(--light);
+  padding: 0 24px;
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 54px;
+}
+.logo { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; white-space: nowrap; text-decoration: none; color: var(--dark); }
+.logo span { color: var(--orange); }
+
+.nav { display: flex; gap: 4px; flex: 1; }
+.nav-tab {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: var(--mid);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.nav-tab:hover { background: #f3f4f6; color: var(--dark); }
+.nav-tab.active { background: var(--blue); color: var(--white); }
+
+.header-right { margin-left: auto; font-size: 12px; color: var(--mid); white-space: nowrap; }
+
+/* ── MAIN ───────────────────────────────────────────────── */
+.main { max-width: 1100px; margin: 0 auto; padding: 32px 24px 64px; }
+
+/* ── HERO ───────────────────────────────────────────────── */
+.hero { margin-bottom: 32px; }
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eff0ff;
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.hero-badge::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #00c950;
+  display: inline-block;
+}
+.hero h1 { font-size: 38px; font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 12px; }
+.hero p { font-size: 15px; color: var(--mid); max-width: 620px; line-height: 1.6; }
+.hero strong { color: var(--dark); }
+
+/* ── SEARCH ─────────────────────────────────────────────── */
+.search-box { margin-bottom: 24px; }
+.search-toggle {
+  display: flex;
+  border: 1px solid var(--light);
+  border-radius: 8px;
+  overflow: hidden;
+  width: fit-content;
+  margin-bottom: 12px;
+}
+.toggle-btn {
+  padding: 7px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--white);
+  color: var(--mid);
+}
+.toggle-btn.active { background: var(--dark); color: var(--white); }
+
+.search-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.search-input-wrap { position: relative; flex: 1; min-width: 200px; }
+.search-input-wrap svg {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  padding: 9px 12px 9px 38px;
+  border: 1px solid var(--light);
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background: var(--white);
+  transition: border-color 0.15s;
+}
+.search-input:focus { border-color: var(--blue); }
+
+.filter-select {
+  padding: 9px 12px;
+  border: 1px solid var(--light);
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  background: var(--white);
+  cursor: pointer;
+  color: var(--dark);
+}
+.filter-select:focus { border-color: var(--blue); }
+
+.view-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.pill {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--light);
+  background: var(--white);
+  color: var(--mid);
+  transition: all 0.15s;
+}
+.pill.active, .pill:hover { background: var(--dark); color: var(--white); border-color: var(--dark); }
+
+/* ── STATS ──────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--light);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.stat-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--mid); margin-bottom: 6px; }
+.stat-value { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+.stat-sub { font-size: 12px; color: var(--mid); margin-top: 4px; }
+.stat-blue .stat-value  { color: var(--blue); }
+.stat-teal .stat-value  { color: #00897b; }
+.stat-orange .stat-value{ color: var(--orange); }
+
+/* ── VIEWS ──────────────────────────────────────────────── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── TABLE ──────────────────────────────────────────────── */
+.table-wrap {
+  background: var(--white);
+  border: 1px solid var(--light);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  padding: 11px 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--mid);
+  background: #f8f9fa;
+  border-bottom: 1px solid var(--light);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+thead th:hover { color: var(--dark); }
+thead th.sorted { color: var(--blue); }
+thead th .sort-icon { margin-left: 4px; opacity: 0.5; }
+thead th.sorted .sort-icon { opacity: 1; }
+
+tbody tr { border-bottom: 1px solid #f3f4f6; transition: background 0.1s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #f8f9ff; }
+tbody td { padding: 10px 14px; font-size: 13px; }
+
+.td-prov { font-weight: 600; max-width: 280px; }
+.td-prov-name { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.td-prov-nif { font-size: 11px; color: #aaa; font-weight: 400; }
+.td-import { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.td-any { color: var(--mid); text-align: center; }
+.td-trim { color: var(--mid); text-align: center; font-size: 12px; }
+.td-desc { color: var(--mid); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
+
+.badge-cat {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.table-footer {
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-top: 1px solid var(--light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.table-footer span { font-size: 13px; color: var(--mid); }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 7px;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-dark { background: var(--dark); color: var(--white); }
+.btn-dark:hover { background: #333; }
+.btn-outline { background: var(--white); color: var(--dark); border: 1px solid var(--light); }
+.btn-outline:hover { background: #f3f4f6; }
+
+/* Paginació */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px;
+  background: var(--white);
+  border-top: 1px solid var(--light);
+  flex-wrap: wrap;
+}
+.page-btn {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 6px;
+  border: 1px solid var(--light);
+  background: var(--white);
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.page-btn:hover { background: #f3f4f6; }
+.page-btn.active { background: var(--blue); color: var(--white); border-color: var(--blue); }
+.page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ── RANKING VIEW ───────────────────────────────────────── */
+.ranking-grid { display: grid; gap: 16px; }
+.ranking-card {
+  background: var(--white);
+  border: 1px solid var(--light);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.ranking-card h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--mid); margin-bottom: 16px; }
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.ranking-item:last-child { border-bottom: none; }
+.rank-num { font-size: 13px; font-weight: 700; color: var(--mid); min-width: 22px; text-align: right; }
+.rank-num.top3 { color: var(--blue); }
+.rank-name { flex: 1; font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rank-bar-wrap { width: 120px; }
+.rank-bar-bg { background: #f3f4f6; border-radius: 4px; height: 6px; overflow: hidden; }
+.rank-bar { background: var(--blue); height: 100%; border-radius: 4px; transition: width 0.5s; }
+.rank-import { font-size: 13px; font-weight: 700; text-align: right; min-width: 90px; font-variant-numeric: tabular-nums; }
+.rank-pct { font-size: 11px; color: var(--mid); min-width: 40px; text-align: right; }
+
+/* ── ANY VIEW ───────────────────────────────────────────── */
+.any-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.any-card {
+  background: var(--white);
+  border: 1px solid var(--light);
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.any-card:hover { border-color: var(--blue); box-shadow: 0 2px 8px rgba(64,64,255,0.08); }
+.any-year { font-size: 32px; font-weight: 800; color: var(--blue); margin-bottom: 6px; }
+.any-import { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.any-meta { font-size: 12px; color: var(--mid); }
+.any-bar-bg { background: #f3f4f6; border-radius: 4px; height: 4px; margin-top: 14px; overflow: hidden; }
+.any-bar { background: var(--blue); height: 100%; border-radius: 4px; }
+
+/* ── LOADING ────────────────────────────────────────────── */
+.loading {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--mid);
+}
+.loading-spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--light);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-box {
+  background: #fff5f5;
+  border: 1px solid #fca5a5;
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  color: #991b1b;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .main { padding: 20px 16px 48px; }
+  .hero h1 { font-size: 26px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .header-right { display: none; }
+  .nav { gap: 2px; overflow-x: auto; }
+  .td-desc, .td-trim, .td-nif { display: none; }
+  .rank-bar-wrap { display: none; }
+  .any-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#"><span>calaf</span>.transparència</a>
+    <nav class="nav">
+      <button class="nav-tab active" onclick="setView('taula')">Inici</button>
+      <button class="nav-tab" onclick="setView('proveidors')">Proveïdors</button>
+      <button class="nav-tab" onclick="setView('anys')">Per any</button>
+      <button class="nav-tab" onclick="setView('categories')">Categories</button>
+    </nav>
+    <div class="header-right" id="header-date">—</div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Dades obertes del portal de transparència de l'Ajuntament de Calaf</div>
+    <h1>Despesa municipal a Calaf</h1>
+    <p>Consulta les factures i pagaments municipals de <strong>2019 a 2025</strong>.
+       <span id="hero-stats">Carregant dades...</span></p>
+  </section>
+
+  <!-- SEARCH -->
+  <div class="search-box">
+    <div class="search-row">
+      <div class="search-toggle">
+        <button class="toggle-btn active" id="toggle-prov" onclick="setSearchMode('proveidor')">Proveïdor</button>
+        <button class="toggle-btn" id="toggle-desc" onclick="setSearchMode('descripcio')">Descripció</button>
+      </div>
+      <div class="search-input-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input class="search-input" id="search-input" type="text" placeholder="Cerca proveïdor..." oninput="onSearch()">
+      </div>
+      <select class="filter-select" id="filter-any" onchange="onFilter()">
+        <option value="">Tots els anys</option>
+      </select>
+      <select class="filter-select" id="filter-cat" onchange="onFilter()">
+        <option value="">Totes les categories</option>
+      </select>
+      <button class="btn btn-outline" onclick="clearFilters()">Netejar</button>
+    </div>
+    <div class="view-pills">
+      <button class="pill active" onclick="setView('taula')">Explorador complet</button>
+      <button class="pill" onclick="setView('proveidors')">Rànquing proveïdors</button>
+      <button class="pill" onclick="setView('anys')">Despesa per any</button>
+      <button class="pill" onclick="setView('categories')">Per categoria</button>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid" id="stats-grid">
+    <div class="stat-card stat-blue">
+      <div class="stat-label">Factures</div>
+      <div class="stat-value" id="s-registres">—</div>
+      <div class="stat-sub" id="s-registres-sub">registres totals</div>
+    </div>
+    <div class="stat-card stat-teal">
+      <div class="stat-label">Import total</div>
+      <div class="stat-value" id="s-import">—</div>
+      <div class="stat-sub" id="s-import-sub">euros (2019–2025)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Proveïdors</div>
+      <div class="stat-value" id="s-proveidors">—</div>
+      <div class="stat-sub">entitats úniques</div>
+    </div>
+    <div class="stat-card stat-orange">
+      <div class="stat-label">Concentració top 10</div>
+      <div class="stat-value" id="s-concentracio">—</div>
+      <div class="stat-sub">de la despesa total</div>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loading" class="loading">
+    <div class="loading-spinner"></div>
+    <div>Carregant dades municipals...</div>
+  </div>
+
+  <!-- VIEW: TAULA -->
+  <div class="view" id="view-taula">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th onclick="sortBy('proveidor')" id="th-proveidor">Proveïdor <span class="sort-icon">↕</span></th>
+            <th onclick="sortBy('import')" id="th-import" style="text-align:right">Import <span class="sort-icon">↕</span></th>
+            <th onclick="sortBy('any')" id="th-any" style="text-align:center">Any <span class="sort-icon">↕</span></th>
+            <th style="text-align:center">Trim.</th>
+            <th>Categoria</th>
+            <th class="td-desc">Descripció</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+      <div class="table-footer">
+        <span id="table-count">—</span>
+        <button class="btn btn-dark" onclick="downloadCSV()">↓ Descarregar CSV</button>
+      </div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+
+  <!-- VIEW: PROVEÏDORS -->
+  <div class="view" id="view-proveidors">
+    <div class="ranking-grid">
+      <div class="ranking-card">
+        <h3>Top proveïdors per import total</h3>
+        <div id="ranking-proveidors"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW: ANYS -->
+  <div class="view" id="view-anys">
+    <div class="any-grid" id="any-grid"></div>
+  </div>
+
+  <!-- VIEW: CATEGORIES -->
+  <div class="view" id="view-categories">
+    <div class="ranking-grid">
+      <div class="ranking-card">
+        <h3>Despesa per categoria</h3>
+        <div id="ranking-categories"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// DADES I ESTAT
+// ─────────────────────────────────────────────────────────────────────────────
+let ALL_DATA     = [];
+let filtered     = [];
+let sortCol      = 'import';
+let sortAsc      = false;
+let currentPage  = 1;
+let searchMode   = 'proveidor';
+let currentView  = 'taula';
+const PAGE_SIZE  = 25;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CÀRREGA CSV
+// ─────────────────────────────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const resp = await fetch('data.csv');
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const text = await resp.text();
+    ALL_DATA = parseCSV(text);
+    init();
+  } catch (e) {
+    document.getElementById('loading').innerHTML =
+      `<div class="error-box">
+        <strong>No s'ha pogut carregar data.csv</strong><br>
+        Assegura't que el fitxer <code>data.csv</code> és a la mateixa carpeta que aquest <code>index.html</code>.<br><br>
+        <small>Error: ${e.message}</small>
+      </div>`;
+  }
+}
+
+function parseCSV(text) {
+  // Eliminar BOM si n'hi ha
+  if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+  const lines = text.split('\n');
+  if (lines.length < 2) return [];
+  const headers = parseCSVLine(lines[0]);
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    const vals = parseCSVLine(line);
+    const obj = {};
+    headers.forEach((h, idx) => { obj[h] = vals[idx] ?? ''; });
+    obj.import = parseFloat(obj.import) || 0;
+    obj.any    = parseInt(obj.any)      || 0;
+    rows.push(obj);
+  }
+  return rows;
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuote = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQuote && line[i+1] === '"') { current += '"'; i++; }
+      else inQuote = !inQuote;
+    } else if (ch === ',' && !inQuote) {
+      result.push(current);
+      current = '';
+    } else {
+      current += ch;
+    }
+  }
+  result.push(current);
+  return result;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INICIALITZACIÓ
+// ─────────────────────────────────────────────────────────────────────────────
+function init() {
+  document.getElementById('loading').style.display = 'none';
+
+  // Poblar filtres
+  const anys = [...new Set(ALL_DATA.map(r => r.any))].sort((a,b) => b-a);
+  const cats = [...new Set(ALL_DATA.map(r => r.categoria))].sort();
+  const selAny = document.getElementById('filter-any');
+  const selCat = document.getElementById('filter-cat');
+  anys.forEach(y => { const o = document.createElement('option'); o.value = y; o.textContent = y; selAny.appendChild(o); });
+  cats.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; selCat.appendChild(o); });
+
+  // Data actualització
+  const maxDate = ALL_DATA.reduce((max, r) => r.data > max ? r.data : max, '');
+  document.getElementById('header-date').textContent = `Actualitzat: ${maxDate || '—'}`;
+
+  applyFilters();
+  updateStats(ALL_DATA);
+  renderAnyView();
+  renderCategoriesView();
+
+  document.getElementById('view-taula').classList.add('active');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FILTRES
+// ─────────────────────────────────────────────────────────────────────────────
+function onSearch() { currentPage = 1; applyFilters(); }
+function onFilter() { currentPage = 1; applyFilters(); }
+
+function clearFilters() {
+  document.getElementById('search-input').value = '';
+  document.getElementById('filter-any').value = '';
+  document.getElementById('filter-cat').value = '';
+  currentPage = 1;
+  applyFilters();
+}
+
+function applyFilters() {
+  const q   = document.getElementById('search-input').value.trim().toLowerCase();
+  const any = document.getElementById('filter-any').value;
+  const cat = document.getElementById('filter-cat').value;
+
+  filtered = ALL_DATA.filter(r => {
+    if (any && String(r.any) !== any) return false;
+    if (cat && r.categoria !== cat)   return false;
+    if (q) {
+      const target = searchMode === 'proveidor'
+        ? r.proveidor.toLowerCase()
+        : (r.descripcio || '').toLowerCase();
+      if (!target.includes(q)) return false;
+    }
+    return true;
+  });
+
+  sortData();
+  updateStats(filtered);
+  renderTable();
+  renderRankingProveidors(filtered);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ORDENACIÓ
+// ─────────────────────────────────────────────────────────────────────────────
+function sortBy(col) {
+  if (sortCol === col) sortAsc = !sortAsc;
+  else { sortCol = col; sortAsc = col === 'proveidor'; }
+  currentPage = 1;
+  sortData();
+  renderTable();
+  // Actualitzar capçaleres
+  ['proveidor','import','any'].forEach(c => {
+    const th = document.getElementById('th-' + c);
+    if (!th) return;
+    th.classList.toggle('sorted', c === sortCol);
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = c === sortCol ? (sortAsc ? '↑' : '↓') : '↕';
+  });
+}
+
+function sortData() {
+  filtered.sort((a, b) => {
+    let va = a[sortCol], vb = b[sortCol];
+    if (typeof va === 'string') va = va.toLowerCase();
+    if (typeof vb === 'string') vb = vb.toLowerCase();
+    if (va < vb) return sortAsc ? -1 : 1;
+    if (va > vb) return sortAsc ? 1 : -1;
+    return 0;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STATS
+// ─────────────────────────────────────────────────────────────────────────────
+function updateStats(data) {
+  const total = data.reduce((s, r) => s + r.import, 0);
+  const provs = new Set(data.map(r => r.proveidor)).size;
+  const top10sum = Object.values(
+    data.reduce((acc, r) => { acc[r.proveidor] = (acc[r.proveidor] || 0) + r.import; return acc; }, {})
+  ).sort((a,b) => b-a).slice(0,10).reduce((s,v) => s+v, 0);
+  const conc = total > 0 ? (top10sum / total * 100).toFixed(1) + '%' : '—';
+
+  document.getElementById('s-registres').textContent   = data.length.toLocaleString('ca');
+  document.getElementById('s-import').textContent      = fmtM(total);
+  document.getElementById('s-proveidors').textContent  = provs.toLocaleString('ca');
+  document.getElementById('s-concentracio').textContent = conc;
+
+  const isFiltered = data.length < ALL_DATA.length;
+  document.getElementById('s-registres-sub').textContent  = isFiltered ? `de ${ALL_DATA.length.toLocaleString('ca')} totals` : 'registres totals';
+  document.getElementById('s-import-sub').textContent     = isFiltered ? 'filtrats' : 'euros (2019–2025)';
+
+  // Hero
+  if (!isFiltered) {
+    document.getElementById('hero-stats').innerHTML =
+      `<strong>${data.length.toLocaleString('ca')} factures</strong>, <strong>${provs}</strong> proveïdors,
+       import total <strong>${fmtEur(total)}</strong>.`;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAULA
+// ─────────────────────────────────────────────────────────────────────────────
+function renderTable() {
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const page  = filtered.slice(start, start + PAGE_SIZE);
+  const tbody = document.getElementById('table-body');
+
+  tbody.innerHTML = page.map(r => `
+    <tr>
+      <td class="td-prov">
+        <span class="td-prov-name" title="${esc(r.proveidor)}">${esc(r.proveidor)}</span>
+        ${r.nif_tercer ? `<span class="td-prov-nif">${esc(r.nif_tercer)}</span>` : ''}
+      </td>
+      <td class="td-import">${fmtEur(r.import)}</td>
+      <td class="td-any">${r.any}</td>
+      <td class="td-trim">${r.trimestre || '—'}</td>
+      <td><span class="badge-cat" style="${catStyle(r.categoria)}">${esc(r.categoria)}</span></td>
+      <td class="td-desc" title="${esc(r.descripcio)}">${esc(r.descripcio || '—')}</td>
+    </tr>`).join('');
+
+  document.getElementById('table-count').textContent =
+    `Mostrant ${start+1}–${Math.min(start+PAGE_SIZE, filtered.length)} de ${filtered.length.toLocaleString('ca')} transaccions`;
+
+  renderPagination();
+}
+
+function renderPagination() {
+  const total = Math.ceil(filtered.length / PAGE_SIZE);
+  if (total <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+
+  const pages = [];
+  pages.push(1);
+  for (let p = currentPage - 2; p <= currentPage + 2; p++) {
+    if (p > 1 && p < total) pages.push(p);
+  }
+  pages.push(total);
+  const unique = [...new Set(pages)].sort((a,b) => a-b);
+
+  let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+  let prev = 0;
+  for (const p of unique) {
+    if (p - prev > 1) html += `<button class="page-btn" disabled>…</button>`;
+    html += `<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+    prev = p;
+  }
+  html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===total?'disabled':''}>›</button>`;
+  document.getElementById('pagination').innerHTML = html;
+}
+
+function goPage(p) {
+  const total = Math.ceil(filtered.length / PAGE_SIZE);
+  if (p < 1 || p > total) return;
+  currentPage = p;
+  renderTable();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RÀNQUING PROVEÏDORS
+// ─────────────────────────────────────────────────────────────────────────────
+function renderRankingProveidors(data) {
+  const grouped = {};
+  data.forEach(r => { grouped[r.proveidor] = (grouped[r.proveidor] || 0) + r.import; });
+  const sorted = Object.entries(grouped).sort((a,b) => b[1]-a[1]);
+  const total  = sorted.reduce((s,[,v]) => s+v, 0);
+  const maxVal = sorted[0]?.[1] || 1;
+  const top    = sorted.slice(0, 30);
+
+  document.getElementById('ranking-proveidors').innerHTML = top.map(([nom, imp], i) => `
+    <div class="ranking-item">
+      <span class="rank-num ${i<3?'top3':''}">${i+1}</span>
+      <span class="rank-name" title="${esc(nom)}">${esc(nom)}</span>
+      <div class="rank-bar-wrap">
+        <div class="rank-bar-bg"><div class="rank-bar" style="width:${(imp/maxVal*100).toFixed(1)}%"></div></div>
+      </div>
+      <span class="rank-import">${fmtEur(imp)}</span>
+      <span class="rank-pct">${(imp/total*100).toFixed(1)}%</span>
+    </div>`).join('');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// VISTA PER ANY
+// ─────────────────────────────────────────────────────────────────────────────
+function renderAnyView() {
+  const grouped = {};
+  ALL_DATA.forEach(r => {
+    if (!grouped[r.any]) grouped[r.any] = { import: 0, count: 0 };
+    grouped[r.any].import += r.import;
+    grouped[r.any].count++;
+  });
+  const sorted = Object.entries(grouped).sort((a,b) => b[0]-a[0]);
+  const maxImp = Math.max(...sorted.map(([,v]) => v.import));
+
+  document.getElementById('any-grid').innerHTML = sorted.map(([any, v]) => `
+    <div class="any-card" onclick="filterByYear(${any})">
+      <div class="any-year">${any}</div>
+      <div class="any-import">${fmtEur(v.import)}</div>
+      <div class="any-meta">${v.count.toLocaleString('ca')} factures</div>
+      <div class="any-bar-bg"><div class="any-bar" style="width:${(v.import/maxImp*100).toFixed(1)}%"></div></div>
+    </div>`).join('');
+}
+
+function filterByYear(year) {
+  document.getElementById('filter-any').value = year;
+  setView('taula');
+  onFilter();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// VISTA CATEGORIES
+// ─────────────────────────────────────────────────────────────────────────────
+function renderCategoriesView() {
+  const grouped = {};
+  ALL_DATA.forEach(r => {
+    if (!grouped[r.categoria]) grouped[r.categoria] = { import: 0, count: 0 };
+    grouped[r.categoria].import += r.import;
+    grouped[r.categoria].count++;
+  });
+  const sorted = Object.entries(grouped).sort((a,b) => b[1].import-a[1].import);
+  const total  = sorted.reduce((s,[,v]) => s+v.import, 0);
+  const maxVal = sorted[0]?.[1].import || 1;
+
+  document.getElementById('ranking-categories').innerHTML = sorted.map(([cat, v]) => `
+    <div class="ranking-item">
+      <span class="rank-name">
+        <span class="badge-cat" style="${catStyle(cat)}">${esc(cat)}</span>
+      </span>
+      <div class="rank-bar-wrap">
+        <div class="rank-bar-bg"><div class="rank-bar" style="width:${(v.import/maxVal*100).toFixed(1)}%;background:${catColor(cat)}"></div></div>
+      </div>
+      <span class="rank-import">${fmtEur(v.import)}</span>
+      <span class="rank-pct">${(v.import/total*100).toFixed(1)}%</span>
+      <span style="font-size:11px;color:#aaa;min-width:60px;text-align:right">${v.count.toLocaleString('ca')} reg.</span>
+    </div>`).join('');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// NAVEGACIÓ VISTES
+// ─────────────────────────────────────────────────────────────────────────────
+function setView(view) {
+  currentView = view;
+  ['taula','proveidors','anys','categories'].forEach(v => {
+    document.getElementById('view-' + (v==='anys'?'anys':v)).classList.toggle('active', v === view);
+  });
+  document.querySelectorAll('.nav-tab').forEach((t, i) => {
+    t.classList.toggle('active', ['taula','proveidors','anys','categories'][i] === view);
+  });
+  document.querySelectorAll('.pill').forEach((p, i) => {
+    p.classList.toggle('active', ['taula','proveidors','anys','categories'][i] === view);
+  });
+  if (view === 'proveidors') renderRankingProveidors(filtered);
+}
+
+function setSearchMode(mode) {
+  searchMode = mode;
+  document.getElementById('toggle-prov').classList.toggle('active', mode === 'proveidor');
+  document.getElementById('toggle-desc').classList.toggle('active', mode === 'descripcio');
+  document.getElementById('search-input').placeholder = mode === 'proveidor' ? 'Cerca proveïdor...' : 'Cerca descripció...';
+  onSearch();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EXPORT CSV
+// ─────────────────────────────────────────────────────────────────────────────
+function downloadCSV() {
+  const cols = ['data','any','trimestre','num_document','import','situacio','codi_operacio','nif_tercer','proveidor','descripcio','categoria','font'];
+  const esc2 = v => {
+    const s = String(v ?? '');
+    return (s.includes(',') || s.includes('"') || s.includes('\n')) ? '"' + s.replace(/"/g,'""') + '"' : s;
+  };
+  const lines = [cols.join(','), ...filtered.map(r => cols.map(c => esc2(r[c])).join(','))];
+  const blob  = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `calaf_transparencia_${new Date().toISOString().substring(0,10)}.csv`;
+  a.click();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────────────────────────────────────────
+function fmtEur(n) {
+  return new Intl.NumberFormat('ca-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+}
+function fmtM(n) {
+  if (n >= 1e6) return (n/1e6).toFixed(2).replace('.', ',') + 'M€';
+  if (n >= 1e3) return Math.round(n/1e3) + 'K€';
+  return fmtEur(n);
+}
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+const CAT_COLORS = {
+  'Manteniment':             { bg:'#e0f2fe', fg:'#0369a1' },
+  'Subministraments':        { bg:'#fef9c3', fg:'#854d0e' },
+  'Seguretat':               { bg:'#fee2e2', fg:'#991b1b' },
+  'Cultura i Festes':        { bg:'#fce7f3', fg:'#9d174d' },
+  'Obra pública':            { bg:'#dcfce7', fg:'#166534' },
+  'Serveis Socials':         { bg:'#ede9fe', fg:'#5b21b6' },
+  'Assessoria i estudis':    { bg:'#f0fdf4', fg:'#15803d' },
+  'Comunicació':             { bg:'#fff7ed', fg:'#c2410c' },
+  'Subvencions i convenis':  { bg:'#ecfdf5', fg:'#065f46' },
+  'Assegurances':            { bg:'#f0f9ff', fg:'#0c4a6e' },
+  'Lloguers':                { bg:'#fdf4ff', fg:'#6b21a8' },
+  'Vehicles i transport':    { bg:'#fff1f2', fg:'#881337' },
+  'Material i subministres': { bg:'#f7fee7', fg:'#365314' },
+  'Personal i contractació': { bg:'#fafafa', fg:'#374151' },
+  'Altres':                  { bg:'#f3f4f6', fg:'#6b7280' },
+};
+function catStyle(cat) {
+  const c = CAT_COLORS[cat] || CAT_COLORS['Altres'];
+  return `background:${c.bg};color:${c.fg}`;
+}
+function catColor(cat) {
+  const c = CAT_COLORS[cat] || CAT_COLORS['Altres'];
+  return c.fg;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ARRANCADA
+// ─────────────────────────────────────────────────────────────────────────────
+loadData();
+</script>
+</body>
+</html>
