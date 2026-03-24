@@ -414,6 +414,7 @@ tbody td { padding: 10px 14px; font-size: 13px; }
       <div class="search-toggle">
         <button class="toggle-btn active" id="toggle-prov" onclick="setSearchMode('proveidor')">Proveïdor</button>
         <button class="toggle-btn" id="toggle-desc" onclick="setSearchMode('descripcio')">Descripció</button>
+        <button class="toggle-btn" id="toggle-nif" onclick="setSearchMode('nif')">NIF</button>
       </div>
       <div class="search-input-wrap">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -629,9 +630,13 @@ function init() {
   anys.forEach(y => { const o = document.createElement('option'); o.value = y; o.textContent = y; selAny.appendChild(o); });
   cats.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; selCat.appendChild(o); });
 
-  // Data actualització
-  const maxDate = ALL_DATA.reduce((max, r) => r.data > max ? r.data : max, '');
-  document.getElementById('header-date').textContent = `Actualitzat: ${maxDate || '—'}`;
+  // Data actualització — ignorar files sense data vàlida
+  const maxDate = ALL_DATA
+    .map(r => r.data)
+    .filter(d => d && d.match(/^\d{4}-\d{2}-\d{2}/))
+    .sort()
+    .pop();
+  document.getElementById('header-date').textContent = maxDate ? `Actualitzat: ${maxDate}` : '—';
 
   applyFilters();
   updateStats(ALL_DATA);
@@ -666,6 +671,8 @@ function applyFilters() {
     if (q) {
       const target = searchMode === 'proveidor'
         ? r.proveidor.toLowerCase()
+        : searchMode === 'nif'
+        ? (r.nif_tercer || '').toLowerCase()
         : (r.descripcio || '').toLowerCase();
       if (!target.includes(q)) return false;
     }
@@ -896,7 +903,9 @@ function setSearchMode(mode) {
   searchMode = mode;
   document.getElementById('toggle-prov').classList.toggle('active', mode === 'proveidor');
   document.getElementById('toggle-desc').classList.toggle('active', mode === 'descripcio');
-  document.getElementById('search-input').placeholder = mode === 'proveidor' ? 'Cerca proveïdor...' : 'Cerca descripció...';
+  document.getElementById('toggle-nif').classList.toggle('active',  mode === 'nif');
+  const placeholders = { proveidor: 'Cerca proveïdor...', descripcio: 'Cerca descripció...', nif: 'Cerca NIF / CIF...' };
+  document.getElementById('search-input').placeholder = placeholders[mode];
   onSearch();
 }
 
