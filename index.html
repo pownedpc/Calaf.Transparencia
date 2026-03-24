@@ -391,6 +391,7 @@ tbody td { padding: 10px 14px; font-size: 13px; }
       <button class="nav-tab" onclick="setView('proveidors')">Proveïdors</button>
       <button class="nav-tab" onclick="setView('anys')">Per any</button>
       <button class="nav-tab" onclick="setView('categories')">Categories</button>
+      <button class="nav-tab" onclick="setView('subvencions')">Subvencions</button>
     </nav>
     <div class="header-right" id="header-date">—</div>
   </div>
@@ -433,6 +434,7 @@ tbody td { padding: 10px 14px; font-size: 13px; }
       <button class="pill" onclick="setView('proveidors')">Rànquing proveïdors</button>
       <button class="pill" onclick="setView('anys')">Despesa per any</button>
       <button class="pill" onclick="setView('categories')">Per categoria</button>
+      <button class="pill" onclick="setView('subvencions')">Subvencions i convenis</button>
     </div>
   </div>
 
@@ -512,6 +514,29 @@ tbody td { padding: 10px 14px; font-size: 13px; }
         <h3>Despesa per categoria</h3>
         <div id="ranking-categories"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- VIEW: SUBVENCIONS -->
+  <div class="view" id="view-subvencions">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th onclick="sortSub('proveidor')" id="sth-proveidor">Entitat <span class="sort-icon">↕</span></th>
+            <th onclick="sortSub('import')" id="sth-import" style="text-align:right">Import <span class="sort-icon">↕</span></th>
+            <th onclick="sortSub('any')" id="sth-any" style="text-align:center">Any <span class="sort-icon">↕</span></th>
+            <th>Descripció</th>
+            <th>Font</th>
+          </tr>
+        </thead>
+        <tbody id="sub-table-body"></tbody>
+      </table>
+      <div class="table-footer">
+        <span id="sub-table-count">—</span>
+        <button class="btn btn-dark" onclick="downloadSubCSV()">↓ Descarregar CSV</button>
+      </div>
+      <div class="pagination" id="sub-pagination"></div>
     </div>
   </div>
 
@@ -853,16 +878,18 @@ function renderCategoriesView() {
 // ─────────────────────────────────────────────────────────────────────────────
 function setView(view) {
   currentView = view;
-  ['taula','proveidors','anys','categories'].forEach(v => {
-    document.getElementById('view-' + (v==='anys'?'anys':v)).classList.toggle('active', v === view);
+  ['taula','proveidors','anys','categories','subvencions'].forEach(v => {
+    const el = document.getElementById('view-' + v);
+    if (el) el.classList.toggle('active', v === view);
   });
   document.querySelectorAll('.nav-tab').forEach((t, i) => {
-    t.classList.toggle('active', ['taula','proveidors','anys','categories'][i] === view);
+    t.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions'][i] === view);
   });
   document.querySelectorAll('.pill').forEach((p, i) => {
-    p.classList.toggle('active', ['taula','proveidors','anys','categories'][i] === view);
+    p.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions'][i] === view);
   });
-  if (view === 'proveidors') renderRankingProveidors(filtered);
+  if (view === 'proveidors')   renderRankingProveidors(filtered);
+  if (view === 'subvencions')  initSubvencions();
 }
 
 function setSearchMode(mode) {
@@ -929,6 +956,117 @@ function catStyle(cat) {
 function catColor(cat) {
   const c = CAT_COLORS[cat] || CAT_COLORS['Altres'];
   return c.fg;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// VISTA SUBVENCIONS
+// ─────────────────────────────────────────────────────────────────────────────
+let subData     = [];
+let subFiltered = [];
+let subSortCol  = 'import';
+let subSortAsc  = false;
+let subPage     = 1;
+const SUB_PAGE  = 25;
+
+function initSubvencions() {
+  subData = ALL_DATA.filter(r => r.categoria === 'Subvencions i convenis');
+  subFiltered = [...subData];
+  sortSubData();
+  renderSubTable();
+}
+
+function sortSub(col) {
+  if (subSortCol === col) subSortAsc = !subSortAsc;
+  else { subSortCol = col; subSortAsc = col === 'proveidor'; }
+  subPage = 1;
+  sortSubData();
+  renderSubTable();
+  ['proveidor','import','any'].forEach(c => {
+    const th = document.getElementById('sth-' + c);
+    if (!th) return;
+    th.classList.toggle('sorted', c === subSortCol);
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = c === subSortCol ? (subSortAsc ? '↑' : '↓') : '↕';
+  });
+}
+
+function sortSubData() {
+  subFiltered.sort((a, b) => {
+    let va = a[subSortCol], vb = b[subSortCol];
+    if (typeof va === 'string') va = va.toLowerCase();
+    if (typeof vb === 'string') vb = vb.toLowerCase();
+    if (va < vb) return subSortAsc ? -1 : 1;
+    if (va > vb) return subSortAsc ? 1 : -1;
+    return 0;
+  });
+}
+
+function renderSubTable() {
+  const start = (subPage - 1) * SUB_PAGE;
+  const page  = subFiltered.slice(start, start + SUB_PAGE);
+  const tbody = document.getElementById('sub-table-body');
+
+  const fontLabel = f => {
+    if (f.includes('Organitzades')) return 'Subvencions oficials';
+    if (f.includes('convenis'))     return 'Convenis per entitat';
+    if (f.includes('Contractes'))   return 'Perfil contractant';
+    return f;
+  };
+
+  tbody.innerHTML = page.map(r => `
+    <tr>
+      <td class="td-prov">
+        <span class="td-prov-name" title="${esc(r.proveidor)}">${esc(r.proveidor)}</span>
+        ${r.nif_tercer ? `<span class="td-prov-nif">${esc(r.nif_tercer)}</span>` : ''}
+      </td>
+      <td class="td-import">${fmtEur(r.import)}</td>
+      <td class="td-any">${r.any || '—'}</td>
+      <td class="td-desc" title="${esc(r.descripcio)}">${esc(r.descripcio || '—')}</td>
+      <td style="font-size:11px;color:#aaa">${esc(fontLabel(r.font))}</td>
+    </tr>`).join('');
+
+  const total = subFiltered.reduce((s, r) => s + r.import, 0);
+  document.getElementById('sub-table-count').textContent =
+    `${subFiltered.length.toLocaleString('ca')} subvencions · ${fmtEur(total)} total`;
+
+  renderSubPagination();
+}
+
+function renderSubPagination() {
+  const total = Math.ceil(subFiltered.length / SUB_PAGE);
+  if (total <= 1) { document.getElementById('sub-pagination').innerHTML = ''; return; }
+  const pages = [1];
+  for (let p = subPage - 2; p <= subPage + 2; p++) if (p > 1 && p < total) pages.push(p);
+  pages.push(total);
+  const unique = [...new Set(pages)].sort((a,b) => a-b);
+  let html = `<button class="page-btn" onclick="goSubPage(${subPage-1})" ${subPage===1?'disabled':''}>‹</button>`;
+  let prev = 0;
+  for (const p of unique) {
+    if (p - prev > 1) html += `<button class="page-btn" disabled>…</button>`;
+    html += `<button class="page-btn ${p===subPage?'active':''}" onclick="goSubPage(${p})">${p}</button>`;
+    prev = p;
+  }
+  html += `<button class="page-btn" onclick="goSubPage(${subPage+1})" ${subPage===total?'disabled':''}>›</button>`;
+  document.getElementById('sub-pagination').innerHTML = html;
+}
+
+function goSubPage(p) {
+  const total = Math.ceil(subFiltered.length / SUB_PAGE);
+  if (p < 1 || p > total) return;
+  subPage = p;
+  renderSubTable();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function downloadSubCSV() {
+  const cols = ['data','any','nif_tercer','proveidor','import','descripcio','font'];
+  const esc2 = v => { const s = String(v ?? ''); return (s.includes(',') || s.includes('"')) ? '"' + s.replace(/"/g,'""') + '"' : s; };
+  const lines = [cols.join(','), ...subFiltered.map(r => cols.map(c => esc2(r[c])).join(','))];
+  const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `calaf_subvencions_${new Date().toISOString().substring(0,10)}.csv`;
+  a.click();
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
