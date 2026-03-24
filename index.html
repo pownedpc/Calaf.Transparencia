@@ -531,7 +531,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
       <button class="pill" onclick="setView('anys')">Despesa per any</button>
       <button class="pill" onclick="setView('categories')">Per categoria</button>
       <button class="pill" onclick="setView('subvencions')">Subvencions i convenis</button>
-      <button class="pill" onclick="setView('pressupost')">Pressupost 2025</button>
+      <button class="pill" onclick="setView('pressupost')">Pressupost</button>
     </div>
   </div>
 
@@ -643,7 +643,8 @@ body.mobile-mode .hero h1 { font-size: 22px; }
     <!-- Selector any -->
     <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center">
       <span style="font-size:13px;font-weight:600;color:#666">Any:</span>
-      <button class="pres-any-btn btn btn-dark" data-any="2025" onclick="setPresAny(2025)">2025</button>
+      <button class="pres-any-btn btn btn-dark" data-any="2026" onclick="setPresAny(2026)">2026</button>
+      <button class="pres-any-btn btn btn-outline" data-any="2025" onclick="setPresAny(2025)">2025</button>
       <button class="pres-any-btn btn btn-outline" data-any="2024" onclick="setPresAny(2024)">2024</button>
       <button class="pres-any-btn btn btn-outline" data-any="2023" onclick="setPresAny(2023)">2023</button>
     </div>
@@ -1267,6 +1268,29 @@ function downloadSubCSV() {
 // PRESSUPOST 2023-2025
 // ─────────────────────────────────────────────────────────────────────────────
 const PRESSUPOSTOS = {
+  2026: {
+    despeses: [
+      {cap:1,nom:'Despeses de personal',                import:2217394.40},
+      {cap:2,nom:'Despeses corrents en béns i serveis', import:1862864.11},
+      {cap:3,nom:'Despeses financeres',                 import:141765.47},
+      {cap:4,nom:'Transferències corrents',             import:738276.16},
+      {cap:5,nom:'Fons de contingència',                import:60000.00},
+      {cap:6,nom:'Inversions reals',                    import:445655.65},
+      {cap:9,nom:'Passius financers',                   import:207858.49},
+    ],
+    ingressos: [
+      {cap:1,nom:'Impostos directes',        import:1806495.23},
+      {cap:2,nom:'Impostos indirectes',      import:75000.00},
+      {cap:3,nom:'Taxes i altres ingressos', import:1430669.85},
+      {cap:4,nom:'Transferències corrents',  import:1976380.22},
+      {cap:5,nom:'Ingressos patrimonials',   import:23760.00},
+      {cap:6,nom:'Alienació inversions reals',import:0.00},
+      {cap:7,nom:'Transferències de capital',import:116313.10},
+      {cap:9,nom:'Passius financers',        import:253779.35},
+    ],
+    plantilla:{funcionaris:25,funcionarisVacants:2,laborals:42,laboralsVacants:19},
+    partides:[]
+  },
   2025: {
     despeses: [
       {cap:1,nom:'Despeses de personal',                import:2163017.72},
@@ -1461,7 +1485,7 @@ const PRESSUPOSTOS = {
   }
 };
 
-let presAny = 2025;
+let presAny = 2026;
 
 function renderPressupost() {
   const p = PRESSUPOSTOS[presAny];
