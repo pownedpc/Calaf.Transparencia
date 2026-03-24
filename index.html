@@ -640,67 +640,88 @@ body.mobile-mode .hero h1 { font-size: 22px; }
   <!-- VIEW: PRESSUPOST -->
   <div class="view" id="view-pressupost">
 
+    <!-- Selector any -->
+    <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center">
+      <span style="font-size:13px;font-weight:600;color:#666">Any:</span>
+      <button class="pres-any-btn btn btn-dark" data-any="2025" onclick="setPresAny(2025)">2025</button>
+      <button class="pres-any-btn btn btn-outline" data-any="2024" onclick="setPresAny(2024)">2024</button>
+      <button class="pres-any-btn btn btn-outline" data-any="2023" onclick="setPresAny(2023)">2023</button>
+    </div>
+
+    <!-- Resum + capítol max -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-      <!-- Resum executiu -->
-      <div class="ranking-card" style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
-        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:16px">Resum executiu 2025</h3>
+      <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
+        <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:14px">Resum executiu <span id="pres-any-label">2025</span></h3>
         <div style="display:flex;flex-direction:column;gap:10px">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:13px;color:#444">Total despeses</span>
-            <span style="font-weight:700;color:#4040ff">8.699.093 €</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:13px;color:#444">Total ingressos</span>
-            <span style="font-weight:700;color:#00897b">8.699.708 €</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #f0f0f0;padding-top:10px">
-            <span style="font-size:13px;color:#444">Superàvit previst</span>
-            <span style="font-weight:700;color:#ff9800">615 €</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:13px;color:#444">Plantilla total</span>
-            <span style="font-weight:700">69 places (32 vacants)</span>
-          </div>
+          <div style="display:flex;justify-content:space-between"><span style="font-size:13px;color:#444">Total despeses</span><span style="font-weight:700;color:#4040ff" id="pres-total-d">—</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="font-size:13px;color:#444">Total ingressos</span><span style="font-weight:700;color:#00897b" id="pres-total-i">—</span></div>
+          <div style="display:flex;justify-content:space-between;border-top:1px solid #f0f0f0;padding-top:10px"><span style="font-size:13px;color:#444">Superàvit / dèficit</span><span style="font-weight:700" id="pres-superavit">—</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="font-size:13px;color:#444">Plantilla</span><span style="font-weight:700;font-size:13px" id="pres-plantilla">—</span></div>
         </div>
       </div>
-
-      <!-- Capítol més gran -->
-      <div class="ranking-card" style="background:#eff0ff;border:1px solid #c7c7ff;border-radius:10px;padding:20px">
-        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#4040ff;margin-bottom:16px">Capítol més gran (Despesa)</h3>
-        <div style="font-size:28px;font-weight:800;color:#4040ff;margin-bottom:4px">3.541.280 €</div>
-        <div style="font-size:14px;font-weight:600;color:#333;margin-bottom:4px">Cap. 6 — Inversions Reals</div>
-        <div style="font-size:12px;color:#666">40,7% del pressupost total de despeses</div>
+      <div style="background:#eff0ff;border:1px solid #c7c7ff;border-radius:10px;padding:20px">
+        <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#4040ff;margin-bottom:14px">Capítol més gran (Despesa)</h3>
+        <div style="font-size:26px;font-weight:800;color:#4040ff;margin-bottom:4px" id="pres-cap-max-import">—</div>
+        <div style="font-size:14px;font-weight:600;color:#333;margin-bottom:4px" id="pres-cap-max-nom">—</div>
+        <div style="font-size:12px;color:#666" id="pres-cap-max-pct">—</div>
       </div>
     </div>
 
     <!-- Despeses per capítol -->
-    <div class="ranking-card" style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px">
-      <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:16px">Despeses per capítol — 2025</h3>
+    <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px">
+      <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:14px">Despeses per capítol</h3>
       <div id="pres-despeses"></div>
     </div>
 
     <!-- Ingressos per capítol -->
-    <div class="ranking-card" style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px">
-      <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:16px">Ingressos per capítol — 2025</h3>
+    <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px">
+      <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:14px">Ingressos per capítol</h3>
       <div id="pres-ingressos"></div>
     </div>
 
     <!-- Plantilla -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-      <div class="ranking-card" style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
-        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:16px">Plantilla funcionaris</h3>
-        <div style="font-size:32px;font-weight:800;color:#1a1a1a">26</div>
-        <div style="font-size:13px;color:#666;margin-top:4px">places · <span style="color:#f59e0b;font-weight:600">4 vacants</span></div>
+      <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
+        <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:10px">Funcionaris</h3>
+        <div style="font-size:32px;font-weight:800" id="pres-func">—</div>
+        <div style="font-size:12px;color:#666;margin-top:4px" id="pres-func-vac">—</div>
       </div>
-      <div class="ranking-card" style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
-        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:16px">Plantilla laborals</h3>
-        <div style="font-size:32px;font-weight:800;color:#1a1a1a">43</div>
-        <div style="font-size:13px;color:#666;margin-top:4px">places · <span style="color:#ef4444;font-weight:600">28 vacants</span></div>
+      <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
+        <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:10px">Laborals</h3>
+        <div style="font-size:32px;font-weight:800" id="pres-lab">—</div>
+        <div style="font-size:12px;color:#666;margin-top:4px" id="pres-lab-vac">—</div>
       </div>
     </div>
 
+    <!-- Partides detallades (2023 i 2024) -->
+    <div id="pres-partides-wrap" style="background:#fff;border:1px solid #ddd;border-radius:10px;overflow:hidden;margin-bottom:16px">
+      <div style="padding:16px 20px;background:#f8f9fa;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666">Partides detallades</span>
+        <input id="pres-search" type="text" placeholder="Cerca partida..." oninput="renderPartides()"
+          style="flex:1;min-width:160px;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;outline:none">
+        <select id="pres-tipus" onchange="renderPartides()"
+          style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;outline:none;background:#fff">
+          <option value="">Despeses i ingressos</option>
+          <option value="despesa">Només despeses</option>
+          <option value="ingres">Només ingressos</option>
+        </select>
+      </div>
+      <table style="width:100%;border-collapse:collapse">
+        <thead>
+          <tr style="background:#f8f9fa">
+            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Codi</th>
+            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Concepte</th>
+            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Tipus</th>
+            <th style="padding:10px 14px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Import</th>
+          </tr>
+        </thead>
+        <tbody id="pres-partides-body"></tbody>
+      </table>
+      <div style="padding:10px 16px;background:#f8f9fa;border-top:1px solid #e5e7eb;font-size:12px;color:#888" id="pres-partides-count"></div>
+    </div>
+
     <div style="font-size:12px;color:#aaa;text-align:center;padding:8px">
-      Font: Pressupost Municipal Calaf 2025 · Dades oficials de l'Ajuntament
+      Font: Pressupost Municipal Calaf · BOPB · Dades oficials de l'Ajuntament
     </div>
   </div>
 
@@ -1243,36 +1264,278 @@ function downloadSubCSV() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PRESSUPOST 2025
+// PRESSUPOST 2023-2025
 // ─────────────────────────────────────────────────────────────────────────────
-const DESPESES_2025 = [
-  { cap: 1, nom: 'Despeses de personal',              import: 2163017.72 },
-  { cap: 2, nom: 'Despeses corrents en béns i serveis', import: 1903218.43 },
-  { cap: 3, nom: 'Despeses financeres',               import: 73479.87 },
-  { cap: 4, nom: 'Transferències corrents',           import: 747648.36 },
-  { cap: 5, nom: 'Fons de contingència',              import: 79714.29 },
-  { cap: 6, nom: 'Inversions reals',                  import: 3541280.02 },
-  { cap: 9, nom: 'Passius financers',                 import: 190734.10 },
-];
+const PRESSUPOSTOS = {
+  2025: {
+    despeses: [
+      {cap:1,nom:'Despeses de personal',                import:2163017.72},
+      {cap:2,nom:'Despeses corrents en béns i serveis', import:1903218.43},
+      {cap:3,nom:'Despeses financeres',                 import:73479.87},
+      {cap:4,nom:'Transferències corrents',             import:747648.36},
+      {cap:5,nom:'Fons de contingència',                import:79714.29},
+      {cap:6,nom:'Inversions reals',                    import:3541280.02},
+      {cap:9,nom:'Passius financers',                   import:190734.10},
+    ],
+    ingressos: [
+      {cap:1,nom:'Impostos directes',        import:1761196.41},
+      {cap:2,nom:'Impostos indirectes',      import:60000.00},
+      {cap:3,nom:'Taxes i altres ingressos', import:1524062.90},
+      {cap:4,nom:'Transferències corrents',  import:1853910.60},
+      {cap:5,nom:'Ingressos patrimonials',   import:28000.00},
+      {cap:6,nom:'Alienació de terrenys',    import:0.00},
+      {cap:7,nom:'Transferències de capital',import:1759864.94},
+      {cap:9,nom:'Passius financers',        import:1712672.95},
+    ],
+    plantilla:{funcionaris:26,funcionarisVacants:4,laborals:43,laboralsVacants:28},
+    partides:[]
+  },
+  2024: {
+    despeses: [
+      {cap:1,nom:'Despeses de personal',                import:2338412.70},
+      {cap:2,nom:'Despeses corrents en béns i serveis', import:1857003.40},
+      {cap:3,nom:'Despeses financeres',                 import:16290.98},
+      {cap:4,nom:'Transferències corrents',             import:230454.43},
+      {cap:5,nom:'Fons de contingència',                import:50000.00},
+      {cap:6,nom:'Inversions reals',                    import:2639290.10},
+      {cap:9,nom:'Passius financers',                   import:205065.12},
+    ],
+    ingressos: [
+      {cap:1,nom:'Impostos directes',        import:1751196.41},
+      {cap:2,nom:'Impostos indirectes',      import:60000.00},
+      {cap:3,nom:'Taxes i altres ingressos', import:1192391.50},
+      {cap:4,nom:'Transferències corrents',  import:1737712.20},
+      {cap:5,nom:'Ingressos patrimonials',   import:15000.00},
+      {cap:6,nom:'Alienació de terrenys',    import:0.00},
+      {cap:7,nom:'Transferències de capital',import:2025224.59},
+      {cap:9,nom:'Passius financers',        import:555037.84},
+    ],
+    plantilla:{funcionaris:26,funcionarisVacants:9,laborals:53,laboralsVacants:41},
+    partides:[
+      {tipus:'despesa',codi:'91200',concepte:'Atencions protocolàries i representatives',import:4000},
+      {tipus:'despesa',codi:'91200',concepte:'Indemnitzacions membres òrgans de govern',import:7200},
+      {tipus:'despesa',codi:'92000',concepte:'Manteniment i reparacions edifici',import:15000},
+      {tipus:'despesa',codi:'92000',concepte:'Manteniment ascensors',import:7100},
+      {tipus:'despesa',codi:'92000',concepte:'Material oficina no inventariable',import:7500},
+      {tipus:'despesa',codi:'92000',concepte:'Material informàtic no inventariable',import:18000},
+      {tipus:'despesa',codi:'92000',concepte:'Lloguer fotocopiadores',import:5000},
+      {tipus:'despesa',codi:'92000',concepte:'Energia elèctrica administració',import:12000},
+      {tipus:'despesa',codi:'92000',concepte:'Aigua subministrament fonts',import:2300},
+      {tipus:'despesa',codi:'92000',concepte:'Gas calefacció administració',import:15000},
+      {tipus:'despesa',codi:'92000',concepte:'Servei telecomunicacions',import:26296},
+      {tipus:'despesa',codi:'92000',concepte:'Primes assegurances',import:35000},
+      {tipus:'despesa',codi:'92000',concepte:'Seguretat administració',import:10100},
+      {tipus:'despesa',codi:'92000',concepte:'Control horari',import:14200},
+      {tipus:'despesa',codi:'93200',concepte:'Serveis recaptació favor entitat',import:50000},
+      {tipus:'despesa',codi:'15310',concepte:'Reparacions, manteniment vies públiques',import:60000},
+      {tipus:'despesa',codi:'15310',concepte:'Manteniment vehicles vies públiques',import:10000},
+      {tipus:'despesa',codi:'45000',concepte:'Estudis i treballs tècnics',import:45000},
+      {tipus:'despesa',codi:'16100',concepte:'Proveïment domiciliari aigua potable',import:134126.82},
+      {tipus:'despesa',codi:'16100',concepte:'Pagaments trimestrals cànon',import:125726.89},
+      {tipus:'despesa',codi:'16500',concepte:'Manteniment enllumenat',import:11000.80},
+      {tipus:'despesa',codi:'16500',concepte:'Enllumenat públic',import:100000},
+      {tipus:'despesa',codi:'16210',concepte:'Cànon abocador',import:43600},
+      {tipus:'despesa',codi:'16210',concepte:'Renting camió + satèl·lit',import:57457.32},
+      {tipus:'despesa',codi:'16210',concepte:'Recollida selectiva i deixalleria',import:44200},
+      {tipus:'despesa',codi:'16300',concepte:'Combustibles i carburants brigada',import:35000},
+      {tipus:'despesa',codi:'16400',concepte:'Manteniment cementiri',import:14000},
+      {tipus:'despesa',codi:'17100',concepte:'Manteniment i conservació parcs i jardins',import:40000},
+      {tipus:'despesa',codi:'23100',concepte:'Manteniment Centre de Dia Casa Gimferrer',import:5000},
+      {tipus:'despesa',codi:'23100',concepte:'Setmana de la Gent Gran',import:14500},
+      {tipus:'despesa',codi:'23100',concepte:'Teleassistència',import:7200},
+      {tipus:'despesa',codi:'23100',concepte:'Gestió Centre de Dia - Grup Auria',import:25000},
+      {tipus:'despesa',codi:'32300',concepte:'Altres treballs empreses CEIP',import:80000},
+      {tipus:'despesa',codi:'32300',concepte:'Gas calefacció CEIP',import:22000},
+      {tipus:'despesa',codi:'32300',concepte:'Energia elèctrica CEIP',import:12500},
+      {tipus:'despesa',codi:'33800',concepte:'Festes Populars Festa Major',import:91500},
+      {tipus:'despesa',codi:'33800',concepte:'SGAE festes',import:4000},
+      {tipus:'despesa',codi:'33400',concepte:'Lloguer local entitats culturals',import:10680},
+      {tipus:'despesa',codi:'33700',concepte:'Oci i temps lliure Casal del Poble',import:21000},
+      {tipus:'despesa',codi:'34202',concepte:'Energia elèctrica poliesportiu',import:10500},
+      {tipus:'despesa',codi:'34203',concepte:'Servei integral piscina',import:20625},
+      {tipus:'despesa',codi:'43120',concepte:'Fires i mercat de Calaf',import:35959.60},
+      {tipus:'despesa',codi:'24100',concepte:'SLO / CLSE / Reactiva\'t',import:73535},
+      {tipus:'despesa',codi:'23100',concepte:'Subvenció Consell Comarcal Serveis Socials',import:55000},
+      {tipus:'despesa',codi:'23100',concepte:'Ajuts a famílies',import:21000},
+      {tipus:'despesa',codi:'92400',concepte:'Subvencions entitats locals',import:68656.62},
+      {tipus:'despesa',codi:'34100',concepte:'Beques esportives',import:6200},
+      {tipus:'despesa',codi:'16500',concepte:'Next Generation - Canvi lluminàries',import:1423684.31},
+      {tipus:'despesa',codi:'92000',concepte:'Fotovoltaiques 2024',import:246198.81},
+      {tipus:'despesa',codi:'15220',concepte:'Casetes dels mestres',import:122622.20},
+      {tipus:'despesa',codi:'15100',concepte:'Accessibilitat Next Generation',import:144108.12},
+      {tipus:'despesa',codi:'23100',concepte:'Residència tercera edat (inversió)',import:457163.10},
+      {tipus:'ingres',codi:'11300',concepte:'IBI Urbana',import:1237294.01},
+      {tipus:'ingres',codi:'11500',concepte:'IVTM - Vehicles',import:260000},
+      {tipus:'ingres',codi:'13000',concepte:'IAE - Activitats econòmiques',import:160000},
+      {tipus:'ingres',codi:'30000',concepte:'Subministrament aigua potable',import:277528.30},
+      {tipus:'ingres',codi:'30200',concepte:'Recollida escombraries domèstiques',import:229343.82},
+      {tipus:'ingres',codi:'31200',concepte:'Taxa escola de música',import:76875},
+      {tipus:'ingres',codi:'31201',concepte:'Taxa escola bressol',import:59430.98},
+      {tipus:'ingres',codi:'31302',concepte:'Taxa piscina municipal',import:22000},
+      {tipus:'ingres',codi:'42000',concepte:'Participació tributs Estat PIE',import:751000},
+      {tipus:'ingres',codi:'46100',concepte:'Subvencions Diputació',import:300000},
+      {tipus:'ingres',codi:'75001',concepte:'Next Generation - Ministeri DUS 5000',import:1210131.66},
+      {tipus:'ingres',codi:'75005',concepte:'Next Generation - Residència',import:457163.10},
+      {tipus:'ingres',codi:'33900',concepte:'Taxa ocupació via pública mercat',import:48000},
+    ]
+  },
+  2023: {
+    despeses: [
+      {cap:1,nom:'Despeses de personal',                import:2074309.34},
+      {cap:2,nom:'Despeses corrents en béns i serveis', import:1715388.90},
+      {cap:3,nom:'Despeses financeres',                 import:9548.19},
+      {cap:4,nom:'Transferències corrents',             import:221905.16},
+      {cap:5,nom:'Fons de contingència',                import:50000.00},
+      {cap:6,nom:'Inversions reals',                    import:2186321.05},
+      {cap:9,nom:'Passius financers',                   import:246999.76},
+    ],
+    ingressos: [
+      {cap:1,nom:'Impostos directes',        import:1698588.75},
+      {cap:2,nom:'Impostos indirectes',      import:50000.00},
+      {cap:3,nom:'Taxes i altres ingressos', import:1033170.42},
+      {cap:4,nom:'Transferències corrents',  import:1587325.81},
+      {cap:5,nom:'Ingressos patrimonials',   import:18138.72},
+      {cap:6,nom:'Alienació de terrenys',    import:78404.46},
+      {cap:7,nom:'Transferències de capital',import:1590166.15},
+      {cap:9,nom:'Passius financers',        import:527212.77},
+    ],
+    plantilla:{funcionaris:24,funcionarisVacants:8,laborals:51,laboralsVacants:39},
+    partides:[
+      {tipus:'despesa',codi:'91200',concepte:'Atencions protocolàries i representatives',import:4000},
+      {tipus:'despesa',codi:'91200',concepte:'Indemnitzacions membres òrgans de govern',import:67150},
+      {tipus:'despesa',codi:'92000',concepte:'Manteniment i reparacions edifici',import:15000},
+      {tipus:'despesa',codi:'92000',concepte:'Manteniment ascensors',import:7100},
+      {tipus:'despesa',codi:'92000',concepte:'Material oficina no inventariable',import:7500},
+      {tipus:'despesa',codi:'92000',concepte:'Material informàtic no inventariable',import:12985},
+      {tipus:'despesa',codi:'92000',concepte:'Servei telecomunicacions',import:26296},
+      {tipus:'despesa',codi:'92000',concepte:'Primes assegurances',import:35000},
+      {tipus:'despesa',codi:'92000',concepte:'Seguretat administració',import:10100},
+      {tipus:'despesa',codi:'92000',concepte:'Control horari',import:14200},
+      {tipus:'despesa',codi:'93200',concepte:'Serveis recaptació favor entitat',import:50000},
+      {tipus:'despesa',codi:'15310',concepte:'Reparacions, manteniment vies públiques',import:50000},
+      {tipus:'despesa',codi:'45000',concepte:'Estudis i treballs tècnics',import:25000},
+      {tipus:'despesa',codi:'16100',concepte:'Proveïment domiciliari aigua potable',import:173762.86},
+      {tipus:'despesa',codi:'16500',concepte:'Manteniment enllumenat',import:11000.80},
+      {tipus:'despesa',codi:'16500',concepte:'Enllumenat públic',import:80000},
+      {tipus:'despesa',codi:'16210',concepte:'Cànon abocador',import:43600},
+      {tipus:'despesa',codi:'16210',concepte:'Renting camió + satèl·lit',import:57457.32},
+      {tipus:'despesa',codi:'16210',concepte:'Recollida selectiva i deixalleria',import:44200},
+      {tipus:'despesa',codi:'16300',concepte:'Combustibles i carburants brigada',import:39000},
+      {tipus:'despesa',codi:'16400',concepte:'Manteniment cementiri',import:15000},
+      {tipus:'despesa',codi:'17100',concepte:'Manteniment i conservació parcs i jardins',import:40000},
+      {tipus:'despesa',codi:'23100',concepte:'Manteniment Centre de Dia Casa Gimferrer',import:5000},
+      {tipus:'despesa',codi:'23100',concepte:'Setmana de la Gent Gran',import:17700},
+      {tipus:'despesa',codi:'23100',concepte:'Teleassistència',import:7200},
+      {tipus:'despesa',codi:'23100',concepte:'Gestió Centre de Dia - Grup Auria',import:26500},
+      {tipus:'despesa',codi:'32300',concepte:'Altres treballs empreses CEIP',import:80000},
+      {tipus:'despesa',codi:'32300',concepte:'Gas calefacció CEIP',import:22000},
+      {tipus:'despesa',codi:'33800',concepte:'Festes Populars Festa Major',import:91500},
+      {tipus:'despesa',codi:'33800',concepte:'Festes Populars Festa Pellofa / Carnestoltes',import:7500},
+      {tipus:'despesa',codi:'33800',concepte:'SGAE festes',import:4000},
+      {tipus:'despesa',codi:'33400',concepte:'Lloguer local entitats culturals',import:9000},
+      {tipus:'despesa',codi:'43120',concepte:'Fires i mercat de Calaf',import:29490.30},
+      {tipus:'despesa',codi:'24100',concepte:'SLO / CLSE / Reactiva\'t',import:28262.64},
+      {tipus:'despesa',codi:'23100',concepte:'Subvenció Consell Comarcal Serveis Socials',import:50425.49},
+      {tipus:'despesa',codi:'23100',concepte:'Ajuts a famílies',import:21000},
+      {tipus:'despesa',codi:'92400',concepte:'Subvencions entitats locals',import:65006.62},
+      {tipus:'despesa',codi:'34100',concepte:'Beques esportives',import:6200},
+      {tipus:'despesa',codi:'16500',concepte:'Next Generation - Canvi lluminàries',import:1423684.31},
+      {tipus:'despesa',codi:'92000',concepte:'Fotovoltaiques',import:99103.36},
+      {tipus:'despesa',codi:'92000',concepte:'Millora eficiència energètica',import:138834.27},
+      {tipus:'despesa',codi:'33300',concepte:'Museu Capella CRO - Alexandre de Riquer',import:70000},
+      {tipus:'despesa',codi:'16100',concepte:'Proveïment domiciliari aigua (inversió)',import:68942.13},
+      {tipus:'ingres',codi:'11300',concepte:'IBI Urbana',import:1201256.32},
+      {tipus:'ingres',codi:'11500',concepte:'IVTM - Vehicles',import:260000},
+      {tipus:'ingres',codi:'13000',concepte:'IAE - Activitats econòmiques',import:160000},
+      {tipus:'ingres',codi:'30000',concepte:'Servei abastiment d\'aigua',import:257548.66},
+      {tipus:'ingres',codi:'30200',concepte:'Recollida escombraries',import:282000},
+      {tipus:'ingres',codi:'31200',concepte:'Taxa escola de música',import:75000},
+      {tipus:'ingres',codi:'31201',concepte:'Taxa escola bressol',import:57981.44},
+      {tipus:'ingres',codi:'31302',concepte:'Taxa piscina municipal',import:22000},
+      {tipus:'ingres',codi:'42000',concepte:'Participació tributs Estat PIE',import:711000},
+      {tipus:'ingres',codi:'46100',concepte:'Subvencions Diputació',import:340000},
+      {tipus:'ingres',codi:'75001',concepte:'Next Generation',import:1210131.66},
+      {tipus:'ingres',codi:'75002',concepte:'ICAEN',import:74628.71},
+      {tipus:'ingres',codi:'33900',concepte:'Taxa ocupació via pública mercat',import:54500},
+    ]
+  }
+};
 
-const INGRESSOS_2025 = [
-  { cap: 1, nom: 'Impostos directes',        import: 1761196.41 },
-  { cap: 2, nom: 'Impostos indirectes',      import: 60000.00 },
-  { cap: 3, nom: 'Taxes i altres ingressos', import: 1524062.90 },
-  { cap: 4, nom: 'Transferències corrents',  import: 1853910.60 },
-  { cap: 5, nom: 'Ingressos patrimonials',   import: 28000.00 },
-  { cap: 6, nom: 'Alienació de terrenys',    import: 0.00 },
-  { cap: 7, nom: 'Transferències de capital',import: 1759864.94 },
-  { cap: 9, nom: 'Passius financers',        import: 1712672.95 },
-];
+let presAny = 2025;
 
 function renderPressupost() {
-  renderBarres('pres-despeses', DESPESES_2025, '#4040ff');
-  renderBarres('pres-ingressos', INGRESSOS_2025, '#00897b');
+  const p = PRESSUPOSTOS[presAny];
+  const totalD = p.despeses.reduce((s,d) => s+d.import, 0);
+  const totalI = p.ingressos.reduce((s,d) => s+d.import, 0);
+  const superavit = totalI - totalD;
+  const capMax = p.despeses.reduce((a,b) => b.import > a.import ? b : a);
+
+  document.getElementById('pres-any-label').textContent = presAny;
+  document.getElementById('pres-total-d').textContent = fmtEur(totalD);
+  document.getElementById('pres-total-i').textContent = fmtEur(totalI);
+  document.getElementById('pres-superavit').textContent = (superavit >= 0 ? '+' : '') + fmtEur(superavit);
+  document.getElementById('pres-superavit').style.color = superavit >= 0 ? '#ff9800' : '#ef4444';
+  document.getElementById('pres-plantilla').textContent =
+    `${p.plantilla.funcionaris + p.plantilla.laborals} places (${p.plantilla.funcionarisVacants + p.plantilla.laboralsVacants} vacants)`;
+  document.getElementById('pres-cap-max-import').textContent = fmtEur(capMax.import);
+  document.getElementById('pres-cap-max-nom').textContent = `Cap. ${capMax.cap} — ${capMax.nom}`;
+  document.getElementById('pres-cap-max-pct').textContent = `${(capMax.import/totalD*100).toFixed(1)}% del pressupost total`;
+  document.getElementById('pres-func').textContent = p.plantilla.funcionaris;
+  document.getElementById('pres-func-vac').textContent = `places · ${p.plantilla.funcionarisVacants} vacants`;
+  document.getElementById('pres-lab').textContent = p.plantilla.laborals;
+  document.getElementById('pres-lab-vac').textContent = `places · ${p.plantilla.laboralsVacants} vacants`;
+
+  renderBarres('pres-despeses', p.despeses, '#4040ff');
+  renderBarres('pres-ingressos', p.ingressos, '#00897b');
+
+  const wrap = document.getElementById('pres-partides-wrap');
+  if (p.partides && p.partides.length > 0) {
+    wrap.style.display = 'block';
+    document.getElementById('pres-search').value = '';
+    document.getElementById('pres-tipus').value = '';
+    renderPartides();
+  } else {
+    wrap.style.display = 'none';
+  }
+
+  document.querySelectorAll('.pres-any-btn').forEach(b => {
+    b.className = parseInt(b.dataset.any) === presAny
+      ? 'pres-any-btn btn btn-dark'
+      : 'pres-any-btn btn btn-outline';
+  });
+}
+
+function setPresAny(any) { presAny = any; renderPressupost(); }
+
+function renderPartides() {
+  const p = PRESSUPOSTOS[presAny];
+  if (!p.partides) return;
+  const q = (document.getElementById('pres-search').value || '').toLowerCase();
+  const tipus = document.getElementById('pres-tipus').value;
+  const filteredP = p.partides.filter(r => {
+    if (tipus && r.tipus !== tipus) return false;
+    if (q && !r.concepte.toLowerCase().includes(q) && !r.codi.includes(q)) return false;
+    return true;
+  });
+  const tbody = document.getElementById('pres-partides-body');
+  tbody.innerHTML = filteredP.map(r => `
+    <tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:8px 14px;font-size:12px;color:#aaa;white-space:nowrap">${r.codi}</td>
+      <td style="padding:8px 14px;font-size:13px">${esc(r.concepte)}</td>
+      <td style="padding:8px 14px">
+        <span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;${r.tipus==='despesa'?'background:#fee2e2;color:#991b1b':'background:#dcfce7;color:#166534'}">
+          ${r.tipus === 'despesa' ? 'Despesa' : 'Ingrés'}
+        </span>
+      </td>
+      <td style="padding:8px 14px;font-size:13px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums">${fmtEur(r.import)}</td>
+    </tr>`).join('');
+  const total = filteredP.reduce((s,r) => s+r.import, 0);
+  document.getElementById('pres-partides-count').textContent =
+    `${filteredP.length} partides · ${fmtEur(total)} total`;
 }
 
 function renderBarres(containerId, dades, color) {
-  const total  = dades.reduce((s, d) => s + d.import, 0);
+  const total  = dades.reduce((s,d) => s+d.import, 0);
   const maxVal = Math.max(...dades.map(d => d.import));
   const el = document.getElementById(containerId);
   if (!el) return;
@@ -1280,13 +1543,11 @@ function renderBarres(containerId, dades, color) {
     <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #f3f4f6">
       <span style="font-size:12px;font-weight:700;color:#aaa;min-width:24px;text-align:right">C${d.cap}</span>
       <span style="flex:1;font-size:13px;font-weight:500;color:#333">${d.nom}</span>
-      <div style="width:140px">
-        <div style="background:#f3f4f6;border-radius:4px;height:6px;overflow:hidden">
-          <div style="background:${color};height:100%;border-radius:4px;width:${d.import > 0 ? (d.import/maxVal*100).toFixed(1) : 0}%;transition:width .5s"></div>
-        </div>
-      </div>
-      <span style="font-size:13px;font-weight:700;min-width:110px;text-align:right;font-variant-numeric:tabular-nums">${fmtEur(d.import)}</span>
-      <span style="font-size:11px;color:#aaa;min-width:38px;text-align:right">${d.import > 0 ? (d.import/total*100).toFixed(1) : 0}%</span>
+      <div style="width:120px"><div style="background:#f3f4f6;border-radius:4px;height:6px;overflow:hidden">
+        <div style="background:${color};height:100%;border-radius:4px;width:${d.import>0?(d.import/maxVal*100).toFixed(1):0}%;transition:width .5s"></div>
+      </div></div>
+      <span style="font-size:13px;font-weight:700;min-width:100px;text-align:right;font-variant-numeric:tabular-nums">${fmtEur(d.import)}</span>
+      <span style="font-size:11px;color:#aaa;min-width:36px;text-align:right">${d.import>0?(d.import/total*100).toFixed(1):0}%</span>
     </div>`).join('');
 }
 
