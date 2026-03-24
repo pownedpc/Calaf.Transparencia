@@ -366,17 +366,68 @@ tbody td { padding: 10px 14px; font-size: 13px; }
 /* ── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 768px) {
   .main { padding: 20px 16px 48px; }
+  .hero { margin-bottom: 20px; }
   .hero h1 { font-size: 26px; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-badge { font-size: 11px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .stat-card { padding: 14px; }
+  .stat-value { font-size: 22px; }
+
+  /* Header: logo petit + nav scrollable */
+  .header-inner { gap: 12px; }
+  .logo { font-size: 15px; }
   .header-right { display: none; }
-  .nav { gap: 2px; overflow-x: auto; }
-  .td-desc, .td-trim, .td-nif { display: none; }
+  .nav {
+    gap: 2px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-shrink: 1;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-tab { padding: 5px 10px; font-size: 12px; white-space: nowrap; }
+
+  /* Cerca: apila elements */
+  .search-row { flex-direction: column; align-items: stretch; gap: 8px; }
+  .search-toggle { width: 100%; }
+  .toggle-btn { flex: 1; text-align: center; }
+  .search-input-wrap { min-width: unset; }
+  .filter-select { width: 100%; }
+  .btn-outline { width: 100%; justify-content: center; }
+
+  /* Pills: scroll horitzontal */
+  .view-pills {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+    padding-bottom: 4px;
+  }
+  .view-pills::-webkit-scrollbar { display: none; }
+  .pill { white-space: nowrap; flex-shrink: 0; }
+
+  /* Taula: amagar columnes secundàries */
+  .td-desc, .td-trim { display: none; }
+  thead th:nth-child(4), thead th:nth-child(6) { display: none; }
+
+  /* Import visible complet */
+  .td-import { font-size: 13px; }
+
   .rank-bar-wrap { display: none; }
   .any-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Taula footer */
+  .table-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .table-footer .btn { width: 100%; justify-content: center; }
 }
+
 @media (max-width: 480px) {
-  .stats-grid { grid-template-columns: 1fr 1fr; }
-  .hero h1 { font-size: 22px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .hero h1 { font-size: 20px; }
+  .stat-value { font-size: 20px; }
+  .any-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
