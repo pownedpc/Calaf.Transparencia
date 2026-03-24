@@ -363,7 +363,19 @@ tbody td { padding: 10px 14px; font-size: 13px; }
   color: #991b1b;
 }
 
-.mobile-btn {
+.camp-btn {
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--light);
+  background: var(--white);
+  color: var(--mid);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.camp-btn:hover { background: #f3f4f6; color: var(--dark); }
+.camp-btn.active { background: var(--dark); color: var(--white); border-color: var(--dark); }
   background: none;
   border: 1px solid var(--light);
   border-radius: 7px;
@@ -482,6 +494,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
       <button class="nav-tab" onclick="setView('categories')">Categories</button>
       <button class="nav-tab" onclick="setView('subvencions')">Subvencions</button>
       <button class="nav-tab" onclick="setView('pressupost')">Pressupost</button>
+      <button class="nav-tab" onclick="setView('campanyes')">Campanyes</button>
     </nav>
     <div class="header-right" id="header-date">—</div>
     <button class="mobile-btn" id="mobile-toggle" onclick="toggleMobileMode()" title="Vista mòbil">
@@ -532,6 +545,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
       <button class="pill" onclick="setView('categories')">Per categoria</button>
       <button class="pill" onclick="setView('subvencions')">Subvencions i convenis</button>
       <button class="pill" onclick="setView('pressupost')">Pressupost</button>
+      <button class="pill" onclick="setView('campanyes')">Campanyes institucionals</button>
     </div>
   </div>
 
@@ -723,6 +737,56 @@ body.mobile-mode .hero h1 { font-size: 22px; }
 
     <div style="font-size:12px;color:#aaa;text-align:center;padding:8px">
       Font: Pressupost Municipal Calaf · BOPB · Dades oficials de l'Ajuntament
+    </div>
+  </div>
+
+  <!-- VIEW: CAMPANYES -->
+  <div class="view" id="view-campanyes">
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
+      <div style="background:var(--white);border:1px solid var(--light);border-radius:var(--radius);padding:16px;text-align:center">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:6px">Any màxim</div>
+        <div style="font-size:22px;font-weight:800;color:var(--blue)">2018</div>
+        <div style="font-size:12px;color:var(--mid)">~12.816 €</div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--light);border-radius:var(--radius);padding:16px;text-align:center">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:6px">Any mínim</div>
+        <div style="font-size:22px;font-weight:800;color:#ef4444">2020</div>
+        <div style="font-size:12px;color:var(--mid)">1.543 € (Covid)</div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--light);border-radius:var(--radius);padding:16px;text-align:center">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:6px">Total 2017–2024</div>
+        <div style="font-size:22px;font-weight:800;color:var(--dark)">52.681 €</div>
+        <div style="font-size:12px;color:var(--mid)">8 anys</div>
+      </div>
+    </div>
+
+    <div style="background:var(--white);border:1px solid var(--light);border-radius:var(--radius);overflow:hidden">
+      <div style="padding:14px 16px;background:#f8f9fa;border-bottom:1px solid var(--light);display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid)">Filtre:</span>
+        <button class="camp-btn active" onclick="filtrarCamp('')">Tots</button>
+        <button class="camp-btn" onclick="filtrarCamp('Festa Major')">Festa Major</button>
+        <button class="camp-btn" onclick="filtrarCamp('Agro')">Agro Alta Segarra</button>
+        <button class="camp-btn" onclick="filtrarCamp('EcoFira')">EcoFira</button>
+        <button class="camp-btn" onclick="filtrarCamp('Carbassa')">Fira Carbassa</button>
+        <button class="camp-btn" onclick="filtrarCamp('Edicte')">Edictes</button>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="background:#f8f9fa">
+            <th style="padding:9px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);border-bottom:1px solid var(--light)">Any</th>
+            <th style="padding:9px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);border-bottom:1px solid var(--light)">Campanya</th>
+            <th style="padding:9px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);border-bottom:1px solid var(--light)">Proveïdors principals</th>
+            <th style="padding:9px 14px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);border-bottom:1px solid var(--light)">Import</th>
+          </tr>
+        </thead>
+        <tbody id="camp-tbody"></tbody>
+      </table>
+      <div style="padding:10px 16px;background:#f8f9fa;border-top:1px solid var(--light);font-size:12px;color:var(--mid)" id="camp-total-row"></div>
+    </div>
+
+    <div style="font-size:12px;color:#aaa;text-align:center;padding:12px 8px">
+      Font: Informes anuals Cost campanyes institucionals · Departament de Comunicació · Ajuntament de Calaf
     </div>
   </div>
 
@@ -1070,19 +1134,20 @@ function renderCategoriesView() {
 // ─────────────────────────────────────────────────────────────────────────────
 function setView(view) {
   currentView = view;
-  ['taula','proveidors','anys','categories','subvencions','pressupost'].forEach(v => {
+  ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes'].forEach(v => {
     const el = document.getElementById('view-' + v);
     if (el) el.classList.toggle('active', v === view);
   });
   document.querySelectorAll('.nav-tab').forEach((t, i) => {
-    t.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost'][i] === view);
+    t.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes'][i] === view);
   });
   document.querySelectorAll('.pill').forEach((p, i) => {
-    p.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost'][i] === view);
+    p.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes'][i] === view);
   });
   if (view === 'proveidors')  renderRankingProveidors(filtered);
   if (view === 'subvencions') initSubvencions();
   if (view === 'pressupost')  renderPressupost();
+  if (view === 'campanyes')   { campFiltre = ''; renderCampanyes(); }
 }
 
 function setSearchMode(mode) {
@@ -1576,8 +1641,185 @@ function renderBarres(containerId, dades, color) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MODE MÒBIL
+// CAMPANYES INSTITUCIONALS
 // ─────────────────────────────────────────────────────────────────────────────
+const CAMP_ROWS = [
+  { any:2017, campanya:'EcoFira', prov:'Grup Taelus · mapamundi Produccions · RAC1 · Regió 7 · La Veu', imp:2836, tipus:'campanya' },
+  { any:2017, campanya:'Festa Major', prov:'Gràfiques Oller · DISCOM · RAC1 · Anoia Diari · La Veu', imp:5307, tipus:'campanya' },
+  { any:2017, campanya:'Agro Alta Segarra', prov:'Grup Taelus · El Segre · Regió 7 · Facebook', imp:1397, tipus:'campanya' },
+  { any:2018, campanya:'EcoFira', prov:'RAC1 · Catalunya Ràdio · Canal Taronja · Gràfiques Oller', imp:3420, tipus:'campanya' },
+  { any:2018, campanya:'Agro Alta Segarra', prov:'El Segre · Canal Taronja · Unió Pagesos · Electronadal', imp:1694, tipus:'campanya' },
+  { any:2018, campanya:'Festa Major', prov:'Gràfiques Oller · DISCOM · RAC1 · Anoia Diari · La Veu', imp:5404, tipus:'campanya' },
+  { any:2018, campanya:'Fira de la Carbassa', prov:'RAC1 · Fires i Festes Catalunya · Retolmania', imp:866, tipus:'campanya' },
+  { any:2018, campanya:'Botigues Plaça Gran', prov:'Canal Taronja · Més Que TV · Gràfiques Oller · Info Anoia', imp:3431, tipus:'campanya' },
+  { any:2019, campanya:'EcoFira', prov:'RAC1 · Vilaweb · La Veu · Regió 7 · Gràfiques Oller', imp:2687, tipus:'campanya' },
+  { any:2019, campanya:'Festa Major', prov:'Gràfiques Oller · DISCOM · RAC1 · Meta (Facebook/Instagram)', imp:4917, tipus:'campanya' },
+  { any:2019, campanya:'Agro Alta Segarra', prov:'El Segre · RAC1 · Unió Pagesos · Vilaweb · Electronadal', imp:2218, tipus:'campanya' },
+  { any:2019, campanya:'Fira de la Carbassa', prov:'RAC1 · Vilaweb · Meta', imp:614, tipus:'campanya' },
+  { any:2020, campanya:'Publicitat diversa (Covid)', prov:'Vilaweb · Regió 7', imp:1543, tipus:'campanya' },
+  { any:2021, campanya:'Publicitat institucional', prov:'La Veu de l\'Anoia · L\'Enllaç dels Anoiencs', imp:101, tipus:'campanya' },
+  { any:2021, campanya:'Edictes i anuncis no oficials', prov:'Publicacions Anoia · Edicions Intercomarcals (Regió 7)', imp:2420, tipus:'edicte' },
+  { any:2022, campanya:'Publicitat institucional (Nadal, Carbassa, Mercat)', prov:'Anoia Diari · La Veu · L\'Enllaç · Comarques de Ponent', imp:1312, tipus:'campanya' },
+  { any:2022, campanya:'Agro Alta Segarra', prov:'RAC1 · El Segre · Unió Pagesos', imp:1549, tipus:'campanya' },
+  { any:2022, campanya:'Edictes i anuncis no oficials', prov:'Publicacions Anoia', imp:1149, tipus:'edicte' },
+  { any:2023, campanya:'Publicitat institucional (Nadal)', prov:'Regió 7 · La Veu · L\'Enllaç dels Anoiencs', imp:490, tipus:'campanya' },
+  { any:2023, campanya:'Agro Alta Segarra', prov:'RAC1 · El Segre · Unió Pagesos · Anoia Diari', imp:1803, tipus:'campanya' },
+  { any:2023, campanya:'Edictes i anuncis no oficials', prov:'Publicacions Anoia', imp:1742, tipus:'edicte' },
+  { any:2023, campanya:'Altres (col·laboracions)', prov:'Diversos', imp:491, tipus:'campanya' },
+  { any:2024, campanya:'Festa Major', prov:'Regió 7 · La Veu · L\'Enllaç · Anoia Diari · Canal Taronja · Meta', imp:1688, tipus:'campanya' },
+  { any:2024, campanya:'Revista Alta Segarra', prov:'Revista Alta Segarra', imp:605, tipus:'campanya' },
+  { any:2024, campanya:'Edictes i anuncis no oficials', prov:'Publicacions Anoia · Edicions Intercomarcals', imp:1036, tipus:'edicte' },
+];
+
+let campFiltre = '';
+
+function filtrarCamp(f) {
+  campFiltre = f;
+  document.querySelectorAll('.camp-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim() === (f || 'Tots'));
+  });
+  renderCampanyes();
+}
+
+function renderCampanyes() {
+  const visible = campFiltre
+    ? CAMP_ROWS.filter(r => r.campanya.toLowerCase().includes(campFiltre.toLowerCase()) || r.tipus.toLowerCase().includes(campFiltre.toLowerCase()))
+    : CAMP_ROWS;
+
+  const BADGE_COVID = '<span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:#fee2e2;color:#991b1b;margin-right:6px">Covid</span>';
+  const BADGE_EDICTE = '<span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:#fef9c3;color:#854d0e;margin-right:6px">Edicte</span>';
+
+  let prevAny = null;
+  let html = '';
+  for (const r of visible) {
+    if (r.any !== prevAny) {
+      html += `<tr style="background:#f8f9fa">
+        <td colspan="4" style="padding:6px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid)">${r.any}</td>
+      </tr>`;
+      prevAny = r.any;
+    }
+    const badge = (r.any === 2020 || r.any === 2021) ? BADGE_COVID : r.tipus === 'edicte' ? BADGE_EDICTE : '';
+    html += `<tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:9px 14px;color:var(--mid);font-size:12px">${r.any}</td>
+      <td style="padding:9px 14px;font-size:13px">${badge}${esc(r.campanya)}</td>
+      <td style="padding:9px 14px;font-size:12px;color:var(--mid)">${esc(r.prov)}</td>
+      <td style="padding:9px 14px;font-size:13px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums">${fmtEur(r.imp)}</td>
+    </tr>`;
+  }
+
+  document.getElementById('camp-tbody').innerHTML = html;
+  const total = visible.reduce((s, r) => s + r.imp, 0);
+  document.getElementById('camp-total-row').textContent = `${visible.length} registres · Total: ${fmtEur(total)}`;
+}
+  {
+    any: 2017, total: 9538.82,
+    nota: 'EcoFira, Festa Major, Agro Alta Segarra',
+    detall: [
+      {campanya:'EcoFira', import: 2835.38},
+      {campanya:'Festa Major', import: 5306.53},
+      {campanya:'Agro Alta Segarra', import: 1396.91},
+    ]
+  },
+  {
+    any: 2018, total: 12815.84,
+    nota: 'EcoFira, Agro, Festa Major, Fira Carbassa, Botigues Plaça Gran',
+    detall: [
+      {campanya:'EcoFira', import: 3420.27},
+      {campanya:'Agro Alta Segarra', import: 1694.48},
+      {campanya:'Festa Major', import: 5403.59},
+      {campanya:'Fira de la Carbassa', import: 866.46},
+      {campanya:'Botigues Plaça Gran', import: 3431.04},
+    ]
+  },
+  {
+    any: 2019, total: 10436.72,
+    nota: '4 campanyes actives (any normal pre-Covid)',
+    detall: [
+      {campanya:'EcoFira', import: 2687.10},
+      {campanya:'Festa Major', import: 4917.44},
+      {campanya:'Agro Alta Segarra', import: 2218.32},
+      {campanya:'Fira de la Carbassa', import: 613.86},
+    ]
+  },
+  {
+    any: 2020, total: 1542.75,
+    nota: 'Covid — EcoFira, Agro, Festa Major i Carbassa suspeses',
+    detall: [
+      {campanya:'Publicitat diversa (Vilaweb)', import: 1087.50},
+      {campanya:'Anunci Botigues Antigues (Regió 7)', import: 453.75},
+    ]
+  },
+  {
+    any: 2021, total: 2521.00,
+    nota: 'Covid — activitat mínima, edictes oficials',
+    detall: [
+      {campanya:'Publicitat institucional', import: 101.00},
+      {campanya:'Edictes i anuncis no oficials', import: 2420.00},
+    ]
+  },
+  {
+    any: 2022, total: 4009.85,
+    nota: 'Recuperació: Nadal, Festa Major, Agro, Carbassa, Mercat',
+    detall: [
+      {campanya:'Publicitat institucional', import: 1311.88},
+      {campanya:'Publicitat fires i mercats (Agro)', import: 1548.81},
+      {campanya:'Edictes i anuncis no oficials', import: 1149.16},
+    ]
+  },
+  {
+    any: 2023, total: 4526.18,
+    nota: 'Agro Alta Segarra + Nadal + edictes',
+    detall: [
+      {campanya:'Publicitat institucional', import: 490.08},
+      {campanya:'Publicitat fires i mercats (Agro)', import: 1802.90},
+      {campanya:'Edictes i anuncis no oficials', import: 1742.40},
+      {campanya:'Altres', import: 490.80},
+    ]
+  },
+  {
+    any: 2024, total: 3328.36,
+    nota: 'Festa Major + Revista Alta Segarra + edictes',
+    detall: [
+      {campanya:'Publicitat Festa Major', import: 1687.70},
+      {campanya:'Revista Alta Segarra', import: 605.00},
+      {campanya:'Edictes i anuncis no oficials', import: 1035.66},
+    ]
+  },
+];
+
+function renderCampanyes() {
+  const maxVal = Math.max(...CAMPANYES.map(c => c.total));
+
+  // Barres per any
+  document.getElementById('camp-barres').innerHTML = CAMPANYES.map(c => `
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f3f4f6;cursor:pointer"
+         onclick="toggleCampDetall(${c.any})">
+      <span style="font-size:13px;font-weight:700;color:#1a1a1a;min-width:40px">${c.any}</span>
+      <div style="flex:1">
+        <div style="background:#f3f4f6;border-radius:4px;height:8px;overflow:hidden">
+          <div style="background:${c.total < 2000 ? '#ef4444' : c.total > 10000 ? '#4040ff' : '#ff9800'};height:100%;border-radius:4px;width:${(c.total/maxVal*100).toFixed(1)}%;transition:width .5s"></div>
+        </div>
+        <div style="font-size:11px;color:#aaa;margin-top:3px">${c.nota}</div>
+      </div>
+      <span style="font-size:14px;font-weight:700;min-width:90px;text-align:right;font-variant-numeric:tabular-nums">${fmtEur(c.total)}</span>
+      <span style="font-size:12px;color:#aaa">▾</span>
+    </div>
+    <div id="camp-det-${c.any}" style="display:none;background:#f8f9fa;padding:10px 14px 10px 54px;border-bottom:1px solid #f3f4f6">
+      ${c.detall.map(d => `
+        <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:12px">
+          <span style="color:#555">${d.campanya}</span>
+          <span style="font-weight:600">${fmtEur(d.import)}</span>
+        </div>`).join('')}
+    </div>`).join('');
+
+  // Resum per any al detall
+  document.getElementById('camp-detall').innerHTML = '';
+}
+
+function toggleCampDetall(any) {
+  const el = document.getElementById(`camp-det-${any}`);
+  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
 function toggleMobileMode() {
   const active = document.body.classList.toggle('mobile-mode');
   document.getElementById('mobile-toggle').classList.toggle('active', active);
