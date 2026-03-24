@@ -481,6 +481,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
       <button class="nav-tab" onclick="setView('anys')">Per any</button>
       <button class="nav-tab" onclick="setView('categories')">Categories</button>
       <button class="nav-tab" onclick="setView('subvencions')">Subvencions</button>
+      <button class="nav-tab" onclick="setView('pressupost')">Pressupost</button>
     </nav>
     <div class="header-right" id="header-date">—</div>
     <button class="mobile-btn" id="mobile-toggle" onclick="toggleMobileMode()" title="Vista mòbil">
@@ -530,6 +531,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
       <button class="pill" onclick="setView('anys')">Despesa per any</button>
       <button class="pill" onclick="setView('categories')">Per categoria</button>
       <button class="pill" onclick="setView('subvencions')">Subvencions i convenis</button>
+      <button class="pill" onclick="setView('pressupost')">Pressupost 2025</button>
     </div>
   </div>
 
@@ -632,6 +634,73 @@ body.mobile-mode .hero h1 { font-size: 22px; }
         <button class="btn btn-dark" onclick="downloadSubCSV()">↓ Descarregar CSV</button>
       </div>
       <div class="pagination" id="sub-pagination"></div>
+    </div>
+  </div>
+
+  <!-- VIEW: PRESSUPOST -->
+  <div class="view" id="view-pressupost">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <!-- Resum executiu -->
+      <div class="ranking-card" style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
+        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:16px">Resum executiu 2025</h3>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:#444">Total despeses</span>
+            <span style="font-weight:700;color:#4040ff">8.699.093 €</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:#444">Total ingressos</span>
+            <span style="font-weight:700;color:#00897b">8.699.708 €</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #f0f0f0;padding-top:10px">
+            <span style="font-size:13px;color:#444">Superàvit previst</span>
+            <span style="font-weight:700;color:#ff9800">615 €</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:#444">Plantilla total</span>
+            <span style="font-weight:700">69 places (32 vacants)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Capítol més gran -->
+      <div class="ranking-card" style="background:#eff0ff;border:1px solid #c7c7ff;border-radius:10px;padding:20px">
+        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#4040ff;margin-bottom:16px">Capítol més gran (Despesa)</h3>
+        <div style="font-size:28px;font-weight:800;color:#4040ff;margin-bottom:4px">3.541.280 €</div>
+        <div style="font-size:14px;font-weight:600;color:#333;margin-bottom:4px">Cap. 6 — Inversions Reals</div>
+        <div style="font-size:12px;color:#666">40,7% del pressupost total de despeses</div>
+      </div>
+    </div>
+
+    <!-- Despeses per capítol -->
+    <div class="ranking-card" style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px">
+      <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:16px">Despeses per capítol — 2025</h3>
+      <div id="pres-despeses"></div>
+    </div>
+
+    <!-- Ingressos per capítol -->
+    <div class="ranking-card" style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px">
+      <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:16px">Ingressos per capítol — 2025</h3>
+      <div id="pres-ingressos"></div>
+    </div>
+
+    <!-- Plantilla -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div class="ranking-card" style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
+        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:16px">Plantilla funcionaris</h3>
+        <div style="font-size:32px;font-weight:800;color:#1a1a1a">26</div>
+        <div style="font-size:13px;color:#666;margin-top:4px">places · <span style="color:#f59e0b;font-weight:600">4 vacants</span></div>
+      </div>
+      <div class="ranking-card" style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
+        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:16px">Plantilla laborals</h3>
+        <div style="font-size:32px;font-weight:800;color:#1a1a1a">43</div>
+        <div style="font-size:13px;color:#666;margin-top:4px">places · <span style="color:#ef4444;font-weight:600">28 vacants</span></div>
+      </div>
+    </div>
+
+    <div style="font-size:12px;color:#aaa;text-align:center;padding:8px">
+      Font: Pressupost Municipal Calaf 2025 · Dades oficials de l'Ajuntament
     </div>
   </div>
 
@@ -979,18 +1048,19 @@ function renderCategoriesView() {
 // ─────────────────────────────────────────────────────────────────────────────
 function setView(view) {
   currentView = view;
-  ['taula','proveidors','anys','categories','subvencions'].forEach(v => {
+  ['taula','proveidors','anys','categories','subvencions','pressupost'].forEach(v => {
     const el = document.getElementById('view-' + v);
     if (el) el.classList.toggle('active', v === view);
   });
   document.querySelectorAll('.nav-tab').forEach((t, i) => {
-    t.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions'][i] === view);
+    t.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost'][i] === view);
   });
   document.querySelectorAll('.pill').forEach((p, i) => {
-    p.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions'][i] === view);
+    p.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost'][i] === view);
   });
-  if (view === 'proveidors')   renderRankingProveidors(filtered);
-  if (view === 'subvencions')  initSubvencions();
+  if (view === 'proveidors')  renderRankingProveidors(filtered);
+  if (view === 'subvencions') initSubvencions();
+  if (view === 'pressupost')  renderPressupost();
 }
 
 function setSearchMode(mode) {
@@ -1170,6 +1240,54 @@ function downloadSubCSV() {
   a.href = URL.createObjectURL(blob);
   a.download = `calaf_subvencions_${new Date().toISOString().substring(0,10)}.csv`;
   a.click();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PRESSUPOST 2025
+// ─────────────────────────────────────────────────────────────────────────────
+const DESPESES_2025 = [
+  { cap: 1, nom: 'Despeses de personal',              import: 2163017.72 },
+  { cap: 2, nom: 'Despeses corrents en béns i serveis', import: 1903218.43 },
+  { cap: 3, nom: 'Despeses financeres',               import: 73479.87 },
+  { cap: 4, nom: 'Transferències corrents',           import: 747648.36 },
+  { cap: 5, nom: 'Fons de contingència',              import: 79714.29 },
+  { cap: 6, nom: 'Inversions reals',                  import: 3541280.02 },
+  { cap: 9, nom: 'Passius financers',                 import: 190734.10 },
+];
+
+const INGRESSOS_2025 = [
+  { cap: 1, nom: 'Impostos directes',        import: 1761196.41 },
+  { cap: 2, nom: 'Impostos indirectes',      import: 60000.00 },
+  { cap: 3, nom: 'Taxes i altres ingressos', import: 1524062.90 },
+  { cap: 4, nom: 'Transferències corrents',  import: 1853910.60 },
+  { cap: 5, nom: 'Ingressos patrimonials',   import: 28000.00 },
+  { cap: 6, nom: 'Alienació de terrenys',    import: 0.00 },
+  { cap: 7, nom: 'Transferències de capital',import: 1759864.94 },
+  { cap: 9, nom: 'Passius financers',        import: 1712672.95 },
+];
+
+function renderPressupost() {
+  renderBarres('pres-despeses', DESPESES_2025, '#4040ff');
+  renderBarres('pres-ingressos', INGRESSOS_2025, '#00897b');
+}
+
+function renderBarres(containerId, dades, color) {
+  const total  = dades.reduce((s, d) => s + d.import, 0);
+  const maxVal = Math.max(...dades.map(d => d.import));
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = dades.map(d => `
+    <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #f3f4f6">
+      <span style="font-size:12px;font-weight:700;color:#aaa;min-width:24px;text-align:right">C${d.cap}</span>
+      <span style="flex:1;font-size:13px;font-weight:500;color:#333">${d.nom}</span>
+      <div style="width:140px">
+        <div style="background:#f3f4f6;border-radius:4px;height:6px;overflow:hidden">
+          <div style="background:${color};height:100%;border-radius:4px;width:${d.import > 0 ? (d.import/maxVal*100).toFixed(1) : 0}%;transition:width .5s"></div>
+        </div>
+      </div>
+      <span style="font-size:13px;font-weight:700;min-width:110px;text-align:right;font-variant-numeric:tabular-nums">${fmtEur(d.import)}</span>
+      <span style="font-size:11px;color:#aaa;min-width:38px;text-align:right">${d.import > 0 ? (d.import/total*100).toFixed(1) : 0}%</span>
+    </div>`).join('');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
