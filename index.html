@@ -376,6 +376,8 @@ tbody td { padding: 10px 14px; font-size: 13px; }
 }
 .camp-btn:hover { background: #f3f4f6; color: var(--dark); }
 .camp-btn.active { background: var(--dark); color: var(--white); border-color: var(--dark); }
+
+.mobile-btn {
   background: none;
   border: 1px solid var(--light);
   border-radius: 7px;
@@ -390,95 +392,96 @@ tbody td { padding: 10px 14px; font-size: 13px; }
 .mobile-btn:hover { background: #f3f4f6; color: var(--dark); }
 .mobile-btn.active { background: var(--dark); color: var(--white); border-color: var(--dark); }
 
-/* ── MODE MÒBIL (classe aplicada al body) ───────────────── */
-body.mobile-mode .search-row { flex-direction: column; align-items: stretch; gap: 8px; }
-body.mobile-mode .search-toggle { width: 100%; }
-body.mobile-mode .toggle-btn { flex: 1; text-align: center; }
-body.mobile-mode .search-input-wrap { min-width: unset; }
-body.mobile-mode .filter-select { width: 100%; }
-body.mobile-mode .btn-outline { width: 100%; justify-content: center; }
-body.mobile-mode .view-pills { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 4px; }
-body.mobile-mode .view-pills::-webkit-scrollbar { display: none; }
-body.mobile-mode .pill { white-space: nowrap; flex-shrink: 0; }
-body.mobile-mode .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-body.mobile-mode .stat-card { padding: 14px; }
-body.mobile-mode .stat-value { font-size: 22px; }
-body.mobile-mode .td-desc, body.mobile-mode .td-trim { display: none; }
-body.mobile-mode thead th:nth-child(4), body.mobile-mode thead th:nth-child(6) { display: none; }
-body.mobile-mode .rank-bar-wrap { display: none; }
-body.mobile-mode .any-grid { grid-template-columns: repeat(2, 1fr); }
-body.mobile-mode .table-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
-body.mobile-mode .table-footer .btn { width: 100%; justify-content: center; }
-body.mobile-mode .header-right { display: none; }
-body.mobile-mode .main { padding: 20px 16px 48px; }
-body.mobile-mode .hero h1 { font-size: 22px; }
-
 /* ── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .main { padding: 20px 16px 48px; }
-  .hero { margin-bottom: 20px; }
-  .hero h1 { font-size: 26px; }
+  .main { padding: 16px 12px 48px; }
+  .hero { margin-bottom: 16px; }
+  .hero h1 { font-size: 22px; letter-spacing: -.5px; }
+  .hero p { font-size: 13px; }
   .hero-badge { font-size: 11px; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .stat-card { padding: 14px; }
-  .stat-value { font-size: 22px; }
 
-  /* Header: logo petit + nav scrollable */
-  .header-inner { gap: 12px; }
-  .logo { font-size: 15px; }
+  .header-inner { gap: 8px; }
+  .logo { font-size: 14px; }
   .header-right { display: none; }
-  .nav {
-    gap: 2px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    flex-shrink: 1;
-  }
+  .nav { gap: 2px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-shrink: 1; }
   .nav::-webkit-scrollbar { display: none; }
-  .nav-tab { padding: 5px 10px; font-size: 12px; white-space: nowrap; }
+  .nav-tab { padding: 5px 8px; font-size: 11px; white-space: nowrap; }
 
-  /* Cerca: apila elements */
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .stat-card { padding: 12px; }
+  .stat-label { font-size: 10px; }
+  .stat-value { font-size: 20px; }
+  .stat-sub { font-size: 11px; }
+
+  .search-box { margin-bottom: 16px; }
   .search-row { flex-direction: column; align-items: stretch; gap: 8px; }
-  .search-toggle { width: 100%; }
-  .toggle-btn { flex: 1; text-align: center; }
+  .search-toggle { width: 100%; display: flex; }
+  .toggle-btn { flex: 1; text-align: center; padding: 8px 4px; }
   .search-input-wrap { min-width: unset; }
-  .filter-select { width: 100%; }
+  .search-input { font-size: 16px; }
+  .filter-select { width: 100%; font-size: 16px; padding: 10px 12px; }
   .btn-outline { width: 100%; justify-content: center; }
 
-  /* Pills: scroll horitzontal */
-  .view-pills {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: 6px;
-    padding-bottom: 4px;
-  }
+  .view-pills { display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 6px; padding-bottom: 6px; margin-top: 8px; }
   .view-pills::-webkit-scrollbar { display: none; }
-  .pill { white-space: nowrap; flex-shrink: 0; }
+  .pill { white-space: nowrap; flex-shrink: 0; font-size: 12px; padding: 5px 12px; }
 
-  /* Taula: amagar columnes secundàries */
+  .col-hide-mobile { display: none; }
   .td-desc, .td-trim { display: none; }
-  thead th:nth-child(4), thead th:nth-child(6) { display: none; }
-
-  /* Import visible complet */
-  .td-import { font-size: 13px; }
+  tbody td { padding: 10px; }
+  .td-prov-name { font-size: 13px; }
+  .td-import { font-size: 13px; white-space: nowrap; }
+  table { table-layout: fixed; width: 100%; }
+  table thead th:nth-child(1) { width: 68%; }
+  table thead th:nth-child(2) { width: 32%; }
 
   .rank-bar-wrap { display: none; }
-  .any-grid { grid-template-columns: repeat(2, 1fr); }
+  .rank-pct { display: none; }
+  .rank-name { font-size: 12px; }
+  .rank-import { font-size: 12px; min-width: 70px; }
 
-  /* Taula footer */
-  .table-footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .any-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .any-year { font-size: 26px; }
+
+  .table-footer { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px; }
   .table-footer .btn { width: 100%; justify-content: center; }
+  .table-footer span { font-size: 12px; }
+
+  .page-btn { min-width: 36px; height: 36px; font-size: 14px; }
+  .camp-btn { font-size: 11px; padding: 4px 8px; }
 }
 
 @media (max-width: 480px) {
   .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .hero h1 { font-size: 20px; }
-  .stat-value { font-size: 20px; }
+  .hero h1 { font-size: 18px; }
+  .stat-value { font-size: 18px; }
   .any-grid { grid-template-columns: 1fr 1fr; }
+  .nav-tab { padding: 4px 6px; font-size: 10px; }
 }
+
+/* ── MODE MÒBIL MANUAL ───────────────────────────────────── */
+body.mobile-mode .search-row { flex-direction: column; align-items: stretch; gap: 8px; }
+body.mobile-mode .search-toggle { width: 100%; display: flex; }
+body.mobile-mode .toggle-btn { flex: 1; text-align: center; }
+body.mobile-mode .search-input-wrap { min-width: unset; }
+body.mobile-mode .filter-select { width: 100%; }
+body.mobile-mode .btn-outline { width: 100%; justify-content: center; }
+body.mobile-mode .view-pills { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+body.mobile-mode .view-pills::-webkit-scrollbar { display: none; }
+body.mobile-mode .pill { white-space: nowrap; flex-shrink: 0; }
+body.mobile-mode .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+body.mobile-mode .stat-card { padding: 12px; }
+body.mobile-mode .stat-value { font-size: 20px; }
+body.mobile-mode .td-desc, body.mobile-mode .td-trim { display: none; }
+body.mobile-mode thead th:nth-child(4), body.mobile-mode thead th:nth-child(6) { display: none; }
+body.mobile-mode .rank-bar-wrap { display: none; }
+body.mobile-mode .rank-pct { display: none; }
+body.mobile-mode .any-grid { grid-template-columns: repeat(2, 1fr); }
+body.mobile-mode .table-footer { flex-direction: column; align-items: stretch; gap: 10px; }
+body.mobile-mode .table-footer .btn { width: 100%; justify-content: center; }
+body.mobile-mode .header-right { display: none; }
+body.mobile-mode .main { padding: 16px 12px 48px; }
+body.mobile-mode .hero h1 { font-size: 22px; }
 </style>
 </head>
 <body>
@@ -587,10 +590,10 @@ body.mobile-mode .hero h1 { font-size: 22px; }
           <tr>
             <th onclick="sortBy('proveidor')" id="th-proveidor">Proveïdor <span class="sort-icon">↕</span></th>
             <th onclick="sortBy('import')" id="th-import" style="text-align:right">Import <span class="sort-icon">↕</span></th>
-            <th onclick="sortBy('any')" id="th-any" style="text-align:center">Any <span class="sort-icon">↕</span></th>
-            <th style="text-align:center">Trim.</th>
-            <th>Categoria</th>
-            <th class="td-desc">Descripció</th>
+            <th onclick="sortBy('any')" id="th-any" style="text-align:center" class="col-hide-mobile">Any <span class="sort-icon">↕</span></th>
+            <th style="text-align:center" class="col-hide-mobile">Trim.</th>
+            <th class="col-hide-mobile">Categoria</th>
+            <th class="td-desc col-hide-mobile">Descripció</th>
           </tr>
         </thead>
         <tbody id="table-body"></tbody>
@@ -999,19 +1002,31 @@ function renderTable() {
   const start = (currentPage - 1) * PAGE_SIZE;
   const page  = filtered.slice(start, start + PAGE_SIZE);
   const tbody = document.getElementById('table-body');
+  const isMobile = window.innerWidth <= 768;
 
-  tbody.innerHTML = page.map(r => `
-    <tr>
-      <td class="td-prov">
-        <span class="td-prov-name" title="${esc(r.proveidor)}">${esc(r.proveidor)}</span>
-        ${r.nif_tercer ? `<span class="td-prov-nif">${esc(r.nif_tercer)}</span>` : ''}
-      </td>
-      <td class="td-import">${fmtEur(r.import)}</td>
-      <td class="td-any">${r.any}</td>
-      <td class="td-trim">${r.trimestre || '—'}</td>
-      <td><span class="badge-cat" style="${catStyle(r.categoria)}">${esc(r.categoria)}</span></td>
-      <td class="td-desc" title="${esc(r.descripcio)}">${esc(r.descripcio || '—')}</td>
-    </tr>`).join('');
+  if (isMobile) {
+    tbody.innerHTML = page.map(r => `
+      <tr>
+        <td style="padding:10px;width:65%">
+          <span style="display:block;font-weight:600;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.proveidor)}</span>
+          <span style="display:block;font-size:11px;color:#aaa;margin-top:2px">${r.any} · ${esc(r.categoria)}</span>
+        </td>
+        <td style="padding:10px;width:35%;text-align:right;font-weight:700;font-size:13px;white-space:nowrap">${fmtM(r.import)}</td>
+      </tr>`).join('');
+  } else {
+    tbody.innerHTML = page.map(r => `
+      <tr>
+        <td class="td-prov">
+          <span class="td-prov-name" title="${esc(r.proveidor)}">${esc(r.proveidor)}</span>
+          ${r.nif_tercer ? `<span class="td-prov-nif">${esc(r.nif_tercer)}</span>` : ''}
+        </td>
+        <td class="td-import">${fmtEur(r.import)}</td>
+        <td class="td-any">${r.any}</td>
+        <td class="td-trim">${r.trimestre || '—'}</td>
+        <td><span class="badge-cat" style="${catStyle(r.categoria)}">${esc(r.categoria)}</span></td>
+        <td class="td-desc" title="${esc(r.descripcio)}">${esc(r.descripcio || '—')}</td>
+      </tr>`).join('');
+  }
 
   document.getElementById('table-count').textContent =
     `Mostrant ${start+1}–${Math.min(start+PAGE_SIZE, filtered.length)} de ${filtered.length.toLocaleString('ca')} transaccions`;
