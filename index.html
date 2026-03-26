@@ -498,6 +498,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
       <button class="nav-tab" onclick="setView('subvencions')">Subvencions</button>
       <button class="nav-tab" onclick="setView('pressupost')">Pressupost</button>
       <button class="nav-tab" onclick="setView('campanyes')">Campanyes</button>
+      <button class="nav-tab" onclick="setView('convenis')">Convenis</button>
     </nav>
     <div class="header-right" id="header-date">—</div>
     <button class="mobile-btn" id="mobile-toggle" onclick="toggleMobileMode()" title="Vista mòbil">
@@ -549,6 +550,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
       <button class="pill" onclick="setView('subvencions')">Subvencions i convenis</button>
       <button class="pill" onclick="setView('pressupost')">Pressupost</button>
       <button class="pill" onclick="setView('campanyes')">Campanyes institucionals</button>
+      <button class="pill" onclick="setView('convenis')">Documents convenis</button>
     </div>
   </div>
 
@@ -790,6 +792,43 @@ body.mobile-mode .hero h1 { font-size: 22px; }
 
     <div style="font-size:12px;color:#aaa;text-align:center;padding:12px 8px">
       Font: Informes anuals Cost campanyes institucionals · Departament de Comunicació · Ajuntament de Calaf
+    </div>
+  </div>
+
+  <!-- VIEW: CONVENIS -->
+  <div class="view" id="view-convenis">
+    <div style="background:var(--white);border:1px solid var(--light);border-radius:var(--radius);overflow:hidden">
+      <div style="padding:14px 16px;background:#f8f9fa;border-bottom:1px solid var(--light);display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid)">Convenis i col·laboracions</span>
+        <input id="conv-search" type="text" placeholder="Cerca conveni o entitat..." oninput="renderConvenis()"
+          style="flex:1;min-width:160px;padding:7px 10px;border:1px solid var(--light);border-radius:6px;font-size:13px;outline:none">
+        <select id="conv-any" onchange="renderConvenis()"
+          style="padding:7px 10px;border:1px solid var(--light);border-radius:6px;font-size:13px;outline:none;background:var(--white)">
+          <option value="">Tots els anys</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+          <option value="2019">2019</option>
+          <option value="2017">2017-2018</option>
+        </select>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="background:#f8f9fa">
+            <th style="padding:9px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);border-bottom:1px solid var(--light)">Any</th>
+            <th style="padding:9px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);border-bottom:1px solid var(--light)">Conveni</th>
+            <th style="padding:9px 14px;text-align:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);border-bottom:1px solid var(--light)">Document</th>
+          </tr>
+        </thead>
+        <tbody id="conv-tbody"></tbody>
+      </table>
+      <div style="padding:10px 16px;background:#f8f9fa;border-top:1px solid var(--light);font-size:12px;color:var(--mid)" id="conv-count"></div>
+    </div>
+    <div style="font-size:12px;color:#aaa;text-align:center;padding:12px 8px">
+      Font: Portal de transparència · Ajuntament de Calaf · Documents oficials signats
     </div>
   </div>
 
@@ -1149,20 +1188,21 @@ function renderCategoriesView() {
 // ─────────────────────────────────────────────────────────────────────────────
 function setView(view) {
   currentView = view;
-  ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes'].forEach(v => {
+  ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis'].forEach(v => {
     const el = document.getElementById('view-' + v);
     if (el) el.classList.toggle('active', v === view);
   });
   document.querySelectorAll('.nav-tab').forEach((t, i) => {
-    t.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes'][i] === view);
+    t.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis'][i] === view);
   });
   document.querySelectorAll('.pill').forEach((p, i) => {
-    p.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes'][i] === view);
+    p.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis'][i] === view);
   });
   if (view === 'proveidors')  renderRankingProveidors(filtered);
   if (view === 'subvencions') initSubvencions();
   if (view === 'pressupost')  renderPressupost();
   if (view === 'campanyes')   { campFiltre = ''; renderCampanyes(); }
+  if (view === 'convenis')    renderConvenis();
 }
 
 function setSearchMode(mode) {
@@ -1736,6 +1776,155 @@ function toggleMobileMode() {
 if (localStorage.getItem('calaf-mobile') === '1') {
   document.body.classList.add('mobile-mode');
   document.getElementById('mobile-toggle').classList.add('active');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONVENIS
+// ─────────────────────────────────────────────────────────────────────────────
+const BASE_DOCS = 'docs/convenis/';
+const CONVENIS = [
+  {any:2026,nom:"Conveni AMPA IES Alexandre de Riquer 2025",fitxer:"20260119_Uns altres_Conveni AMPA IES Alexandre de Riquer 2025.pdf"},
+  {any:2025,nom:"Conveni AMPA llar d'infants",fitxer:"20250110_Uns altres_Conveni AMPA llar d'infants.pdf"},
+  {any:2025,nom:"Conveni BikeCalaf 2024",fitxer:"20250110_Uns altres_Conveni BikeCalaf 2024.pdf"},
+  {any:2025,nom:"Conveni Club Bàsquet Calaf 2024",fitxer:"20250110_Uns altres_Conveni Club Bàsquet Calaf 2024.pdf"},
+  {any:2025,nom:"Conveni Protecció Civil 2025",fitxer:"20250203_Uns altres_Conveni Protecció Civil 2025.pdf"},
+  {any:2025,nom:"Conveni La Polseguera 2025",fitxer:"20250214_Uns altres_Conveni amb La Polseguera 2025.pdf"},
+  {any:2025,nom:"Conveni AFA Escola Alta Segarra 2025",fitxer:"20250314_Uns altres_Conveni AFA Escola Alta Segarra 25.pdf"},
+  {any:2025,nom:"Conveni Diables 2025",fitxer:"20250319_Uns altres_Conveni Diables 2025.pdf"},
+  {any:2025,nom:"Conveni Ass. Cultural i Educativa Calamanda 2025",fitxer:"20250414_Uns altres_Conveni Ass. Cultural i Educativa Calamanda  2025.pdf"},
+  {any:2025,nom:"Addenda Conveni Ass. Calamanda 2025",fitxer:"20250602_Uns altres_Addenda Conveni Ass. Calamanda 2025.pdf"},
+  {any:2025,nom:"Conveni COMTCASE 2025",fitxer:"20250602_Uns altres_Conveni Comtcase 2025.pdf"},
+  {any:2025,nom:"Conveni Fundació Privada Casal de Calaf 2025",fitxer:"20250602_Uns altres_Conveni Fundació Privada Casal de Calaf 2025.pdf"},
+  {any:2025,nom:"Conveni Geganters i Grallers 2025",fitxer:"20250602_Uns altres_Conveni Geganters i Grallers 2025.pdf"},
+  {any:2024,nom:"Conveni AFA Escola Alta Segarra 2024",fitxer:"20240221_Conveni AFA Escola Alta Segarra 2024.pdf"},
+  {any:2024,nom:"Conveni AMPA IES Alexandre de Riquer 2023",fitxer:"20240117_Conveni AMPA IES Alexandre de Riquer 2023.pdf"},
+  {any:2024,nom:"Conveni La Polseguera 2024",fitxer:"20240802_Uns altres_Conveni amb l'Associació La Polseguera 2024.pdf"},
+  {any:2024,nom:"Conveni Anoia Turisme 2024",fitxer:"20240802_Uns altres_Conveni Anoia Turisme 2024.pdf"},
+  {any:2024,nom:"Conveni Casal del Poble 2024",fitxer:"20240802_Uns altres_Conveni Casal del Poble 2024.pdf"},
+  {any:2024,nom:"Conveni COMTCASE 2024",fitxer:"20240802_Uns altres_Conveni COMTCASE 2024.pdf"},
+  {any:2024,nom:"Conveni Càritas 2024",fitxer:"20240802_Uns altres_Conveni Càritas 2024.pdf"},
+  {any:2024,nom:"Conveni Diables 2024",fitxer:"20240802_Uns altres_Conveni Diables 2024.pdf"},
+  {any:2024,nom:"Conveni Fundació la Caixa 2024",fitxer:"20240802_Uns altres_Conveni Fundació _la Caixa_ 2024.pdf"},
+  {any:2024,nom:"Conveni Geganters i Grallers 2024",fitxer:"20240802_Uns altres_Conveni Geganters i Grallers 2024.pdf"},
+  {any:2024,nom:"Conveni Penya Barcelonista de Calaf 2024",fitxer:"20240802_Uns altres_Conveni Penya Barcelonista de Calaf 2024.pdf"},
+  {any:2024,nom:"Conveni Vòlei 2024",fitxer:"20240802_Uns altres_Conveni Vòlei 2024.pdf"},
+  {any:2024,nom:"Conveni Consell Comarcal Anoia - Benestar Social 2024",fitxer:"20240923_Uns altres_Conveni Departament de Benestar Social i Atenció a la Ciutadania del Consell Comarcal de l'Anoia 2024.pdf"},
+  {any:2024,nom:"Conveni Fundació Privada Casal de Calaf 2024",fitxer:"20240923_Uns altres_Conveni Fundació Privada Casal de Calaf 2024.pdf"},
+  {any:2024,nom:"Conveni Unió Esportiva Calaf 2024",fitxer:"20240923_Uns altres_Conveni Unió Esportiva Calaf 2024.pdf"},
+  {any:2024,nom:"Conveni Club Tenis Taula 2024",fitxer:"20240924_Uns altres_Conveni Club Tenis Taula 2024.pdf"},
+  {any:2024,nom:"Conveni ús camp de futbol municipal 2024",fitxer:"20240924_Uns altres_Conveni per l'ús del camp de futbol municipal 2024.pdf"},
+  {any:2023,nom:"Conveni AFA Escola Alta Segarra 2023",fitxer:"20230301_Conveni AFA Escola Alta Segarra 23.pdf"},
+  {any:2023,nom:"Conveni La Polseguera 2023",fitxer:"20230301_Conveni amb l'Associació La Polseguera 2023.pdf"},
+  {any:2023,nom:"Conveni Casal de Calaf 2023",fitxer:"20230503_Conveni amb el Casal de Calaf 2023.pdf"},
+  {any:2023,nom:"Conveni COMTCASE 2023",fitxer:"20230531_Conveni amb COMTCASE 2023.pdf"},
+  {any:2023,nom:"Conveni Penya Barcelonista de Calaf i Comarca 2023",fitxer:"20230531_Conveni amb la  Penya Barcelonista de Calaf i Comarca 2023.pdf"},
+  {any:2023,nom:"Conveni AFA Escola Alta Segarra - Casal de Poble",fitxer:"20230622_Conveni amb AFA Escola Alta Segarra pel Casal de Poble.pdf"},
+  {any:2023,nom:"Conveni Escacs 2023",fitxer:"20230622_Conveni Escacs 2023.pdf"},
+  {any:2023,nom:"Conveni Tenis Taula 2023",fitxer:"20230622_Conveni Tenis Taula 2023.pdf"},
+  {any:2023,nom:"Conveni Club Bàsquet Calaf 2023",fitxer:"20230720_Conveni Club Bàsquet Calaf 2023.pdf"},
+  {any:2023,nom:"Conveni Diables Alta Segarra 2023",fitxer:"20230823_Conveni amb els Diables Alta Segarra 2023.pdf"},
+  {any:2023,nom:"Conveni Casino de Calaf 2023",fitxer:"20231027_Conveni amb El Casino de Calaf 2023.pdf"},
+  {any:2023,nom:"Conveni Geganters i Grallers 2023",fitxer:"20231027_Conveni Geganters i Grallers 2023.pdf"},
+  {any:2023,nom:"Conveni Parròquia Sant Jaume de Calaf 2023",fitxer:"20231030_Conveni amb la Parròquia Sant Jaume de Calaf 2023.pdf"},
+  {any:2023,nom:"Conveni cessió bar poliesportiu 2023",fitxer:"20231123_Conveni de cessió del bar del poliesportiu de Calaf 2023.pdf"},
+  {any:2023,nom:"Conveni BikeCalaf.cat 2023",fitxer:"20231123_Conveni de col·laboració amb BikeCalaf.cat.pdf"},
+  {any:2023,nom:"Conveni AMPA llar d'infants La Boireta 2023",fitxer:"20231228_Conveni AMPA llar d'infants La Boireta 2023.pdf"},
+  {any:2022,nom:"Conveni Castellfollit del Boix - pavelló esportiu",fitxer:"20220202_Conveni amb Castellfollit del Boix (cessió pavelló esportiu).pdf"},
+  {any:2022,nom:"Conveni Associació Polseguera de Calaf 2022",fitxer:"20220223_Conveni Ass. Polseguera de Calaf.pdf"},
+  {any:2022,nom:"Conveni aparcament públic veïnal 2022",fitxer:"20220223_Conveni regulador per la utilització de parcel·la privada per aparcament públic veïnal.pdf"},
+  {any:2022,nom:"Conveni Sardanistes 2022",fitxer:"20220405_Conveni Sardanistes 2022.pdf"},
+  {any:2022,nom:"Conveni Fundació Privada Casal de Calaf 2022",fitxer:"20220421_Conveni amb la Fundació Privada Casal de Calaf 2022.pdf"},
+  {any:2022,nom:"Conveni Unió Calafina - activitats culturals 2022",fitxer:"20220421_Conveni Unió Calafina  per la subvenció per la realització d'activitats culturals 2022.pdf"},
+  {any:2022,nom:"Conveni Casal del Poble estiu 2022",fitxer:"20220519_Conveni amb diverses entitats per l'organització del Casal del Poble estiu  2022.pdf"},
+  {any:2022,nom:"Conveni Unió Calafina - cessió d'espais 2022",fitxer:"20220622_Conveni Unió Calafina per regular la cessió d'espais 2022.pdf"},
+  {any:2022,nom:"Conveni COMTCASE - activitats culturals 2022",fitxer:"20220704_Conven Comtcase per l'atorgament de subvencions destinades a la promoció i realització d'activitats culturals.pdf"},
+  {any:2022,nom:"Conveni Aj. Sant Pere Sallvinera - clavegueram UA2",fitxer:"20220704_Conveni amb Aj. de Sant Pere Sallvinera per la connexió clavegueram sector UA2 2022.pdf"},
+  {any:2022,nom:"Conveni Enplater - clavegueram 2022",fitxer:"20220704_Conveni amb Enplater per la connexió de la xarxa de clavegueram 2022.pdf"},
+  {any:2022,nom:"Conveni Fundació la Caixa - Gent Gran 2022",fitxer:"20220704_Conveni amb la Fundació la Caixa i el Casal de la Gent Gran pel Programa Gent Gran  2022.pdf"},
+  {any:2022,nom:"Conveni cessió façana i campanar parròquia 2022",fitxer:"20220704_Conveni cessió ús puntal façana i campanar parròquia Calaf 2022.pdf"},
+  {any:2022,nom:"Conveni Bike Calaf 2022",fitxer:"20220722_Conveni amb Bike Calaf 2022.pdf"},
+  {any:2022,nom:"Conveni Diables de l'Alta Segarra 2022",fitxer:"20220722_Conveni amb els Diables de l'Alta Segarra 2022.pdf"},
+  {any:2022,nom:"Conveni repartiment de cartells 2022",fitxer:"20221006_Conveni amb diverses entitats pel repartiment de cartells.pdf"},
+  {any:2022,nom:"Conveni Consell Comarcal Anoia - suport informàtic 2022",fitxer:"20221006_Conveni de col·laboració amb Consell Comarcal Anoia per serveis suport informàtics.pdf"},
+  {any:2022,nom:"Conveni Penya Barcelonista de Calaf i comarca 2022",fitxer:"20221006_Conveni Penya Barcelonista de Calaf i comarca 2022.pdf"},
+  {any:2022,nom:"Pròrroga Conveni Drets Socials Generalitat",fitxer:"20221006_Pròrroga del Conveni de col·laboració interadministrativa entre el Departament de Drets Socials de la Generalitat de Catalunya i l Ajuntament de Calaf per a la prestació del servei de c.pdf"},
+  {any:2022,nom:"Conveni diverses entitats Casal de Poble 2022",fitxer:"20221107_Conveni Aj. Calaf amb diverses entitats pel Casal de Poble.pdf"},
+  {any:2022,nom:"Conveni AMPA Llar Infants Boireta 2022",fitxer:"20221107_Conveni AMPA Llar Infants Boireta 2022.pdf"},
+  {any:2021,nom:"Conveni Porta a Porta - bosses compostables",fitxer:"20210126_CONVENI Associacó porta a porta per subministrament bosses, fundes compostables, cubells i bujols per recollida  de fracció orgànica.pdf"},
+  {any:2021,nom:"Conveni Sardanistes 2020",fitxer:"20210126_Conveni_Conveni sardanistes 2020.pdf"},
+  {any:2021,nom:"Conveni Ajuntaments Alta Segarra - Biblioteca 2020",fitxer:"20210202_Conveni 2020 Col·laboració Ajuntaments Alta Segarra pel sosteniment de la Biblioteca.pdf"},
+  {any:2021,nom:"Conveni AMPA Boireta 2020-21",fitxer:"20210203_CONVENI FIRMAT AMPA BOIRETA.pdf"},
+  {any:2021,nom:"Conveni AMPA Ajuntament Calaf 2020",fitxer:"20210208_Conveni 2020 Ampa Ajunt Calaf.pdf"},
+  {any:2021,nom:"Conveni AMPA CEIP 2020",fitxer:"20210208_CONVENI 2020-0012  AMPA CEIP.pdf"},
+  {any:2021,nom:"Conveni Unió Esportiva Calaf temporada 2020-21",fitxer:"20210323_CONVENI temporada 2020-21 amb la Unió Esportiva Calaf.pdf"},
+  {any:2021,nom:"Conveni Unió Calafina 2021",fitxer:"20210802_Conveni Unió Calafina 2021.pdf"},
+  {any:2021,nom:"Conveni COMTCASE 2021",fitxer:"20210803_Conveni Comtcase 2021.pdf"},
+  {any:2021,nom:"Conveni Diables Alta Segarra 2021",fitxer:"20210803_Conveni Diables Alta Segarra 2021.pdf"},
+  {any:2021,nom:"Conveni Casal 2021",fitxer:"20211103_Conveni Casal 2021.pdf"},
+  {any:2021,nom:"Conveni Club Futbol Sala Calaf 2021",fitxer:"20211103_Conveni Club Futbol Sala Calaf 2021.pdf"},
+  {any:2021,nom:"Conveni Club Tennis Taula Calaf 2021",fitxer:"20211103_Conveni Club Tennis Taula Calaf 2021.pdf"},
+  {any:2021,nom:"Conveni Acceptació Residus Planta Igualada 2021",fitxer:"20211220_Conveni Acceptació Residus Planta Igualada 2021.pdf"},
+  {any:2021,nom:"Conveni AMPA Llar Infants La Boireta 2021",fitxer:"20211220_Conveni AMPA Llar Infants La Boireta.pdf"},
+  {any:2021,nom:"Conveni CC Anoia - Envelliment Actiu 2021",fitxer:"20211220_Conveni CCAnoia Envellimentactiu 2021.pdf"},
+  {any:2021,nom:"Conveni INS Alexandre de Riquer 2021",fitxer:"20211220_Conveni INS Alexandre de Riquer 2021.pdf"},
+  {any:2020,nom:"Conveni Polseguera 2020",fitxer:"20200212_Conveni_CONVENI Polseguera 2020.pdf"},
+  {any:2020,nom:"Conveni Casal de Calaf 2020",fitxer:"20200504_Conveni_CONVENI 2020-0002 [Conveni Casal de Calaf 2020].pdf"},
+  {any:2020,nom:"Conveni CAP 2020",fitxer:"20200608_Conveni C.A.P 2020 DEF.pdf"},
+  {any:2020,nom:"Conveni Unió Calafina 2020",fitxer:"20200608_CONVENI Unio  Calafina 2020.pdf"},
+  {any:2020,nom:"Conveni AFA 2020",fitxer:"20200623_Conveni_Conveni_CONVENI 2020-0007 [Conveni AFA 2020].pdf"},
+  {any:2020,nom:"Conveni ús equipament camp de futbol 2020",fitxer:"20200724_Conveni_CONVENI 2020-0010 [Conveni  Us de l'Equipament del camp de Futbol].pdf"},
+  {any:2020,nom:"Conveni Servei Català de Trànsit 2020",fitxer:"20201023_CONVENI Servei Català de Trànsit 2020.pdf"},
+  {any:2020,nom:"Conveni Col·laboració Humana i Calaf 2020",fitxer:"20201026_Conveni Col·laboració Humana i Calaf_juliol_2020.pdf"},
+  {any:2020,nom:"Pròrroga Conveni Bisbat de Vic 2020",fitxer:"20201026_Conveni_Conveni_CONVENI 2020-0008 [Pròrroga conveni Bisbat de Vic].pdf"},
+  {any:2019,nom:"Conveni ARCA 2019",fitxer:"20190715_03. Conveni 2019 ARCA.pdf"},
+  {any:2019,nom:"Conveni COMTCASE 2019",fitxer:"20190715_Conveni COMTCASE 2019.pdf"},
+  {any:2019,nom:"Conveni Coral Ressons 2019",fitxer:"20190715_Conveni Coral Ressons 2019.pdf"},
+  {any:2019,nom:"Conveni Diables 2019",fitxer:"20190715_Conveni diables 2019.pdf"},
+  {any:2019,nom:"Conveni La Polseguera 2019",fitxer:"20190715_CONVENI Polseguera 2019.pdf"},
+  {any:2019,nom:"Conveni Sardanistes 2019",fitxer:"20190715_Conveni sardanistes 2019.pdf"},
+  {any:2019,nom:"Conveni Casal de Calaf 2019",fitxer:"20190715_Conveni_Conveni Casal de Calaf 2019.pdf"},
+  {any:2019,nom:"Conveni Club d'Escacs de Calaf 2019",fitxer:"20190715_Conveni_Conveni_CONVENI 2019-0001 [Conveni amb el Club d'Escacs de Calaf ].pdf"},
+  {any:2019,nom:"Conveni Club de Bàsquet Calaf 2019",fitxer:"20190715_Conveni_Conveni_CONVENI 2019-0002 [Conveni amb el Club de Bàsquet Calaf ].pdf"},
+  {any:2019,nom:"Conveni Penya Barcelonista 2019",fitxer:"20190715_Conveni_Conveni_CONVENI 2019-0003 [Conveni amb la Penya Barcelonista].pdf"},
+  {any:2018,nom:"Registre de convenis de col·laboració 2018",fitxer:"20190715_2018_ Convenis de col·laboració Ajuntament de Calaf.docx"},
+  {any:2017,nom:"Registre de convenis de col·laboració 2017",fitxer:"20190715_2017_ Convenis de col·laboració Ajuntament de Calaf.docx"},
+];
+
+function renderConvenis() {
+  const q   = (document.getElementById('conv-search').value || '').toLowerCase();
+  const any = document.getElementById('conv-any').value;
+
+  const visible = CONVENIS.filter(r => {
+    if (any === '2017' && r.any > 2018) return false;
+    if (any && any !== '2017' && String(r.any) !== any) return false;
+    if (q && !r.nom.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  const iconDoc = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+
+  let prevAny = null;
+  let html = '';
+  for (const r of visible) {
+    if (r.any !== prevAny) {
+      html += `<tr style="background:#f8f9fa"><td colspan="3" style="padding:6px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid)">${r.any}</td></tr>`;
+      prevAny = r.any;
+    }
+    const url = BASE_DOCS + encodeURIComponent(r.fitxer);
+    html += `<tr style="border-bottom:1px solid #f3f4f6">
+      <td style="padding:9px 14px;color:var(--mid);font-size:12px;white-space:nowrap">${r.any}</td>
+      <td style="padding:9px 14px;font-size:13px">${esc(r.nom)}</td>
+      <td style="padding:9px 14px;text-align:center">
+        <a href="${url}" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:1px solid var(--light);background:var(--white);color:var(--blue);font-size:12px;font-weight:600;text-decoration:none">
+          ${iconDoc} Obrir
+        </a>
+      </td>
+    </tr>`;
+  }
+
+  document.getElementById('conv-tbody').innerHTML = html;
+  document.getElementById('conv-count').textContent = `${visible.length} documents`;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
