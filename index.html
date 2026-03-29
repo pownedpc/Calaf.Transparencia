@@ -45,8 +45,9 @@ body {
   gap: 32px;
   height: 54px;
 }
-.logo { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; white-space: nowrap; text-decoration: none; color: var(--dark); }
+.logo { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.1; text-decoration: none; color: var(--dark); }
 .logo span { color: var(--orange); }
+.logo .logo-line2 { display: block; color: var(--dark); }
 
 .nav { display: flex; gap: 4px; flex: 1; }
 .nav-tab {
@@ -76,12 +77,14 @@ body {
   align-items: center;
   gap: 6px;
   background: #eff0ff;
-  color: var(--blue);
+  color: #185FA5;
   font-size: 12px;
-  font-weight: 600;
-  padding: 4px 12px;
+  font-weight: 700;
+  padding: 5px 14px;
   border-radius: 20px;
   margin-bottom: 16px;
+  letter-spacing: .4px;
+  text-transform: uppercase;
 }
 .hero-badge::before {
   content: '';
@@ -489,7 +492,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
 <!-- HEADER -->
 <header class="header">
   <div class="header-inner">
-    <a class="logo" href="#"><span>calaf</span>.transparència</a>
+    <a class="logo" href="#"><span>calaf.</span><span class="logo-line2">transparència</span></a>
     <nav class="nav">
       <button class="nav-tab active" onclick="setView('taula')">Inici</button>
       <button class="nav-tab" onclick="setView('proveidors')">Proveïdors</button>
@@ -514,10 +517,9 @@ body.mobile-mode .hero h1 { font-size: 22px; }
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-badge">Dades obertes del portal de transparència de l'Ajuntament de Calaf</div>
+    <div class="hero-badge">DADES OBERTES · AJUNTAMENT DE CALAF</div>
     <h1>Despesa municipal a Calaf</h1>
-    <p>Consulta les factures i pagaments municipals de <strong>2019 a 2025</strong>.
-       <span id="hero-stats">Carregant dades...</span></p>
+    <p>Observatori independent per consultar despesa municipal · <span id="hero-stats">Carregant dades...</span></p>
   </section>
 
   <!-- SEARCH -->
@@ -1029,8 +1031,7 @@ function updateStats(data) {
   // Hero
   if (!isFiltered) {
     document.getElementById('hero-stats').innerHTML =
-      `<strong>${data.length.toLocaleString('ca')} factures</strong>, <strong>${provs}</strong> proveïdors,
-       import total <strong>${fmtEur(total)}</strong>.`;
+      `<strong style="color:#1a1a1a">${data.length.toLocaleString('ca')} factures</strong> · <strong style="color:#1a1a1a">${provs}</strong> proveïdors · <strong style="color:#1a1a1a">${fmtEur(total)}</strong> (2019–2025)`;
   }
 }
 
