@@ -485,8 +485,64 @@ body.mobile-mode .table-footer .btn { width: 100%; justify-content: center; }
 body.mobile-mode .header-right { display: none; }
 body.mobile-mode .main { padding: 16px 12px 48px; }
 body.mobile-mode .hero h1 { font-size: 22px; }
+/* ── CONCEPTES ──────────────────────────────────────────── */
+.concepte-card {
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  transition: box-shadow .15s;
+}
+.concepte-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,.07); }
+
+.concepte-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.concepte-emoji { font-size: 22px; flex-shrink: 0; width: 32px; text-align: center; }
+.concepte-nom {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+.concepte-meta { font-size: 11px; color: #999; margin-top: 2px; }
+.concepte-import { font-size: 14px; font-weight: 700; color: #4040ff; flex-shrink: 0; white-space: nowrap; }
+.concepte-chevron { font-size: 11px; color: #bbb; flex-shrink: 0; margin-left: 4px; transition: transform .2s; }
+.concepte-card.open .concepte-chevron { transform: rotate(180deg); }
+
+.concepte-body { display: none; border-top: 1px solid #f0f0f0; background: #fafbfc; }
+.concepte-card.open .concepte-body { display: block; }
+
+.concepte-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 16px 9px 60px;
+  border-bottom: 1px solid #f3f4f6;
+  gap: 8px;
+}
+.concepte-row:last-child { border-bottom: none; }
+.concepte-row-nom { font-size: 12px; color: #444; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.concepte-row-anys { font-size: 11px; color: #bbb; flex-shrink: 0; margin-right: 6px; }
+.concepte-row-import { font-size: 12px; font-weight: 700; color: #1a1a1a; flex-shrink: 0; white-space: nowrap; }
+
+@media (max-width: 768px) {
+  .concepte-nom { font-size: 12px; }
+  .concepte-import { font-size: 13px; }
+  .concepte-row { padding-left: 44px; }
+}
 </style>
-</head>
 <body>
 
 <!-- HEADER -->
@@ -502,6 +558,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
       <button class="nav-tab" onclick="setView('pressupost')">Pressupost</button>
       <button class="nav-tab" onclick="setView('campanyes')">Campanyes</button>
       <button class="nav-tab" onclick="setView('convenis')">Convenis</button>
+      <button class="nav-tab" onclick="setView('conceptes')">Conceptes</button>
     </nav>
     <div class="header-right" id="header-date">—</div>
     <button class="mobile-btn" id="mobile-toggle" onclick="toggleMobileMode()" title="Vista mòbil">
@@ -553,6 +610,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
       <button class="pill" onclick="setView('pressupost')">Pressupost</button>
       <button class="pill" onclick="setView('campanyes')">Campanyes institucionals</button>
       <button class="pill" onclick="setView('convenis')">Documents convenis</button>
+      <button class="pill" onclick="setView('conceptes')">Conceptes de despesa</button>
     </div>
   </div>
 
@@ -832,6 +890,35 @@ body.mobile-mode .hero h1 { font-size: 22px; }
     <div style="font-size:12px;color:#aaa;text-align:center;padding:12px 8px">
       Font: Portal de transparència · Ajuntament de Calaf · Documents oficials signats
     </div>
+  </div>
+
+  <!-- VIEW: CONCEPTES -->
+  <div class="view" id="view-conceptes">
+
+    <div style="margin-bottom:20px">
+      <h2 style="font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px">Despesa per concepte</h2>
+      <p style="font-size:14px;color:#666;margin:0">Clica qualsevol concepte per veure totes les empreses i entitats vinculades</p>
+    </div>
+
+    <div style="position:relative;margin-bottom:16px">
+      <input
+        type="text"
+        id="conceptes-search"
+        placeholder="Cerca un concepte..."
+        oninput="renderConceptes()"
+        style="width:100%;padding:9px 12px 9px 38px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none;background:#fff;box-sizing:border-box;transition:border-color .15s"
+        onfocus="this.style.borderColor='#4040ff'"
+        onblur="this.style.borderColor='#ddd'"
+      />
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#aaa;pointer-events:none">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+    </div>
+
+    <div id="conceptes-resum" style="font-size:12px;color:#888;margin-bottom:12px"></div>
+    <div id="conceptes-grid" style="display:flex;flex-direction:column;gap:8px"></div>
+
   </div>
 
 </main>
@@ -1211,21 +1298,23 @@ function renderCategoriesView() {
 // ─────────────────────────────────────────────────────────────────────────────
 function setView(view) {
   currentView = view;
-  ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis'].forEach(v => {
+  const VIEWS = ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes'];
+  VIEWS.forEach(v => {
     const el = document.getElementById('view-' + v);
     if (el) el.classList.toggle('active', v === view);
   });
   document.querySelectorAll('.nav-tab').forEach((t, i) => {
-    t.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis'][i] === view);
+    t.classList.toggle('active', VIEWS[i] === view);
   });
   document.querySelectorAll('.pill').forEach((p, i) => {
-    p.classList.toggle('active', ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis'][i] === view);
+    p.classList.toggle('active', VIEWS[i] === view);
   });
   if (view === 'proveidors')  renderRankingProveidors(filtered);
   if (view === 'subvencions') initSubvencions();
   if (view === 'pressupost')  renderPressupost();
   if (view === 'campanyes')   { campFiltre = ''; renderCampanyes(); }
   if (view === 'convenis')    renderConvenis();
+  if (view === 'conceptes')   renderConceptes();
 }
 
 function setSearchMode(mode) {
@@ -1948,6 +2037,109 @@ function renderConvenis() {
 
   document.getElementById('conv-tbody').innerHTML = html;
   document.getElementById('conv-count').textContent = `${visible.length} documents`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONCEPTES
+// ─────────────────────────────────────────────────────────────────────────────
+const EMOJI_MAP = [
+  { keys: ['residèn','residencia','residencia','habitatge'],  emoji: '🏗️' },
+  { keys: ['recollida','deixalleria','residus'],               emoji: '🚛' },
+  { keys: ['teleassistència','teleassistencia'],               emoji: '🤝' },
+  { keys: ['telecomunicac','telèfon','telefon','vodafone'],    emoji: '📡' },
+  { keys: ['festes','festiv','festa','reis','carnival'],       emoji: '🎉' },
+  { keys: ['cultura','cultural','biblioteca','arxiu'],         emoji: '🎭' },
+  { keys: ['alumbrat','alumbrado','llum','enllumen'],          emoji: '💡' },
+  { keys: ['ajuts','ajudes','família','familia'],              emoji: '👨‍👩‍👧' },
+  { keys: ['asseguranc','segur'],                              emoji: '🛡️' },
+  { keys: ['neteja','netejar','limpie'],                       emoji: '🧹' },
+  { keys: ['manteniment','mantenimiento','reparac','conserv'], emoji: '🔧' },
+  { keys: ['seguretat','seguridad','ordre'],                   emoji: '🔒' },
+  { keys: ['publicac','diari','butlletí','boe','anunci'],      emoji: '📰' },
+  { keys: ['obra','construc','rehabilit','paviment'],          emoji: '🏚️' },
+  { keys: ['energia','electric','endesa','submin'],            emoji: '⚡' },
+  { keys: ['aigua','water','abastament'],                      emoji: '💧' },
+  { keys: ['esport','deport','piscin','futbol','bàsquet'],     emoji: '🏊' },
+  { keys: ['escola','educac','curs','formac','foap'],          emoji: '📚' },
+  { keys: ['vehicle','cotxe','maquinàr','maquinar','lloguer'], emoji: '🚗' },
+  { keys: ['igualtat','diversitat','lgb'],                     emoji: '🌈' },
+  { keys: ['subvenc'],                                         emoji: '💶' },
+  { keys: ['social','serveis'],                                emoji: '🫂' },
+];
+
+function getEmoji(nom) {
+  const low = nom.toLowerCase();
+  for (const { keys, emoji } of EMOJI_MAP) {
+    if (keys.some(k => low.includes(k))) return emoji;
+  }
+  return '📋';
+}
+
+function renderConceptes() {
+  const cerca = (document.getElementById('conceptes-search')?.value || '').toLowerCase().trim();
+
+  // Agrupar per descripcio (fallback a categoria si buida)
+  const mapa = {};
+  for (const row of ALL_DATA) {
+    const concepte = ((row.descripcio && row.descripcio.trim()) ? row.descripcio.trim() : (row.categoria || 'Sense classificar')).toUpperCase();
+    if (cerca && !concepte.toLowerCase().includes(cerca)) continue;
+
+    if (!mapa[concepte]) mapa[concepte] = { total: 0, proveidors: {} };
+    mapa[concepte].total += row.import;
+
+    const prov = (row.proveidor || 'Desconegut').trim();
+    if (!mapa[concepte].proveidors[prov]) mapa[concepte].proveidors[prov] = { total: 0, anys: new Set() };
+    mapa[concepte].proveidors[prov].total += row.import;
+    if (row.any) mapa[concepte].proveidors[prov].anys.add(row.any);
+  }
+
+  const conceptes = Object.entries(mapa).sort((a, b) => b[1].total - a[1].total);
+
+  const resum = document.getElementById('conceptes-resum');
+  if (resum) resum.textContent = `${conceptes.length} conceptes · ${fmtEur(conceptes.reduce((s,[,v]) => s+v.total, 0))} total`;
+
+  const grid = document.getElementById('conceptes-grid');
+  if (!grid) return;
+
+  if (conceptes.length === 0) {
+    grid.innerHTML = '<p style="color:#888;text-align:center;padding:32px">Cap resultat</p>';
+    return;
+  }
+
+  grid.innerHTML = conceptes.map(([nom, dades]) => {
+    const emoji = getEmoji(nom);
+    const nProv = Object.keys(dades.proveidors).length;
+    const meta  = nProv === 1 ? '1 proveïdor' : `${nProv} proveïdors`;
+    const id    = 'cc-' + nom.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 40);
+
+    const files = Object.entries(dades.proveidors)
+      .sort((a, b) => b[1].total - a[1].total)
+      .map(([prov, info]) => {
+        const anys = [...info.anys].sort().join(', ');
+        return `<div class="concepte-row">
+          <span class="concepte-row-nom" title="${esc(prov)}">${esc(prov)}</span>
+          ${anys ? `<span class="concepte-row-anys">${anys}</span>` : ''}
+          <span class="concepte-row-import">${fmtEur(info.total)}</span>
+        </div>`;
+      }).join('');
+
+    return `<div class="concepte-card" id="${id}">
+      <div class="concepte-header" onclick="toggleConcepte('${id}')">
+        <span class="concepte-emoji">${emoji}</span>
+        <div style="flex:1;min-width:0">
+          <div class="concepte-nom">${esc(nom)}</div>
+          <div class="concepte-meta">${meta}</div>
+        </div>
+        <span class="concepte-import">${fmtEur(dades.total)}</span>
+        <span class="concepte-chevron">▼</span>
+      </div>
+      <div class="concepte-body">${files}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleConcepte(id) {
+  document.getElementById(id)?.classList.toggle('open');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
