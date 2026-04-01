@@ -2149,13 +2149,29 @@ function toggleConcepte(id) {
 // ANALYTICS — GoatCounter events personalitzats
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Funció base: envia event si GoatCounter ja ha carregat, si no ho encua
+// Funció base amb cua: si GoatCounter encara no ha carregat, encua l'event
+const _gcQueue = [];
+let _gcReady = false;
+
 function gcEvent(path, title) {
-  if (window.goatcounter && window.goatcounter.count) {
-    window.goatcounter.count({ path: path, title: title || path, event: true });
+  const payload = { path: path, title: title || path, event: true };
+  if (_gcReady && window.goatcounter && window.goatcounter.count) {
+    window.goatcounter.count(payload);
+  } else {
+    _gcQueue.push(payload);
   }
-  // Si no ha carregat encara (async), ignorem — no val la pena complicar-ho
 }
+
+// Quan GoatCounter carregui, buida la cua
+(function waitGC() {
+  if (window.goatcounter && window.goatcounter.count) {
+    _gcReady = true;
+    _gcQueue.forEach(p => window.goatcounter.count(p));
+    _gcQueue.length = 0;
+  } else {
+    setTimeout(waitGC, 300);
+  }
+})();
 
 // ── Tracking cerca (debounced 2s, mínim 3 caràcters) ──
 let _searchTimer = null;
