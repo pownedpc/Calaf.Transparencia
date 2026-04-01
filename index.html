@@ -1315,6 +1315,9 @@ function setView(view) {
   if (view === 'campanyes')   { campFiltre = ''; renderCampanyes(); }
   if (view === 'convenis')    renderConvenis();
   if (view === 'conceptes')   renderConceptes();
+
+  // Tracking GoatCounter — pestanya visitada
+  gcEvent('pestanya/' + view);
 }
 
 function setSearchMode(mode) {
@@ -2143,8 +2146,51 @@ function toggleConcepte(id) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// ANALYTICS — GoatCounter events personalitzats
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Funció base: envia event si GoatCounter ja ha carregat, si no ho encua
+function gcEvent(path, title) {
+  if (window.goatcounter && window.goatcounter.count) {
+    window.goatcounter.count({ path: path, title: title || path, event: true });
+  }
+  // Si no ha carregat encara (async), ignorem — no val la pena complicar-ho
+}
+
+// ── Tracking cerca (debounced 2s, mínim 3 caràcters) ──
+let _searchTimer = null;
+const _origOnSearch = window.onSearch; // per no sobreescriure
+
+function onSearch() {
+  currentPage = 1;
+  applyFilters();
+
+  // Tracking
+  clearTimeout(_searchTimer);
+  const q = document.getElementById('search-input').value.trim();
+  if (q.length >= 3) {
+    _searchTimer = setTimeout(() => {
+      gcEvent('cerca/' + searchMode + '/' + q.toLowerCase(), 'Cerca: ' + q);
+    }, 2000);
+  }
+}
+
+// ── Tracking temps a la pàgina ──
+function initTimeTracking() {
+  const MILESTONES = [
+    { ms: 30000,  label: '30s'  },
+    { ms: 120000, label: '2min' },
+    { ms: 300000, label: '5min' },
+  ];
+  MILESTONES.forEach(({ ms, label }) => {
+    setTimeout(() => gcEvent('temps/' + label, 'Temps: ' + label), ms);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // ARRANCADA
 // ─────────────────────────────────────────────────────────────────────────────
+initTimeTracking();
 loadData();
 </script>
 <script data-goatcounter="https://transparenciacalaf.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
