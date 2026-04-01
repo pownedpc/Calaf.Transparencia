@@ -1317,7 +1317,7 @@ function setView(view) {
   if (view === 'conceptes')   renderConceptes();
 
   // Tracking GoatCounter — pestanya visitada
-  gcEvent('pestanya/' + view);
+  gcEvent('/e/pestanya/' + view);
 }
 
 function setSearchMode(mode) {
@@ -2186,7 +2186,7 @@ function onSearch() {
   const q = document.getElementById('search-input').value.trim();
   if (q.length >= 3) {
     _searchTimer = setTimeout(() => {
-      gcEvent('cerca/' + searchMode + '/' + q.toLowerCase(), 'Cerca: ' + q);
+      gcEvent('/e/cerca/' + searchMode + '/' + q.toLowerCase(), 'Cerca: ' + q);
     }, 2000);
   }
 }
@@ -2199,7 +2199,7 @@ function initTimeTracking() {
     { ms: 300000, label: '5min' },
   ];
   MILESTONES.forEach(({ ms, label }) => {
-    setTimeout(() => gcEvent('temps/' + label, 'Temps: ' + label), ms);
+    setTimeout(() => gcEvent('/e/temps/' + label, 'Temps: ' + label), ms);
   });
 }
 
