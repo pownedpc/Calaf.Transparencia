@@ -1195,53 +1195,101 @@ function updateStats(data) {
 // ─────────────────────────────────────────────────────────────────────────────
 function menjoDot(r) {
   const score = parseFloat(r.menjo_score);
-  if (!score) return '';
-  const color = score >= 70 ? '#ef4444' : score >= 40 ? '#f59e0b' : '#22c55e';
-  const bg    = score >= 70 ? '#fff1f1' : score >= 40 ? '#fffbeb' : '#f0fdf4';
-  return `<span
-    onclick="event.stopPropagation();toggleMenjoPanel('mp-${r._rowid}')"
-    title="Veure context Catalunya al Menjòmetre"
-    style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;
-           background:${bg};border:1px solid ${color}30;color:${color};
-           font-size:10px;font-weight:700;cursor:pointer;flex-shrink:0;
-           white-space:nowrap;transition:opacity .15s;margin-left:5px"
-  >🔍 ${score.toFixed(0)}</span>`;
+  const calaf = parseFloat(r.calaf_score);
+  let html = '';
+
+  // Badge Menjòmetre
+  if (score) {
+    const color = score >= 70 ? '#ef4444' : score >= 40 ? '#f59e0b' : '#22c55e';
+    const bg    = score >= 70 ? '#fff1f1' : score >= 40 ? '#fffbeb' : '#f0fdf4';
+    html += `<span
+      onclick="event.stopPropagation();toggleMenjoPanel('mp-${r._rowid}')"
+      title="Veure context Catalunya al Menjòmetre"
+      style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;
+             background:${bg};border:1px solid ${color}30;color:${color};
+             font-size:10px;font-weight:700;cursor:pointer;flex-shrink:0;
+             white-space:nowrap;transition:opacity .15s;margin-left:5px"
+    >🔍 ${score.toFixed(0)}</span>`;
+  }
+
+  // Badge Score Calaf
+  if (calaf > 30) {
+    const color = calaf >= 70 ? '#dc2626' : calaf >= 50 ? '#ea580c' : '#ca8a04';
+    const bg    = calaf >= 70 ? '#fef2f2' : calaf >= 50 ? '#fff7ed' : '#fefce8';
+    html += `<span
+      onclick="event.stopPropagation();toggleMenjoPanel('mp-${r._rowid}')"
+      title="Score Calaf: concentració local de despesa"
+      style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;
+             background:${bg};border:1px solid ${color}30;color:${color};
+             font-size:10px;font-weight:700;cursor:pointer;flex-shrink:0;
+             white-space:nowrap;transition:opacity .15s;margin-left:3px"
+    >📊 ${calaf.toFixed(0)}</span>`;
+  }
+
+  return html;
 }
 
 function menjoPanel(r) {
   const score = parseFloat(r.menjo_score);
-  if (!score && !r.menjo_total_cat) return '';
+  const calaf = parseFloat(r.calaf_score);
+  if (!score && !r.menjo_total_cat && !(calaf > 30)) return '';
+
   const totalCat = parseFloat(r.menjo_total_cat) || 0;
   const numCont  = parseInt(r.menjo_num_cont) || 0;
   const slug     = r.menjo_slug || '';
   const barColor = score >= 70 ? '#ef4444' : score >= 40 ? '#f59e0b' : '#22c55e';
   const mUrl     = slug ? `https://www.menjometre.cat/entitat/${slug}` : null;
+  const pct      = parseFloat(r.calaf_pct_pressupost) || 0;
+  const anys     = parseInt(r.calaf_anys) || 0;
+  const calafColor = calaf >= 70 ? '#dc2626' : calaf >= 50 ? '#ea580c' : '#ca8a04';
 
   return `<tr id="mp-${r._rowid}" class="menjo-panel-row" style="display:none">
     <td colspan="6" style="padding:0 14px 8px">
       <div class="menjo-panel open">
         <div class="menjo-panel-nom">${esc(r.proveidor)}</div>
-        <div class="menjo-grid">
+
+        ${score || totalCat ? `
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#999;margin-bottom:6px">Context Catalunya · Menjòmetre</div>
+        <div class="menjo-grid" style="margin-bottom:12px">
           <div class="menjo-stat">
             <span class="menjo-stat-val">${score ? score.toFixed(1) : '—'}</span>
-            <span class="menjo-stat-lbl">Score</span>
+            <span class="menjo-stat-lbl">Score CAT</span>
             ${score ? `<div class="menjo-bar-bg"><div class="menjo-bar" style="width:${score}%;background:${barColor}"></div></div>` : ''}
           </div>
           <div class="menjo-stat">
             <span class="menjo-stat-val">${totalCat >= 1e6 ? (totalCat/1e6).toFixed(1)+'M' : totalCat >= 1e3 ? Math.round(totalCat/1e3)+'K' : (totalCat||'—')}</span>
-            <span class="menjo-stat-lbl">Total Catalunya</span>
+            <span class="menjo-stat-lbl">Total CAT</span>
           </div>
           <div class="menjo-stat">
             <span class="menjo-stat-val">${numCont || '—'}</span>
             <span class="menjo-stat-lbl">Contractes CAT</span>
           </div>
-        </div>
+        </div>` : ''}
+
+        ${calaf > 30 ? `
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#999;margin-bottom:6px">Concentració local · Score Calaf</div>
+        <div class="menjo-grid" style="margin-bottom:12px">
+          <div class="menjo-stat">
+            <span class="menjo-stat-val" style="color:${calafColor}">${calaf.toFixed(0)}</span>
+            <span class="menjo-stat-lbl">Score Calaf</span>
+            <div class="menjo-bar-bg"><div class="menjo-bar" style="width:${calaf}%;background:${calafColor}"></div></div>
+          </div>
+          <div class="menjo-stat">
+            <span class="menjo-stat-val">${pct.toFixed(1)}%</span>
+            <span class="menjo-stat-lbl">% pressupost</span>
+          </div>
+          <div class="menjo-stat">
+            <span class="menjo-stat-val">${anys}</span>
+            <span class="menjo-stat-lbl">Anys actiu</span>
+          </div>
+        </div>` : ''}
+
         <div class="menjo-actions">
           ${mUrl ? `<a class="menjo-link" href="${mUrl}" target="_blank" rel="noopener">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Veure al Menjòmetre
           </a>` : '<span></span>'}
-          <span class="menjo-disclaimer">Score descriptiu — no implica irregularitat. Font: menjometre.cat</span>
+          <span class="menjo-disclaimer">Scores descriptius — no impliquen irregularitat. Font: menjometre.cat + dades Ajuntament de Calaf</span>
         </div>
       </div>
     </td>
