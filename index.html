@@ -605,10 +605,141 @@ body.mobile-mode .hero h1 { font-size: 22px; }
 }
 .menjo-link:hover { background: #eff0ff; border-color: #4040ff; }
 .menjo-disclaimer { font-size: 10px; color: #ccc; line-height: 1.4; max-width: 340px; }
+/* ── ALERTES ────────────────────────────────────────────── */
+.alerta-card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1.5px solid #e8e8e8;
+  background: #fff;
+}
+.alerta-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.alerta-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  width: 40px;
+  text-align: center;
+}
+.alerta-info { flex: 1; min-width: 0; }
+.alerta-titol {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 3px;
+}
+.alerta-desc { font-size: 13px; color: #666; line-height: 1.4; }
+.alerta-num {
+  font-size: 28px;
+  font-weight: 800;
+  flex-shrink: 0;
+  min-width: 50px;
+  text-align: right;
+}
+.alerta-chevron {
+  font-size: 12px;
+  color: #bbb;
+  flex-shrink: 0;
+  margin-left: 4px;
+  transition: transform .2s;
+}
+.alerta-card.open .alerta-chevron { transform: rotate(180deg); }
+.alerta-body {
+  display: none;
+  border-top: 1px solid #f0f0f0;
+  background: #fafbfc;
+}
+.alerta-card.open .alerta-body { display: block; }
+.alerta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 18px 9px 72px;
+  border-bottom: 1px solid #f3f4f6;
+  gap: 8px;
+}
+.alerta-row:last-child { border-bottom: none; }
+.alerta-row-nom {
+  font-size: 12px;
+  color: #333;
+  font-weight: 600;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.alerta-row-det { font-size: 11px; color: #999; flex-shrink: 0; margin-right: 6px; }
+.alerta-row-val { font-size: 12px; font-weight: 700; flex-shrink: 0; white-space: nowrap; }
+.alerta-red    { border-color: #fca5a5; }
+.alerta-red    .alerta-header { background: #fff5f5; }
+.alerta-red    .alerta-num    { color: #ef4444; }
+.alerta-yellow { border-color: #fcd34d; }
+.alerta-yellow .alerta-header { background: #fffbeb; }
+.alerta-yellow .alerta-num    { color: #d97706; }
+.alerta-blue   { border-color: #93c5fd; }
+.alerta-blue   .alerta-header { background: #eff6ff; }
+.alerta-blue   .alerta-num    { color: #2563eb; }
 @media (max-width: 768px) {
-  .menjo-grid { grid-template-columns: repeat(3,1fr); gap: 6px; }
-  .menjo-stat-val { font-size: 14px; }
-  .menjo-panel { padding: 10px 12px; }
+  .alerta-row { padding-left: 54px; }
+  .alerta-titol { font-size: 14px; }
+  .alerta-num { font-size: 22px; }
+}
+/* ── GOVERN ─────────────────────────────────────────────── */
+.govern-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.govern-card {
+  background: #fff;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow .15s;
+}
+.govern-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.govern-card-header {
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.govern-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4040ff 0%, #00c9a3 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800; color: #fff;
+  flex-shrink: 0;
+}
+.govern-nom { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+.govern-carrec { font-size: 11px; color: #888; margin-top: 2px; font-weight: 500; }
+.govern-body { padding: 14px 18px; }
+.govern-arees { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+.govern-area-badge {
+  padding: 2px 8px; border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+  background: #eff0ff; color: #4040ff;
+}
+.govern-bio { font-size: 12px; color: #555; line-height: 1.55; margin-bottom: 10px; }
+.govern-meta { font-size: 11px; color: #999; margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+.govern-menjo {
+  display: flex; align-items: flex-start; gap: 6px;
+  padding: 7px 10px; border-radius: 7px;
+  font-size: 11px; line-height: 1.4; margin-top: 10px;
+}
+.govern-menjo-ok     { background: #f0fdf4; color: #166534; }
+.govern-menjo-alerta { background: #fffbeb; color: #92400e; }
+@media (max-width: 768px) {
+  .govern-grid { grid-template-columns: 1fr; }
 }
 </style>
 <body>
@@ -627,6 +758,8 @@ body.mobile-mode .hero h1 { font-size: 22px; }
       <button class="nav-tab" onclick="setView('campanyes')">Campanyes</button>
       <button class="nav-tab" onclick="setView('convenis')">Convenis</button>
       <button class="nav-tab" onclick="setView('conceptes')">Conceptes</button>
+      <button class="nav-tab" onclick="setView('alertes')" style="color:#ef4444;font-weight:700">⚠️ Alertes</button>
+      <button class="nav-tab" onclick="setView('govern')">Govern</button>
     </nav>
     <div class="header-right" id="header-date">—</div>
     <button class="mobile-btn" id="mobile-toggle" onclick="toggleMobileMode()" title="Vista mòbil">
@@ -986,6 +1119,38 @@ body.mobile-mode .hero h1 { font-size: 22px; }
 
     <div id="conceptes-resum" style="font-size:12px;color:#888;margin-bottom:12px"></div>
     <div id="conceptes-grid" style="display:flex;flex-direction:column;gap:8px"></div>
+
+  </div>
+
+  <!-- VIEW: ALERTES -->
+  <div class="view" id="view-alertes">
+
+    <div style="margin-bottom:20px">
+      <h2 style="font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px">⚠️ Alertes de despesa</h2>
+      <p style="font-size:14px;color:#666;margin:0">Patrons estadístics rellevants detectats automàticament. No impliquen irregularitat — serveixen per orientar l'auditoria ciutadana.</p>
+    </div>
+
+    <div id="alertes-grid" style="display:flex;flex-direction:column;gap:12px"></div>
+
+    <div style="font-size:11px;color:#bbb;text-align:center;padding:16px 0">
+      Càlcul automàtic sobre dades del portal · Actualitzat cada trimestre
+    </div>
+
+  </div>
+
+  <!-- VIEW: GOVERN -->
+  <div class="view" id="view-govern">
+
+    <div style="margin-bottom:20px">
+      <h2 style="font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px">Govern municipal 2023–2027</h2>
+      <p style="font-size:14px;color:#666;margin:0">Equip de govern de Junts per Calaf – Acord Municipal (JxC-AM). Vincles empresarials verificats via Menjòmetre / BORME.</p>
+    </div>
+
+    <div id="govern-grid" class="govern-grid"></div>
+
+    <div style="font-size:11px;color:#bbb;text-align:center;padding:16px 0 4px">
+      Font: CVs oficials Ajuntament de Calaf · Menjòmetre / BORME · Dades públiques
+    </div>
 
   </div>
 
@@ -1496,7 +1661,7 @@ function renderCategoriesView() {
 // ─────────────────────────────────────────────────────────────────────────────
 function setView(view) {
   currentView = view;
-  const VIEWS = ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes'];
+  const VIEWS = ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes','alertes','govern'];
   VIEWS.forEach(v => {
     const el = document.getElementById('view-' + v);
     if (el) el.classList.toggle('active', v === view);
@@ -1513,6 +1678,8 @@ function setView(view) {
   if (view === 'campanyes')   { campFiltre = ''; renderCampanyes(); }
   if (view === 'convenis')    renderConvenis();
   if (view === 'conceptes')   renderConceptes();
+  if (view === 'alertes')     renderAlertes();
+  if (view === 'govern')      renderGovern();
 
   // Tracking GoatCounter — pestanya visitada
   gcEvent('/e/pestanya/' + view);
@@ -2399,6 +2566,338 @@ function initTimeTracking() {
   MILESTONES.forEach(({ ms, label }) => {
     setTimeout(() => gcEvent('/e/temps/' + label, 'Temps: ' + label), ms);
   });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ALERTES
+// ─────────────────────────────────────────────────────────────────────────────
+function renderAlertes() {
+  const LLINDAR = 15000;
+  const MIN_FACTURES = 5;
+
+  // ── Agrupació per proveïdor ──
+  const grups = {};
+  ALL_DATA.forEach(r => {
+    if (!r.proveidor) return;
+    if (!grups[r.proveidor]) grups[r.proveidor] = { total: 0, factures: [], anys: new Set() };
+    grups[r.proveidor].total += r.import;
+    grups[r.proveidor].factures.push(r.import);
+    if (r.any) grups[r.proveidor].anys.add(r.any);
+  });
+
+  const totalDespesa = ALL_DATA.reduce((s, r) => s + r.import, 0);
+
+  // ── ALERTA 1: Fragmentació (>5 factures totes < 15.000€) ──
+  const fragmentats = Object.entries(grups)
+    .filter(([, g]) => {
+      const nFact = g.factures.length;
+      const totesMenors = g.factures.every(f => f < LLINDAR);
+      return nFact >= MIN_FACTURES && totesMenors;
+    })
+    .map(([nom, g]) => ({
+      nom,
+      nFact: g.factures.length,
+      total: g.total,
+      mitjana: g.total / g.factures.length,
+    }))
+    .sort((a, b) => b.nFact - a.nFact)
+    .slice(0, 20);
+
+  // ── ALERTA 2: Recurrència alta (≥6 anys consecutius, >20 factures) ──
+  const recurrents = Object.entries(grups)
+    .filter(([, g]) => g.anys.size >= 6 && g.factures.length > 20)
+    .map(([nom, g]) => ({
+      nom,
+      anys: g.anys.size,
+      nFact: g.factures.length,
+      total: g.total,
+    }))
+    .sort((a, b) => b.anys - a.anys || b.nFact - a.nFact)
+    .slice(0, 20);
+
+  // ── ALERTA 3: Concentració (top 5 proveïdors) ──
+  const topProveidors = Object.entries(grups)
+    .map(([nom, g]) => ({ nom, total: g.total, pct: g.total / totalDespesa * 100 }))
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 5);
+  const pctTop5 = topProveidors.reduce((s, p) => s + p.pct, 0);
+
+  // ── Renderitzar ──
+  const grid = document.getElementById('alertes-grid');
+  if (!grid) return;
+
+  function alertaCard(id, cls, icon, titol, desc, num, numLabel, files) {
+    const rowsHtml = files.map(f => `
+      <div class="alerta-row">
+        <span class="alerta-row-nom" title="${esc(f.nom)}">${esc(f.nom)}</span>
+        <span class="alerta-row-det">${f.det}</span>
+        <span class="alerta-row-val">${f.val}</span>
+      </div>`).join('');
+    return `
+      <div class="alerta-card ${cls}" id="alerta-${id}">
+        <div class="alerta-header" onclick="toggleAlerta('alerta-${id}')">
+          <span class="alerta-icon">${icon}</span>
+          <div class="alerta-info">
+            <div class="alerta-titol">${titol}</div>
+            <div class="alerta-desc">${desc}</div>
+          </div>
+          <span class="alerta-num">${num}</span>
+          <span style="font-size:10px;color:#999;text-align:right;flex-shrink:0;min-width:40px">${numLabel}</span>
+          <span class="alerta-chevron">▼</span>
+        </div>
+        <div class="alerta-body">${rowsHtml}</div>
+      </div>`;
+  }
+
+  grid.innerHTML = [
+    alertaCard('frag', 'alerta-red',
+      '🔴',
+      'Possible fragmentació de contractes',
+      `${fragmentats.length} proveïdors amb ${MIN_FACTURES}+ factures totes per sota de ${fmtEur(LLINDAR)}. Possible evitació de licitació pública.`,
+      fragmentats.length,
+      'proveïdors',
+      fragmentats.map(f => ({
+        nom: f.nom,
+        det: `${f.nFact} factures · mitjana ${fmtEur(Math.round(f.mitjana))}`,
+        val: fmtEur(f.total)
+      }))
+    ),
+    alertaCard('rec', 'alerta-yellow',
+      '🟡',
+      'Proveïdors amb recurrència molt alta',
+      `${recurrents.length} proveïdors apareixen 6 o més anys consecutius amb més de 20 factures. Relació continuada sense contracte visible.`,
+      recurrents.length,
+      'proveïdors',
+      recurrents.map(r => ({
+        nom: r.nom,
+        det: `${r.anys} anys · ${r.nFact} factures`,
+        val: fmtEur(r.total)
+      }))
+    ),
+    alertaCard('conc', 'alerta-blue',
+      '🔵',
+      'Concentració de despesa en pocs proveïdors',
+      `Els 5 proveïdors principals concentren el ${pctTop5.toFixed(1)}% de tota la despesa municipal (${fmtEur(topProveidors.reduce((s,p)=>s+p.total,0))}).`,
+      pctTop5.toFixed(1) + '%',
+      'top 5',
+      topProveidors.map((p, i) => ({
+        nom: `${i+1}. ${p.nom}`,
+        det: `${p.pct.toFixed(1)}% del pressupost`,
+        val: fmtEur(p.total)
+      }))
+    ),
+  ].join('');
+}
+
+function toggleAlerta(id) {
+  document.getElementById(id)?.classList.toggle('open');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GOVERN
+// ─────────────────────────────────────────────────────────────────────────────
+const EQUIP_GOVERN = [
+  {
+    id:"mases", nom:"Montserrat Mases Sala", carrec:"Alcaldessa Presidenta",
+    email:"masessm@calaf.cat", sou_brut:29736.96, dedicacio:"64%",
+    arees:["Alcaldia","Secretaria","Hisenda","Promoció Econòmica"],
+    bio:"Tècnica administrativa amb ACTIC. 10 anys a JIP La casa dels pantalons i 15 anys cap d'administració a Wirquin Calaf SL. Des del 2015 al departament de compres de Leds-C4.",
+    empresa:"Leds-C4",
+    dietes_2025:413.60,
+    menjo_vincles:0,
+    menjo_nota:"Cap vincle empresarial detectat al Menjòmetre"
+  },
+  {
+    id:"biosca", nom:"Jordi Biosca Pou", carrec:"1r Tinent d'Alcalde",
+    email:"bioscapj@calaf.cat", sou_brut:22960, dedicacio:"56,33%",
+    arees:["Urbanisme","Espais Públics","Habitatge","Seguretat Ciutadana"],
+    bio:"Diplomat en Ciències Empresarials (FUB). President de l'AA.VV. la Pineda des del 2010. Comptable a Ernust Fincas SL, Sallent.",
+    empresa:"Ernust Fincas SL",
+    dietes_2025:0,
+    menjo_vincles:3,
+    menjo_nota:"3 vincles al BORME (representant, apoderat, secretari no conseller). Cap empresa vinculada és proveïdora de l'Ajuntament."
+  },
+  {
+    id:"isern", nom:"Montserrat Isern Vivancos", carrec:"2a Tinent d'Alcalde",
+    email:"isernvm@calaf.cat", sou_brut:15050, dedicacio:"32%",
+    arees:["Serveis Socials","Salut","Educació","Arxiu"],
+    bio:"Llicenciada en Filologia Catalana (UAB). Professora de català a l'IES Castellet (Dept. Educació). Regidora 2015-2019 a Calaf i 2019-2023 a Aguilar de Segarra.",
+    empresa:"Dept. Educació (Generalitat)",
+    dietes_2025:179.15,
+    menjo_vincles:0,
+    menjo_nota:"Cap vincle empresarial detectat al Menjòmetre"
+  },
+  {
+    id:"rotes", nom:"Roger Rotés Biosca", carrec:"Regidor",
+    email:"rotesbr@calaf.cat", sou_brut:13160, dedicacio:"29,33%",
+    arees:["Medi Ambient","Transició Energètica","Comunicació","Informàtica"],
+    bio:"Enginyer de Sistemes Aeroespacials (UPC, 2020) + Postgrau Innovació Digital. Des del 2021 Product Manager a AUSA (vehicles industrials tot terreny).",
+    empresa:"AUSA",
+    dietes_2025:0,
+    menjo_vincles:0,
+    menjo_nota:"Cap vincle empresarial detectat al Menjòmetre"
+  },
+  {
+    id:"soria", nom:"Laura Sòria Grau", carrec:"Regidora",
+    email:"soriaglr@calaf.cat", sou_brut:13160, dedicacio:"29,33%",
+    arees:["Esports","Turisme","Recursos Humans","Equitat"],
+    bio:"Criminologia (UPF, 2016) + Psicologia (UB, 2019). Especialitzada en psicologia forense. Des del 2018 tècnica de selecció i formació a TERSA.",
+    empresa:"TERSA",
+    dietes_2025:0,
+    menjo_vincles:0,
+    menjo_nota:"Cap vincle empresarial detectat al Menjòmetre"
+  },
+  {
+    id:"sugranes", nom:"Vicenç Sugrañes Creus", carrec:"Regidor",
+    email:"sugranescv@calaf.cat", sou_brut:13160, dedicacio:"29,33%",
+    arees:["Cultura","Festes","Mercats","Joventut"],
+    bio:"Enginyer Industrial Mecànic (UPC Manresa, 2020). Ha treballat en diverses empreses calafines. Des del 2021 enginyer tècnic a Tallers Ratera, Manresa.",
+    empresa:"Tallers Ratera",
+    dietes_2025:0,
+    menjo_vincles:0,
+    menjo_nota:"Cap vincle empresarial detectat al Menjòmetre"
+  }
+];
+
+const OPOSICIO = [
+  {
+    nom:"Joan Caballol Perez", grup:"SC-CP", rol:"Portaveu",
+    assistencies_2025: 1900,
+    mesos_dades: 7,
+    nota:"Sumem per Calaf – Candidatura de Progrés"
+  },
+  {
+    nom:"Josep Casulleras Closa", grup:"SC-CP", rol:"Regidor",
+    assistencies_2025: 1150,
+    mesos_dades: 7,
+    nota:"Sumem per Calaf – Candidatura de Progrés"
+  },
+  {
+    nom:"Aleix Estruch Diaz", grup:"JxC-CM", rol:"Regidor",
+    assistencies_2025: 1350,
+    mesos_dades: 7,
+    nota:"Junts per Catalunya – Compromís Municipal"
+  },
+  {
+    nom:"Omar Salcedo de la Torre", grup:"JxC-CM", rol:"Regidor",
+    assistencies_2025: 1050,
+    mesos_dades: 7,
+    nota:"Junts per Catalunya – Compromís Municipal"
+  }
+];
+
+function renderGovern() {
+  const grid = document.getElementById('govern-grid');
+  if (!grid) return;
+
+  // ── Totals ──
+  const totalSous = EQUIP_GOVERN.reduce((s,r) => s + (r.sou_brut||0), 0);
+  const totalDietes = EQUIP_GOVERN.reduce((s,r) => s + (r.dietes_2025||0), 0);
+  const totalAssist7m = OPOSICIO.reduce((s,r) => s + r.assistencies_2025, 0);
+  const totalAssistAny = Math.round(totalAssist7m / 7 * 12);
+  const totalGeneral = totalSous + totalDietes + totalAssistAny;
+
+  // ── Resum costos ──
+  const resumHtml = `
+    <div style="background:#fff;border:1.5px solid #e8e8e8;border-radius:12px;padding:18px 20px;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;margin-bottom:14px">💶 Cost total democràcia local 2025 (estimat)</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px">
+        <div style="text-align:center;background:#fafbfc;border-radius:8px;padding:12px">
+          <div style="font-size:20px;font-weight:800;color:#4040ff">${fmtEur(totalSous)}</div>
+          <div style="font-size:11px;color:#888;margin-top:2px">Sous equip govern</div>
+        </div>
+        <div style="text-align:center;background:#fafbfc;border-radius:8px;padding:12px">
+          <div style="font-size:20px;font-weight:800;color:#00897b">${fmtEur(totalAssistAny)}</div>
+          <div style="font-size:11px;color:#888;margin-top:2px">Assistències oposició</div>
+        </div>
+        <div style="text-align:center;background:#fafbfc;border-radius:8px;padding:12px">
+          <div style="font-size:20px;font-weight:800;color:#ff9800">${fmtEur(totalDietes)}</div>
+          <div style="font-size:11px;color:#888;margin-top:2px">Dietes i locomoció</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #f0f0f0;padding-top:10px">
+        <span style="font-size:13px;color:#666">Total estimat anual</span>
+        <span style="font-size:18px;font-weight:800;color:#1a1a1a">${fmtEur(totalGeneral)}</span>
+      </div>
+      <div style="font-size:10px;color:#bbb;margin-top:6px">Font: Edicte BOPB 6-7-2023 · Resolucions alcaldia 2025 · Dades oficials Ajuntament de Calaf</div>
+    </div>`;
+
+  // ── Cards equip govern ──
+  const governHtml = `
+    <div style="margin-bottom:16px">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;margin-bottom:12px">Equip de govern · JxC-AM (6 regidors)</div>
+      <div class="govern-grid">
+        ${EQUIP_GOVERN.map(r => {
+          const inicials = r.nom.split(' ').slice(0,2).map(p=>p[0]).join('');
+          const areesBadges = r.arees.map(a => `<span class="govern-area-badge">${esc(a)}</span>`).join('');
+          const menjoClass = r.menjo_vincles > 0 ? 'govern-menjo-alerta' : 'govern-menjo-ok';
+          const menjoIcon  = r.menjo_vincles > 0 ? '⚠️' : '✅';
+          const dietesHtml = r.dietes_2025 > 0
+            ? `<div class="govern-meta">🚗 Dietes 2025: ${fmtEur(r.dietes_2025)}</div>` : '';
+          return `
+            <div class="govern-card">
+              <div class="govern-card-header">
+                <div class="govern-avatar">${inicials}</div>
+                <div>
+                  <div class="govern-nom">${esc(r.nom)}</div>
+                  <div class="govern-carrec">${esc(r.carrec)} · JxC-AM</div>
+                </div>
+              </div>
+              <div class="govern-body">
+                <div class="govern-arees">${areesBadges}</div>
+                <div class="govern-bio">${esc(r.bio)}</div>
+                <div class="govern-meta">🏢 ${esc(r.empresa)}</div>
+                <div class="govern-meta">💶 ${fmtEur(r.sou_brut)}/any brut · ${r.dedicacio} dedicació</div>
+                ${dietesHtml}
+                <div class="govern-meta">✉️ <a href="mailto:${r.email}" style="color:#4040ff;text-decoration:none">${r.email}</a></div>
+                <div class="govern-menjo ${menjoClass}">
+                  <span>${menjoIcon}</span>
+                  <span>${esc(r.menjo_nota)}</span>
+                </div>
+              </div>
+            </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+
+  // ── Oposició ──
+  const opHtml = `
+    <div>
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;margin-bottom:12px">Oposició · Assistències 2025 (7 mesos disponibles)</div>
+      <div style="background:#fff;border:1.5px solid #e8e8e8;border-radius:12px;overflow:hidden">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead>
+            <tr style="background:#f8f9fa">
+              <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Regidor</th>
+              <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Grup</th>
+              <th style="padding:10px 16px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">7 mesos</th>
+              <th style="padding:10px 16px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Estimat any</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${OPOSICIO.map((r,i) => `
+              <tr style="border-bottom:1px solid #f3f4f6">
+                <td style="padding:10px 16px;font-weight:600">${esc(r.nom)}</td>
+                <td style="padding:10px 16px">
+                  <span style="padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:${r.grup==='SC-CP'?'#fef3c7':'#ede9fe'};color:${r.grup==='SC-CP'?'#92400e':'#5b21b6'}">${r.grup}</span>
+                </td>
+                <td style="padding:10px 16px;text-align:right;font-weight:600">${fmtEur(r.assistencies_2025)}</td>
+                <td style="padding:10px 16px;text-align:right;font-weight:700;color:#4040ff">${fmtEur(Math.round(r.assistencies_2025/7*12))}</td>
+              </tr>`).join('')}
+          </tbody>
+          <tfoot>
+            <tr style="background:#f8f9fa;border-top:2px solid #e5e7eb">
+              <td colspan="2" style="padding:10px 16px;font-weight:700;font-size:12px">TOTAL oposició</td>
+              <td style="padding:10px 16px;text-align:right;font-weight:700">${fmtEur(totalAssist7m)}</td>
+              <td style="padding:10px 16px;text-align:right;font-weight:700;color:#4040ff">~${fmtEur(totalAssistAny)}</td>
+            </tr>
+          </tfoot>
+        </table>
+        <div style="padding:10px 16px;font-size:11px;color:#bbb">Font: Resolucions d'Alcaldia 2025 · Gen, Abr, Mai, Jul, Set, Nov, Des (mesos sense dades: Feb, Mar, Jun, Ago, Oct)</div>
+      </div>
+    </div>`;
+
+  grid.innerHTML = resumHtml + governHtml + opHtml;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
