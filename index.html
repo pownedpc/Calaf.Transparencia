@@ -542,6 +542,74 @@ body.mobile-mode .hero h1 { font-size: 22px; }
   .concepte-import { font-size: 13px; }
   .concepte-row { padding-left: 44px; }
 }
+
+/* ── MENJÒMETRE BADGE + PANEL ───────────────────────────── */
+.menjo-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-left: 6px;
+  flex-shrink: 0;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: transform .15s;
+}
+.menjo-dot:hover { transform: scale(1.5); }
+.menjo-green  { background: #22c55e; }
+.menjo-yellow { background: #f59e0b; }
+.menjo-red    { background: #ef4444; }
+
+.menjo-panel {
+  display: none;
+  background: #fff;
+  border: 1.5px solid #e0e0ff;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 4px 0 8px 0;
+  animation: fadeInPanel .15s ease;
+}
+.menjo-panel.open { display: block; }
+@keyframes fadeInPanel {
+  from { opacity:0; transform:translateY(-4px); }
+  to   { opacity:1; transform:none; }
+}
+.menjo-panel-nom {
+  font-size: 12px; font-weight: 700; color: #1a1a1a;
+  margin-bottom: 10px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
+.menjo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.menjo-stat {
+  background: #fafbfc;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 9px 10px;
+  text-align: center;
+}
+.menjo-stat-val { font-size: 17px; font-weight: 800; color: #1a1a1a; display: block; }
+.menjo-stat-lbl { font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .4px; color: #999; margin-top: 2px; display: block; }
+.menjo-bar-bg { background: #f0f0f0; border-radius: 3px; height: 5px; overflow: hidden; margin-top: 5px; }
+.menjo-bar    { height: 100%; border-radius: 3px; transition: width .4s; }
+.menjo-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+.menjo-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 11px; border-radius: 6px; border: 1px solid #ddd;
+  background: #fff; color: #4040ff; font-size: 12px; font-weight: 600;
+  text-decoration: none; transition: all .15s;
+}
+.menjo-link:hover { background: #eff0ff; border-color: #4040ff; }
+.menjo-disclaimer { font-size: 10px; color: #ccc; line-height: 1.4; max-width: 340px; }
+@media (max-width: 768px) {
+  .menjo-grid { grid-template-columns: repeat(3,1fr); gap: 6px; }
+  .menjo-stat-val { font-size: 14px; }
+  .menjo-panel { padding: 10px 12px; }
+}
 </style>
 <body>
 
@@ -1125,27 +1193,107 @@ function updateStats(data) {
 // ─────────────────────────────────────────────────────────────────────────────
 // TAULA
 // ─────────────────────────────────────────────────────────────────────────────
+function menjoDot(r) {
+  const score = parseFloat(r.menjo_score);
+  if (!score) return '';
+  const color = score >= 70 ? '#ef4444' : score >= 40 ? '#f59e0b' : '#22c55e';
+  const bg    = score >= 70 ? '#fff1f1' : score >= 40 ? '#fffbeb' : '#f0fdf4';
+  return `<span
+    onclick="event.stopPropagation();toggleMenjoPanel('mp-${r._rowid}')"
+    title="Veure context Catalunya al Menjòmetre"
+    style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;
+           background:${bg};border:1px solid ${color}30;color:${color};
+           font-size:10px;font-weight:700;cursor:pointer;flex-shrink:0;
+           white-space:nowrap;transition:opacity .15s;margin-left:5px"
+  >🔍 ${score.toFixed(0)}</span>`;
+}
+
+function menjoPanel(r) {
+  const score = parseFloat(r.menjo_score);
+  if (!score && !r.menjo_total_cat) return '';
+  const totalCat = parseFloat(r.menjo_total_cat) || 0;
+  const numCont  = parseInt(r.menjo_num_cont) || 0;
+  const slug     = r.menjo_slug || '';
+  const barColor = score >= 70 ? '#ef4444' : score >= 40 ? '#f59e0b' : '#22c55e';
+  const mUrl     = slug ? `https://www.menjometre.cat/entitat/${slug}` : null;
+
+  return `<tr id="mp-${r._rowid}" class="menjo-panel-row" style="display:none">
+    <td colspan="6" style="padding:0 14px 8px">
+      <div class="menjo-panel open">
+        <div class="menjo-panel-nom">${esc(r.proveidor)}</div>
+        <div class="menjo-grid">
+          <div class="menjo-stat">
+            <span class="menjo-stat-val">${score ? score.toFixed(1) : '—'}</span>
+            <span class="menjo-stat-lbl">Score</span>
+            ${score ? `<div class="menjo-bar-bg"><div class="menjo-bar" style="width:${score}%;background:${barColor}"></div></div>` : ''}
+          </div>
+          <div class="menjo-stat">
+            <span class="menjo-stat-val">${totalCat >= 1e6 ? (totalCat/1e6).toFixed(1)+'M' : totalCat >= 1e3 ? Math.round(totalCat/1e3)+'K' : (totalCat||'—')}</span>
+            <span class="menjo-stat-lbl">Total Catalunya</span>
+          </div>
+          <div class="menjo-stat">
+            <span class="menjo-stat-val">${numCont || '—'}</span>
+            <span class="menjo-stat-lbl">Contractes CAT</span>
+          </div>
+        </div>
+        <div class="menjo-actions">
+          ${mUrl ? `<a class="menjo-link" href="${mUrl}" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Veure al Menjòmetre
+          </a>` : '<span></span>'}
+          <span class="menjo-disclaimer">Score descriptiu — no implica irregularitat. Font: menjometre.cat</span>
+        </div>
+      </div>
+    </td>
+  </tr>`;
+}
+
+function toggleMenjoPanel(id) {
+  const row = document.getElementById(id);
+  if (!row) return;
+  row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
+}
+
 function renderTable() {
   const start = (currentPage - 1) * PAGE_SIZE;
   const page  = filtered.slice(start, start + PAGE_SIZE);
   const tbody = document.getElementById('table-body');
   const isMobile = window.innerWidth <= 768;
 
+  // Afegir _rowid temporal per identificar files
+  page.forEach((r, i) => { r._rowid = start + i; });
+
   if (isMobile) {
     tbody.innerHTML = page.map((r, i) => `
       <tr onclick="toggleDesc('desc-${start+i}')" style="cursor:pointer">
         <td style="padding:10px;width:65%">
-          <span style="display:block;font-weight:600;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.proveidor)}</span>
+          <span style="display:flex;align-items:center;gap:4px">
+            <span style="font-weight:600;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">${esc(r.proveidor)}</span>
+            ${menjoDot(r)}
+          </span>
           <span style="display:block;font-size:11px;color:#aaa;margin-top:2px">${r.any} · ${esc(r.categoria)}</span>
           <span id="desc-${start+i}" style="display:none;font-size:12px;color:#555;margin-top:6px;line-height:1.5;white-space:normal">${esc(r.descripcio || '—')}</span>
         </td>
         <td style="padding:10px;width:35%;text-align:right;font-weight:700;font-size:13px;white-space:nowrap;vertical-align:top">${fmtM(r.import)}</td>
-      </tr>`).join('');
+      </tr>
+      ${r.menjo_score ? `<tr id="mp-${r._rowid}" style="display:none"><td colspan="2" style="padding:0 10px 8px"><div class="menjo-panel open">
+        <div class="menjo-panel-nom">${esc(r.proveidor)}</div>
+        <div class="menjo-grid">
+          <div class="menjo-stat"><span class="menjo-stat-val">${parseFloat(r.menjo_score).toFixed(1)}</span><span class="menjo-stat-lbl">Score</span></div>
+          <div class="menjo-stat"><span class="menjo-stat-val">${parseFloat(r.menjo_total_cat)>=1e6?(parseFloat(r.menjo_total_cat)/1e6).toFixed(1)+'M':Math.round(parseFloat(r.menjo_total_cat)/1e3)+'K'}</span><span class="menjo-stat-lbl">Total CAT</span></div>
+          <div class="menjo-stat"><span class="menjo-stat-val">${r.menjo_num_cont||'—'}</span><span class="menjo-stat-lbl">Contractes</span></div>
+        </div>
+        ${r.menjo_slug?`<a class="menjo-link" href="https://www.menjometre.cat/entitat/${r.menjo_slug}" target="_blank">Veure al Menjòmetre ↗</a>`:''}
+      </div></td></tr>` : ''}
+    `).join('');
   } else {
-    tbody.innerHTML = page.map((r, i) => `
-      <tr onclick="toggleDesc('desc-${start+i}')" style="cursor:pointer">
+    tbody.innerHTML = page.map((r) => `
+      <tr onclick="toggleDesc('desc-${r._rowid}')" style="cursor:pointer">
         <td class="td-prov">
-          <span class="td-prov-name" title="${esc(r.proveidor)}">${esc(r.proveidor)}</span>
+          <span style="display:flex;align-items:center;gap:4px">
+            <span class="td-prov-name" title="${esc(r.proveidor)}">${esc(r.proveidor)}</span>
+            ${menjoDot(r)}
+          </span>
           ${r.nif_tercer ? `<span class="td-prov-nif">${esc(r.nif_tercer)}</span>` : ''}
         </td>
         <td class="td-import">${fmtEur(r.import)}</td>
@@ -1153,9 +1301,11 @@ function renderTable() {
         <td class="td-trim">${r.trimestre || '—'}</td>
         <td><span class="badge-cat" style="${catStyle(r.categoria)}">${esc(r.categoria)}</span></td>
         <td class="td-desc">
-          <span id="desc-${start+i}" style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:300px" title="${esc(r.descripcio)}">${esc(r.descripcio || '—')}</span>
+          <span id="desc-${r._rowid}" style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:300px" title="${esc(r.descripcio)}">${esc(r.descripcio || '—')}</span>
         </td>
-      </tr>`).join('');
+      </tr>
+      ${menjoPanel(r)}
+    `).join('');
   }
 
   document.getElementById('table-count').textContent =
