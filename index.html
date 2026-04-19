@@ -3078,26 +3078,27 @@ function renderGovern() {
 // ─────────────────────────────────────────────────────────────────────────────
 // EQUIPAMENTS
 // ─────────────────────────────────────────────────────────────────────────────
+const SVG = (d) => `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
 const EQUIPAMENTS = [
-  { nom:"Arxiu Municipal",          icon:"📦", keys:["arxiu","archivo municipal"] },
-  { nom:"CAP Calaf",                icon:"🏥", keys:["cap calaf","centre atencio primaria","centre d'atencio","medic","metge","metges","consultori","ambulatori"] },
-  { nom:"Camp de Futbol",           icon:"⚽", keys:["camp de futbol","camp futbol","garrigues","futbol","vestuari futbol"] },
-  { nom:"Casa Bertran · Gent Gran", icon:"👴", keys:["casa bertran","gent gran","esplai gent gran","llar jubilat","casal gent gran","casal de la gent","energia electrica casa bertran"] },
-  { nom:"Casa Joan Gimferrer · Centre de Dia", icon:"🏠", keys:["gimferrer","centre de dia","centredevia"] },
-  { nom:"Cementiri Municipal",      icon:"⚰️", keys:["cementiri","cementerio"] },
-  { nom:"Centre de Recursos (CRO)", icon:"💼", keys:["centre de recursos","cro","foap","casa oficis","taller ocupaci","centre recursos"] },
-  { nom:"CDIAP APINAS",             icon:"👶", keys:["cdiap","apinas","atencio precoç","atencio preco"] },
-  { nom:"Deixalleria Municipal",    icon:"♻️", keys:["deixalleria","deixall","recollida selectiva","residus urbans","residuos urbanos"] },
-  { nom:"Escola Alta Segarra",      icon:"🏫", keys:["escola alta segarra","ceip alta segarra","escola alta","ampa escola"] },
-  { nom:"Escola Municipal de Música",icon:"🎵", keys:["escola de musica","escola musica","escola municipal de musica","mestre manel","musica calaf"] },
-  { nom:"Espai Carmen Arrojo",      icon:"🎭", keys:["carmen arrojo","espai social","espai cultural","sala actes"] },
-  { nom:"Estació de Ferrocarrils",  icon:"🚂", keys:["estacio","estacion","ferrocarril","ffcc"] },
-  { nom:"IES Alexandre de Riquer",  icon:"🎓", keys:["alexandre de riquer","ins alexandre","institut alexandre","riquer"] },
-  { nom:"Jutjat de Pau",            icon:"⚖️", keys:["jutjat","juzgado"] },
-  { nom:"Llar d'Infants La Boireta",icon:"🧸", keys:["boireta","llar d'infants","llar infants","ampa llar","ampa boireta"] },
-  { nom:"Mini Deixalleria",         icon:"🗑️", keys:["mini deixalleria","minideixalleria"] },
-  { nom:"Parc Cal·listènia",        icon:"🏋️", keys:["calistenia","cal·listenia","callistenia","parc esportiu","maquines esport"] },
-  { nom:"Poliesportiu Municipal",   icon:"🏊", keys:["poliesportiu","pavelló","pavello","piscina","pista esportiva","pista poliesportiva","bar poliesportiu","camp poliesportiu"] },
+  { nom:"Arxiu Municipal",           icon:SVG(`<polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/>`), keys:["arxiu","archivo municipal"] },
+  { nom:"CAP Calaf",                 icon:SVG(`<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>`), keys:["cap calaf","centre atencio primaria","centre d'atencio","medic","metge","metges","consultori","ambulatori"] },
+  { nom:"Camp de Futbol",            icon:SVG(`<circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="2" y1="12" x2="22" y2="12"/>`), keys:["camp de futbol","camp futbol","garrigues","futbol","vestuari futbol"] },
+  { nom:"Casa Bertran · Gent Gran",  icon:SVG(`<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`), keys:["casa bertran","gent gran","esplai gent gran","llar jubilat","casal gent gran","casal de la gent","energia electrica casa bertran"] },
+  { nom:"Casa Gimferrer · Centre Dia",icon:SVG(`<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>`), keys:["gimferrer","centre de dia"] },
+  { nom:"Cementiri Municipal",       icon:SVG(`<rect x="3" y="8" width="18" height="14" rx="2"/><path d="M12 4v8"/><path d="M10 6h4"/>`), keys:["cementiri","cementerio"] },
+  { nom:"Centre de Recursos (CRO)",  icon:SVG(`<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>`), keys:["centre de recursos","cro","foap","casa oficis","taller ocupaci","centre recursos"] },
+  { nom:"CDIAP APINAS",              icon:SVG(`<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>`), keys:["cdiap","apinas","atencio precoç","atencio preco"] },
+  { nom:"Deixalleria Municipal",     icon:SVG(`<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>`), keys:["deixalleria","deixall","recollida selectiva","residus urbans","residuos urbanos"] },
+  { nom:"Escola Alta Segarra",       icon:SVG(`<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>`), keys:["escola alta segarra","ceip alta segarra","escola alta","ampa escola"] },
+  { nom:"Escola Municipal de Música", icon:SVG(`<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>`), keys:["escola de musica","escola musica","escola municipal de musica","mestre manel","musica calaf"] },
+  { nom:"Espai Carmen Arrojo",       icon:SVG(`<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`), keys:["carmen arrojo","espai social","espai cultural","sala actes"] },
+  { nom:"Estació de Ferrocarrils",   icon:SVG(`<rect x="2" y="7" width="20" height="13" rx="5"/><polyline points="5 7 5 3 19 3 19 7"/><line x1="6" y1="13" x2="6.01" y2="13"/><line x1="18" y1="13" x2="18.01" y2="13"/><line x1="12" y1="20" x2="8" y2="23"/><line x1="12" y1="20" x2="16" y2="23"/>`), keys:["estacio","estacion","ferrocarril","ffcc"] },
+  { nom:"IES Alexandre de Riquer",   icon:SVG(`<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>`), keys:["alexandre de riquer","ins alexandre","institut alexandre","riquer"] },
+  { nom:"Jutjat de Pau",             icon:SVG(`<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`), keys:["jutjat","juzgado"] },
+  { nom:"Llar d'Infants La Boireta", icon:SVG(`<circle cx="12" cy="8" r="4"/><path d="M16 11c2 1 3 3 3 5H5c0-2 1-4 3-5"/><line x1="12" y1="12" x2="12" y2="17"/>`), keys:["boireta","llar d'infants","llar infants","ampa llar","ampa boireta"] },
+  { nom:"Mini Deixalleria",          icon:SVG(`<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>`), keys:["mini deixalleria","minideixalleria"] },
+  { nom:"Parc Cal·listènia",         icon:SVG(`<circle cx="12" cy="4" r="2"/><path d="M12 6v6l-3 4"/><path d="M12 12l3 4"/><line x1="7" y1="10" x2="17" y2="10"/>`), keys:["calistenia","cal·listenia","callistenia","parc esportiu","maquines esport"] },
+  { nom:"Poliesportiu Municipal",    icon:SVG(`<rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/>`), keys:["poliesportiu","pavelló","pavello","piscina","pista esportiva","pista poliesportiva","bar poliesportiu","camp poliesportiu"] },
 ];
 
 function renderEquipaments() {
@@ -3136,7 +3137,7 @@ function renderEquipaments() {
            onmouseover="this.style.boxShadow='0 2px 10px rgba(0,0,0,.08)';this.style.borderColor='#4040ff'"
            onmouseout="this.style.boxShadow='';this.style.borderColor='#e8e8e8'">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-          <span style="font-size:24px">${eq.icon}</span>
+          <span style="color:#4040ff;display:flex;align-items:center;flex-shrink:0">${eq.icon}</span>
           <span style="font-size:13px;font-weight:700;color:#1a1a1a;flex:1">${esc(eq.nom)}</span>
         </div>
         <div style="font-size:22px;font-weight:800;color:#4040ff;margin-bottom:4px">${fmtEur(eq.total)}</div>
