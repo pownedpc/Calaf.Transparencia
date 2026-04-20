@@ -908,7 +908,11 @@ body.mobile-mode .hero h1 { font-size: 22px; }
     </button>
     <button class="drawer-item" onclick="setView('govern');closeDrawer()">
       <span class="drawer-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
-      <div><div class="drawer-label">Govern municipal</div><div class="drawer-sublabel">Regidors, sous, vincles BORME</div></div>
+      <div><div class="drawer-label">Govern municipal</div><div class="drawer-sublabel">Regidors, sous, plantilla, vincles BORME</div></div>
+    </button>
+    <button class="drawer-item" onclick="setView('contractacio');closeDrawer()">
+      <span class="drawer-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+      <div><div class="drawer-label">Pla contractació 2026</div><div class="drawer-sublabel">29 contractes previstos, seguiment licitacions</div></div>
     </button>
 
   </div>
@@ -1311,8 +1315,53 @@ body.mobile-mode .hero h1 { font-size: 22px; }
 
     <div id="govern-grid" class="govern-grid"></div>
 
-    <div style="font-size:11px;color:#bbb;text-align:center;padding:16px 0 4px">
-      Font: CVs oficials Ajuntament de Calaf · Menjòmetre / BORME · Dades públiques
+    <!-- Plantilla de personal -->
+    <div style="margin-top:28px;margin-bottom:16px">
+      <h3 style="font-size:16px;font-weight:700;color:#1a1a1a;margin-bottom:4px">Plantilla municipal 2026</h3>
+      <p style="font-size:13px;color:#666;margin:0">Font: BOPB 5-1-2026 · CVE 202510204013</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px">
+      <div style="background:#fff;border:1.5px solid #e8e8e8;border-radius:10px;padding:12px 14px;text-align:center">
+        <div style="font-size:22px;font-weight:800;color:#4040ff">67</div>
+        <div style="font-size:11px;color:#888;margin-top:2px">Places totals</div>
+      </div>
+      <div style="background:#fff;border:1.5px solid #e8e8e8;border-radius:10px;padding:12px 14px;text-align:center">
+        <div style="font-size:22px;font-weight:800;color:#00897b">46</div>
+        <div style="font-size:11px;color:#888;margin-top:2px">Places cobertes</div>
+      </div>
+      <div style="background:#fff;border:1.5px solid #fca5a5;border-radius:10px;padding:12px 14px;text-align:center">
+        <div style="font-size:22px;font-weight:800;color:#ef4444">21</div>
+        <div style="font-size:11px;color:#888;margin-top:2px">Vacants (31%)</div>
+      </div>
+      <div style="background:#fff;border:1.5px solid #fed7aa;border-radius:10px;padding:12px 14px;text-align:center">
+        <div style="font-size:16px;font-weight:800;color:#ff9800">2.217.394€</div>
+        <div style="font-size:11px;color:#888;margin-top:2px">Cap. 1 pressupost</div>
+      </div>
+    </div>
+    <div style="background:#fff;border:1.5px solid #e8e8e8;border-radius:12px;overflow:hidden;margin-bottom:20px">
+      <div style="padding:10px 14px;background:#f8f9fa;border-bottom:1px solid #e8e8e8">
+        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888">Catàleg retributiu 2026 (selecció)</span>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead><tr style="background:#f8f9fa">
+          <th style="padding:8px 14px;text-align:left;font-size:11px;color:#888;font-weight:600;border-bottom:1px solid #f0f0f0">Lloc de treball</th>
+          <th style="padding:8px 14px;text-align:center;font-size:11px;color:#888;font-weight:600;border-bottom:1px solid #f0f0f0">Grup</th>
+          <th style="padding:8px 14px;text-align:right;font-size:11px;color:#888;font-weight:600;border-bottom:1px solid #f0f0f0">Total anual</th>
+        </tr></thead>
+        <tbody>
+          ${[['Secretari/ària-Interventor/a','A1',65407],['Director/a Llar d\'Infants','A2',33439],['TS Arquitecte/a','A1',33699],['TS Enginyer/a','A1',33699],['TM Promoció Econòmica','A2',31324],['Cap de Brigada','C1',29135],['TM Recursos Humans','A2',28601],['Vigilant','C2',27961],['Professor/a Escola Música','A2',24745],['Educador/a Llar Infants','C1',23531],['Netejador/a','AP',18438]].map(([lloc,grup,total],i)=>`
+          <tr style="border-bottom:1px solid #f3f4f6;background:${i%2===0?'#fff':'#fafbfc'}">
+            <td style="padding:8px 14px;font-weight:500">${lloc}</td>
+            <td style="padding:8px 14px;text-align:center"><span style="padding:1px 7px;border-radius:20px;font-size:11px;font-weight:700;background:#eff0ff;color:#4040ff">${grup}</span></td>
+            <td style="padding:8px 14px;text-align:right;font-weight:700">${new Intl.NumberFormat('ca-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(total)}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+      <div style="padding:8px 14px;font-size:11px;color:#bbb">Imports bruts anuals (14 pagues) · No inclou SS patronal (~30%)</div>
+    </div>
+
+    <div style="font-size:11px;color:#bbb;text-align:center;padding:8px 0 4px">
+      Font: CVs oficials · Menjòmetre / BORME · BOPB CVE 202510204013 · Dades públiques
     </div>
 
   </div>
@@ -1326,6 +1375,48 @@ body.mobile-mode .hero h1 { font-size: 22px; }
     <div id="equipaments-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px"></div>
     <div style="font-size:11px;color:#bbb;text-align:center;padding:16px 0">
       Càlcul per paraules clau a la descripció de les factures · Pot no incloure totes les despeses
+    </div>
+  </div>
+
+  <!-- VIEW: CONTRACTACIÓ 2026 -->
+  <div class="view" id="view-contractacio">
+    <div style="margin-bottom:20px">
+      <h2 style="font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px">Pla de contractació 2026</h2>
+      <p style="font-size:14px;color:#666;margin:0">Contractes previstos per a l'exercici 2026. Permet fer el seguiment ciutadà de les licitacions anunciades.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:20px" id="cont-stats"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <select id="cont-filtre-trim" onchange="renderContractacio()" style="padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:13px;background:#fff;cursor:pointer">
+        <option value="">Tots els trimestres</option>
+        <option value="1r">1r trimestre</option>
+        <option value="2n">2n trimestre</option>
+        <option value="3r">3r trimestre</option>
+        <option value="4r">4rt trimestre</option>
+      </select>
+      <select id="cont-filtre-tipus" onchange="renderContractacio()" style="padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:13px;background:#fff;cursor:pointer">
+        <option value="">Tots els tipus</option>
+        <option value="Obres">Obres</option>
+        <option value="Serveis">Serveis</option>
+        <option value="Subministrament">Subministrament</option>
+        <option value="Concessió">Concessió</option>
+        <option value="Acord marc">Acord marc (ACM)</option>
+      </select>
+    </div>
+    <div style="background:#fff;border:1.5px solid #e8e8e8;border-radius:12px;overflow:hidden">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="background:#f8f9fa">
+            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb;white-space:nowrap">Trim.</th>
+            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Descripció</th>
+            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Tipus</th>
+            <th style="padding:10px 14px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb;white-space:nowrap">Import est.</th>
+          </tr>
+        </thead>
+        <tbody id="cont-tbody"></tbody>
+      </table>
+    </div>
+    <div style="font-size:11px;color:#bbb;text-align:center;padding:12px 0">
+      Font: Pla Anual de Contractació 2026 · Aprovat Ple desembre 2025 · Ajuntament de Calaf
     </div>
   </div>
 
@@ -1836,7 +1927,7 @@ function renderCategoriesView() {
 // ─────────────────────────────────────────────────────────────────────────────
 function setView(view) {
   currentView = view;
-  const VIEWS = ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes','alertes','govern','equipaments'];
+  const VIEWS = ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes','alertes','govern','equipaments','contractacio'];
   VIEWS.forEach(v => {
     const el = document.getElementById('view-' + v);
     if (el) el.classList.toggle('active', v === view);
@@ -1856,6 +1947,7 @@ function setView(view) {
   if (view === 'alertes')     renderAlertes();
   if (view === 'govern')      renderGovern();
   if (view === 'equipaments') renderEquipaments();
+  if (view === 'contractacio') renderContractacio();
 
   gcEvent('/e/pestanya/' + view);
 }
@@ -3157,6 +3249,93 @@ function filtrarEquipament(key) {
   setView('taula');
   onSearch();
 }
+// ─────────────────────────────────────────────────────────────────────────────
+// CONTRACTACIÓ 2026
+// ─────────────────────────────────────────────────────────────────────────────
+const CONTRACTES_2026 = [
+  {trim:'1r',dept:'SSTT',desc:'Serveis convocatoria Pla de Barris',tipus:'Serveis',proc:'Menor',import:14000,durada:3},
+  {trim:'1r',dept:'SSTT/Serveis',desc:'Adhesió acord marc vestuari laboral',tipus:'Acord marc',proc:'Acord marc',import:null,durada:null},
+  {trim:'1r',dept:'Esports',desc:'Socorrisme i monitoratge piscina municipal (2 lots)',tipus:'Serveis',proc:'Obert simplificat',import:null,durada:4},
+  {trim:'1r',dept:'Esports',desc:'Concessió servei bar piscina municipal',tipus:'Concessió',proc:'Obert',import:null,durada:null},
+  {trim:'1r',dept:'Esports',desc:'Substitució paviment pista de futbol sala',tipus:'Obres',proc:'Menor',import:35000,durada:1},
+  {trim:'1r',dept:'Contractació',desc:'Adhesió acord marc energia elèctrica Lot 1 (2.0TD)',tipus:'Acord marc',proc:'Acord marc',import:null,durada:12},
+  {trim:'1r',dept:'Contractació',desc:'Adhesió acord marc assegurances flota vehicles Lot 2',tipus:'Acord marc',proc:'Acord marc',import:null,durada:null},
+  {trim:'1r/2n',dept:'SSTT',desc:'Reparació estructural dipòsit 2 ETAP',tipus:'Obres',proc:'Menor',import:26286,durada:3},
+  {trim:'1r/2n',dept:'Medi Ambient',desc:'Punt de recàrrega vehicles elèctrics',tipus:'Subministrament',proc:'Acord marc',import:13999,durada:1},
+  {trim:'1r',dept:'Educació',desc:'Neteja equipaments municipals',tipus:'Serveis',proc:'Obert',import:null,durada:null,destacat:true},
+  {trim:'2n',dept:'SSTT',desc:'Pavimentació vials urbans — Pla Director',tipus:'Obres',proc:'Obert simplificat',import:200000,durada:4,destacat:true},
+  {trim:'2n',dept:'SSTT',desc:'Millora de camins',tipus:'Obres',proc:'Menor',import:13160,durada:1},
+  {trim:'2n',dept:'SSTT',desc:'Arranjaments elèctrics pavelló poliesportiu',tipus:'Obres',proc:'Menor',import:20000,durada:3},
+  {trim:'2n',dept:'SSTT',desc:'Arranjaments elèctrics Plaça Barcelona 92',tipus:'Obres',proc:'Menor',import:47500,durada:3},
+  {trim:'2n',dept:'SSTT/Serveis',desc:'Pròrroga neteja viària mercat municipal',tipus:'Serveis',proc:'Obert simplificat',import:45920,durada:24},
+  {trim:'2n',dept:'Esports',desc:'Reparació pista tennis i il·luminació zona esportiva (2 lots)',tipus:'Obres',proc:'Menor',import:37470,durada:1},
+  {trim:'2n',dept:'Esports',desc:'Substitució tanca perimetral zona esportiva',tipus:'Obres',proc:'Menor',import:8144,durada:1},
+  {trim:'2n',dept:'Contractació',desc:'Pròrroga energia elèctrica Lot 2 (3.0TD) — ENDESA',tipus:'Acord marc',proc:'Acord marc',import:null,durada:12},
+  {trim:'2n',dept:'Contractació',desc:'Adhesió acord marc assegurança defensa jurídica Lot 4',tipus:'Acord marc',proc:'Acord marc',import:null,durada:12},
+  {trim:'2n',dept:'Contractació',desc:'Adhesió acord marc responsabilitat càrrecs electes Lot 3',tipus:'Acord marc',proc:'Acord marc',import:null,durada:12},
+  {trim:'3r',dept:'SSTT',desc:'Legalització càmeres seguretat ciutadana LECTIO',tipus:'Serveis',proc:'Obert',import:7044,durada:2},
+  {trim:'3r',dept:'SSTT',desc:'Redacció nou POUM (inicial, provisional, definitiva)',tipus:'Serveis',proc:'Obert simplificat',import:100000,durada:48,destacat:true},
+  {trim:'3r',dept:'Esports',desc:'Sistema control accés domotitzat piscina',tipus:'Subministrament',proc:'Menor',import:6777,durada:1},
+  {trim:'3r',dept:'Esports',desc:'Segon desbordant perímetre piscina municipal',tipus:'Obres',proc:'Menor',import:null,durada:1},
+  {trim:'3r',dept:'Contractació',desc:'Pròrroga electricitat Lot 4 Autoconsum',tipus:'Acord marc',proc:'Acord marc',import:null,durada:12},
+  {trim:'3r',dept:'Contractació',desc:'Nou acord marc gas natural',tipus:'Acord marc',proc:'Acord marc',import:null,durada:12},
+  {trim:'4r',dept:'SSTT',desc:'Adhesió acord marc manteniment ascensors',tipus:'Acord marc',proc:'Acord marc',import:null,durada:null},
+  {trim:'4r',dept:'Contractació',desc:'Adhesió acord marc responsabilitat civil i patrimonial Lot 2',tipus:'Acord marc',proc:'Acord marc',import:null,durada:12},
+  {trim:'4r',dept:'Contractació',desc:'Adhesió acord marc assegurança edificis i instal·lacions',tipus:'Acord marc',proc:'Acord marc',import:null,durada:12},
+];
+
+const TIPUS_COL = {
+  'Obres':         {bg:'#fef3c7',col:'#92400e'},
+  'Serveis':       {bg:'#eff0ff',col:'#4040ff'},
+  'Subministrament':{bg:'#f0fdf4',col:'#166534'},
+  'Concessió':     {bg:'#fdf4ff',col:'#7e22ce'},
+  'Acord marc':    {bg:'#f3f4f6',col:'#374151'},
+};
+
+function renderContractacio() {
+  const fTrim  = document.getElementById('cont-filtre-trim')?.value  || '';
+  const fTipus = document.getElementById('cont-filtre-tipus')?.value || '';
+
+  const data = CONTRACTES_2026.filter(c =>
+    (!fTrim  || c.trim.includes(fTrim.replace('r',''))) &&
+    (!fTipus || c.tipus === fTipus)
+  );
+
+  // Stats
+  const statsEl = document.getElementById('cont-stats');
+  if (statsEl) {
+    const totalQ = CONTRACTES_2026.filter(c=>c.import).reduce((s,c)=>s+(c.import||0),0);
+    statsEl.innerHTML = [
+      [CONTRACTES_2026.length.toString(),'Contractes previstos','#4040ff'],
+      [fmtEur(totalQ)+'*','Import quantificat','#00897b'],
+      [CONTRACTES_2026.filter(c=>c.tipus==='Obres').length.toString(),'Contractes d\'obres','#ff9800'],
+      [CONTRACTES_2026.filter(c=>c.destacat).length.toString(),'Destacats ★','#d97706'],
+    ].map(([val,lab,col])=>`
+      <div style="background:#fff;border:1.5px solid #e8e8e8;border-radius:10px;padding:12px 14px;text-align:center">
+        <div style="font-size:18px;font-weight:800;color:${col}">${val}</div>
+        <div style="font-size:11px;color:#888;margin-top:2px">${lab}</div>
+      </div>`).join('');
+  }
+
+  const tbody = document.getElementById('cont-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = data.map((c,i) => {
+    const tc = TIPUS_COL[c.tipus] || TIPUS_COL['Acord marc'];
+    const importHtml = c.import ? `<span style="font-weight:700">${fmtEur(c.import)}</span>` : `<span style="color:#bbb">Pd.</span>`;
+    const bg = c.destacat ? '#fffbeb' : (i%2===0?'#fff':'#fafbfc');
+    return `<tr style="border-bottom:1px solid #f3f4f6;background:${bg}">
+      <td style="padding:9px 14px;font-size:12px;color:#888;white-space:nowrap;font-weight:600">${esc(c.trim)}</td>
+      <td style="padding:9px 14px">
+        ${c.destacat?'<span style="font-size:10px;font-weight:700;color:#d97706;margin-right:4px">★</span>':''}
+        <span style="font-weight:500">${esc(c.desc)}</span>
+        <div style="font-size:11px;color:#aaa;margin-top:1px">${esc(c.dept)}${c.durada?` · ${c.durada} mesos`:''}</div>
+      </td>
+      <td style="padding:9px 14px"><span style="padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:${tc.bg};color:${tc.col}">${esc(c.tipus)}</span></td>
+      <td style="padding:9px 14px;text-align:right">${importHtml}</td>
+    </tr>`;
+  }).join('');
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 function toggleDrawer() {
   const drawer  = document.getElementById('drawer');
