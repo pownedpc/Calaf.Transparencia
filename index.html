@@ -1321,7 +1321,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
   <div class="view" id="view-equipaments">
     <div style="margin-bottom:20px">
       <h2 style="font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px">Despesa per equipament</h2>
-      <p style="font-size:14px;color:#666;margin:0">Quant costa cada equipament municipal. Suma de totes les factures relacionades per descripció.</p>
+      <p style="font-size:14px;color:#666;margin:0">Suma de factures relacionades per paraules clau a la descripció. <strong>Els imports poden ser parcials</strong> — no totes les despeses esmenten l'equipament explícitament.</p>
     </div>
     <div id="equipaments-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px"></div>
     <div style="font-size:11px;color:#bbb;text-align:center;padding:16px 0">
@@ -2994,7 +2994,7 @@ function renderGovern() {
         <span style="font-size:13px;color:#666">Total estimat anual</span>
         <span style="font-size:18px;font-weight:800;color:#1a1a1a">${fmtEur(totalGeneral)}</span>
       </div>
-      <div style="font-size:10px;color:#bbb;margin-top:6px">Font: Edicte BOPB 6-7-2023 · Resolucions alcaldia 2025 · Dades oficials Ajuntament de Calaf</div>
+      <div style="font-size:10px;color:#bbb;margin-top:6px">Font: Edicte BOPB 6-7-2023 · Resolucions alcaldia 2025 · Dades oficials Ajuntament de Calaf · <strong style="color:#f59e0b">Imports bruts — no inclouen SS patronal (~30%)</strong></div>
     </div>`;
 
   // ── Cards equip govern ──
@@ -3083,8 +3083,8 @@ const EQUIPAMENTS = [
   { nom:"Arxiu Municipal",           icon:SVG(`<polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/>`), keys:["arxiu","archivo municipal"] },
   { nom:"CAP Calaf",                 icon:SVG(`<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>`), keys:["cap calaf","centre atencio primaria","centre d'atencio","medic","metge","metges","consultori","ambulatori"] },
   { nom:"Camp de Futbol",            icon:SVG(`<circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="2" y1="12" x2="22" y2="12"/>`), keys:["camp de futbol","camp futbol","garrigues","futbol","vestuari futbol"] },
-  { nom:"Casa Bertran · Gent Gran",  icon:SVG(`<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`), keys:["casa bertran","gent gran","esplai gent gran","llar jubilat","casal gent gran","casal de la gent","energia electrica casa bertran"] },
-  { nom:"Casa Gimferrer · Centre Dia",icon:SVG(`<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>`), keys:["gimferrer","centre de dia"] },
+  { nom:"Casa Bertran · Gent Gran",  icon:SVG(`<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`), keys:["casa bertran"] },
+  { nom:"Casa Gimferrer · Centre Dia",icon:SVG(`<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>`), keys:["gimferrer","joan gimferrer"] },
   { nom:"Cementiri Municipal",       icon:SVG(`<rect x="3" y="8" width="18" height="14" rx="2"/><path d="M12 4v8"/><path d="M10 6h4"/>`), keys:["cementiri","cementerio"] },
   { nom:"Centre de Recursos (CRO)",  icon:SVG(`<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>`), keys:["centre de recursos","cro","foap","casa oficis","taller ocupaci","centre recursos"] },
   { nom:"CDIAP APINAS",              icon:SVG(`<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>`), keys:["cdiap","apinas","atencio precoç","atencio preco"] },
@@ -3093,7 +3093,7 @@ const EQUIPAMENTS = [
   { nom:"Escola Municipal de Música", icon:SVG(`<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>`), keys:["escola de musica","escola musica","escola municipal de musica","mestre manel","musica calaf"] },
   { nom:"Espai Carmen Arrojo",       icon:SVG(`<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`), keys:["carmen arrojo","espai social","espai cultural","sala actes"] },
   { nom:"Estació de Ferrocarrils",   icon:SVG(`<rect x="2" y="7" width="20" height="13" rx="5"/><polyline points="5 7 5 3 19 3 19 7"/><line x1="6" y1="13" x2="6.01" y2="13"/><line x1="18" y1="13" x2="18.01" y2="13"/><line x1="12" y1="20" x2="8" y2="23"/><line x1="12" y1="20" x2="16" y2="23"/>`), keys:["estacio","estacion","ferrocarril","ffcc"] },
-  { nom:"IES Alexandre de Riquer",   icon:SVG(`<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>`), keys:["alexandre de riquer","ins alexandre","institut alexandre","riquer"] },
+  { nom:"IES Alexandre de Riquer",   icon:SVG(`<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>`), keys:["alexandre de riquer","ins alexandre","institut alexandre"] },
   { nom:"Jutjat de Pau",             icon:SVG(`<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`), keys:["jutjat","juzgado"] },
   { nom:"Llar d'Infants La Boireta", icon:SVG(`<circle cx="12" cy="8" r="4"/><path d="M16 11c2 1 3 3 3 5H5c0-2 1-4 3-5"/><line x1="12" y1="12" x2="12" y2="17"/>`), keys:["boireta","llar d'infants","llar infants","ampa llar","ampa boireta"] },
   { nom:"Mini Deixalleria",          icon:SVG(`<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>`), keys:["mini deixalleria","minideixalleria"] },
