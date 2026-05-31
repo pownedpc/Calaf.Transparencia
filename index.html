@@ -2872,10 +2872,34 @@ function initTimeTracking() {
 // ALERTES
 // ─────────────────────────────────────────────────────────────────────────────
 function renderAlertes() {
-  const LLINDAR = 15000;
-  const MIN_FACTURES = 5;
 
-  // ── Agrupació per proveïdor ──
+  // ── Whitelist: proveïdors exempts de fragmentació ─────────────────
+  // Telecoms, energia, ACM, subministraments recurrents per naturalesa
+  const WHITELIST_FRAG = [
+    'ENDESA','TELEFONICA','VODAFONE','MOVISTAR','ORANGE','FACTOR ENERGIA',
+    'ELECTRA CALDENSE','IBERDROLA','NATURGY','GAS NATURAL','ELECTRICA PINTO',
+    'ANALEMA','ENS ABASTAMENT','TRANSPARENTA CICLE','PROVEÏMENT','ELECTRA',
+    'TYCO','SECURITAS','PROSEGUR','G4S','SOLITIUM',
+    'AMAZON','GOOGLE','MICROSOFT','ADOBE',
+    'AUTOCARS','TRANSPORT',
+  ];
+  const esWhitelist = (nom) => WHITELIST_FRAG.some(w => nom.toUpperCase().includes(w));
+
+  // ── Anys disponibles ───────────────────────────────────────────────
+  const anysDisponibles = [...new Set(ALL_DATA.map(r => r.any))].filter(Boolean).sort();
+  const anyActual = anysDisponibles[anysDisponibles.length - 1];
+
+  // ── Agrupació per any + proveïdor ─────────────────────────────────
+  const grupesPerAny = {};
+  ALL_DATA.forEach(r => {
+    if (!r.proveidor || !r.any) return;
+    const k = `${r.any}__${r.proveidor}`;
+    if (!grupesPerAny[k]) grupesPerAny[k] = { any: r.any, nom: r.proveidor, total: 0, factures: [] };
+    grupesPerAny[k].total += r.import;
+    grupesPerAny[k].factures.push(r.import);
+  });
+
+  // ── Agrupació global per proveïdor ────────────────────────────────
   const grups = {};
   ALL_DATA.forEach(r => {
     if (!r.proveidor) return;
@@ -2887,25 +2911,48 @@ function renderAlertes() {
 
   const totalDespesa = ALL_DATA.reduce((s, r) => s + r.import, 0);
 
-  // ── ALERTA 1: Fragmentació (>5 factures totes < 15.000€) ──
-  const fragmentats = Object.entries(grups)
-    .filter(([, g]) => {
-      const nFact = g.factures.length;
-      const totesMenors = g.factures.every(f => f < LLINDAR);
-      return nFact >= MIN_FACTURES && totesMenors;
-    })
-    .map(([nom, g]) => ({
-      nom,
-      nFact: g.factures.length,
-      total: g.total,
-      mitjana: g.total / g.factures.length,
-    }))
-    .sort((a, b) => b.nFact - a.nFact)
-    .slice(0, 20);
+  // ── ALERTA 1: Fragmentació per any ────────────────────────────────
+  // Per cada any: proveïdors amb ≥4 factures totes <15.000€ (mínim 500€)
+  // Exclou telecoms, energia i ACM
+  const LLINDAR_FRAG  = 15000;
+  const MIN_FACT_FRAG = 4;
+  const MIN_IMPORT    = 500;  // Ignora factures de material de papereria, etc.
 
-  // ── ALERTA 2: Recurrència alta (≥6 anys consecutius, >20 factures) ──
+  const fragmentatsPerAny = {};
+  Object.values(grupesPerAny).forEach(g => {
+    if (esWhitelist(g.nom)) return;
+    const facValides = g.factures.filter(f => f >= MIN_IMPORT);
+    if (facValides.length < MIN_FACT_FRAG) return;
+    if (!facValides.every(f => f < LLINDAR_FRAG)) return;
+    if (!fragmentatsPerAny[g.any]) fragmentatsPerAny[g.any] = [];
+    fragmentatsPerAny[g.any].push({
+      nom: g.nom,
+      nFact: facValides.length,
+      total: g.total,
+      mitjana: g.total / facValides.length,
+    });
+  });
+
+  // Ordenar cada any per nFact
+  Object.keys(fragmentatsPerAny).forEach(any => {
+    fragmentatsPerAny[any].sort((a, b) => b.nFact - a.nFact);
+  });
+
+  // Construir llista flat per mostrar: anys recents primer
+  const fragmentatsFlat = [];
+  Object.keys(fragmentatsPerAny).sort((a, b) => b - a).forEach(any => {
+    fragmentatsPerAny[any].slice(0, 8).forEach(f => {
+      fragmentatsFlat.push({ ...f, any: parseInt(any) });
+    });
+  });
+  const nAnysAmbFrag = Object.keys(fragmentatsPerAny).length;
+
+  // ── ALERTA 2: Recurrència alta (sense whitelist) ──────────────────
   const recurrents = Object.entries(grups)
-    .filter(([, g]) => g.anys.size >= 6 && g.factures.length > 20)
+    .filter(([nom, g]) => {
+      if (esWhitelist(nom)) return false;
+      return g.anys.size >= 5 && g.factures.length > 15;
+    })
     .map(([nom, g]) => ({
       nom,
       anys: g.anys.size,
@@ -2915,14 +2962,24 @@ function renderAlertes() {
     .sort((a, b) => b.anys - a.anys || b.nFact - a.nFact)
     .slice(0, 20);
 
-  // ── ALERTA 3: Concentració (top 5 proveïdors) ──
+  // ── ALERTA 3: Concentració (top 5 proveïdors) ────────────────────
   const topProveidors = Object.entries(grups)
     .map(([nom, g]) => ({ nom, total: g.total, pct: g.total / totalDespesa * 100 }))
     .sort((a, b) => b.total - a.total)
     .slice(0, 5);
   const pctTop5 = topProveidors.reduce((s, p) => s + p.pct, 0);
 
-  // ── Renderitzar ──
+  // ── ALERTA 4: Proveïdors sense NIF ───────────────────────────────
+  const senseNif = Object.entries(grups)
+    .filter(([nom, g]) => {
+      const teNif = ALL_DATA.some(r => r.proveidor === nom && r.nif_tercer && String(r.nif_tercer).trim().length > 5);
+      return !teNif && g.total > 5000;
+    })
+    .map(([nom, g]) => ({ nom, nFact: g.factures.length, total: g.total }))
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 10);
+
+  // ── Renderitzar ───────────────────────────────────────────────────
   const grid = document.getElementById('alertes-grid');
   if (!grid) return;
 
@@ -2950,22 +3007,26 @@ function renderAlertes() {
   }
 
   grid.innerHTML = [
+
     alertaCard('frag', 'alerta-red',
       '🔴',
       'Possible fragmentació de contractes',
-      `${fragmentats.length} proveïdors amb ${MIN_FACTURES}+ factures totes per sota de ${fmtEur(LLINDAR)}. Possible evitació de licitació pública.`,
-      fragmentats.length,
-      'proveïdors',
-      fragmentats.map(f => ({
+      `Proveïdors amb ≥${MIN_FACT_FRAG} factures totes per sota de ${fmtEur(LLINDAR_FRAG)} en un mateix any. ` +
+      `Exclou telecoms, energia i ACM. Detectat en ${nAnysAmbFrag} anys.`,
+      fragmentatsFlat.length,
+      'casos',
+      fragmentatsFlat.map(f => ({
         nom: f.nom,
-        det: `${f.nFact} factures · mitjana ${fmtEur(Math.round(f.mitjana))}`,
+        det: `${f.any} · ${f.nFact} factures · mitjana ${fmtEur(Math.round(f.mitjana))}`,
         val: fmtEur(f.total)
       }))
     ),
+
     alertaCard('rec', 'alerta-yellow',
       '🟡',
-      'Proveïdors amb recurrència molt alta',
-      `${recurrents.length} proveïdors apareixen 6 o més anys consecutius amb més de 20 factures. Relació continuada sense contracte visible.`,
+      'Proveïdors amb relació continuada llarga',
+      `${recurrents.length} proveïdors apareixen 5 o més anys amb més de 15 factures sense contracte públic visible. ` +
+      `Exclou subministraments habituals.`,
       recurrents.length,
       'proveïdors',
       recurrents.map(r => ({
@@ -2974,10 +3035,12 @@ function renderAlertes() {
         val: fmtEur(r.total)
       }))
     ),
+
     alertaCard('conc', 'alerta-blue',
       '🔵',
       'Concentració de despesa en pocs proveïdors',
-      `Els 5 proveïdors principals concentren el ${pctTop5.toFixed(1)}% de tota la despesa municipal (${fmtEur(topProveidors.reduce((s,p)=>s+p.total,0))}).`,
+      `Els 5 proveïdors principals concentren el ${pctTop5.toFixed(1)}% de tota la despesa municipal ` +
+      `(${fmtEur(topProveidors.reduce((s,p)=>s+p.total,0))}).`,
       pctTop5.toFixed(1) + '%',
       'top 5',
       topProveidors.map((p, i) => ({
@@ -2986,6 +3049,7 @@ function renderAlertes() {
         val: fmtEur(p.total)
       }))
     ),
+
   ].join('');
 }
 
