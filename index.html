@@ -761,6 +761,130 @@ body.mobile-mode .hero h1 { font-size: 22px; }
 .drawer-icon { font-size: 18px; width: 26px; text-align: center; flex-shrink: 0; }
 .drawer-label { font-size: 14px; line-height: 1.3; }
 
+/* ── PORTADA ─────────────────────────────────────────────── */
+.portada-hero {
+  text-align: center;
+  padding: 56px 20px 40px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.portada-hero h1 {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 900;
+  color: #1a1a1a;
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+.portada-hero h1 span { color: #4040ff; }
+.portada-hero p {
+  font-size: 17px;
+  color: #555;
+  line-height: 1.6;
+  margin: 0 0 32px;
+}
+.portada-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: #4040ff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+  text-decoration: none;
+}
+.portada-btn:hover { background: #2e2eb8; transform: translateY(-1px); }
+.portada-nums {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 860px;
+  margin: 40px auto;
+}
+.portada-num-card {
+  background: #fff;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 20px 14px;
+  text-align: center;
+}
+.portada-num-val {
+  font-size: clamp(20px, 3vw, 30px);
+  font-weight: 900;
+  color: #4040ff;
+  line-height: 1.1;
+}
+.portada-num-lab {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
+  font-weight: 500;
+}
+.portada-divider {
+  border: none;
+  border-top: 1px solid #f0f0f0;
+  max-width: 860px;
+  margin: 0 auto 32px;
+}
+.portada-cards-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+}
+.portada-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  max-width: 860px;
+  margin: 0 auto 48px;
+}
+.portada-card {
+  background: #fff;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 14px;
+  padding: 22px 20px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .15s, box-shadow .15s, transform .1s;
+  border-top: 3px solid #e8e8e8;
+}
+.portada-card:hover {
+  border-color: #4040ff;
+  border-top-color: #4040ff;
+  box-shadow: 0 4px 16px rgba(64,64,255,.1);
+  transform: translateY(-2px);
+}
+.portada-card-icon {
+  color: #4040ff;
+  margin-bottom: 12px;
+}
+.portada-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+}
+.portada-card-desc {
+  font-size: 13px;
+  color: #777;
+  line-height: 1.4;
+}
+.portada-footer {
+  text-align: center;
+  font-size: 12px;
+  color: #bbb;
+  padding-bottom: 32px;
+}
+@media (max-width: 768px) {
+  .portada-nums { grid-template-columns: repeat(2, 1fr); }
+  .portada-cards { grid-template-columns: 1fr; }
+}
 /* ── GOVERN ─────────────────────────────────────────────── */
 .govern-grid {
   display: grid;
@@ -822,7 +946,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
         <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
       </svg>
     </button>
-    <a class="logo" href="#" onclick="setView('taula')"><span>calaf.</span><span class="logo-line2">transparència</span></a>
+    <a class="logo" href="#" onclick="setView('portada')"><span>calaf.</span><span class="logo-line2">transparència</span></a>
     <nav class="nav">
       <button class="nav-tab active" onclick="setView('taula')">Inici</button>
       <button class="nav-tab" onclick="setView('proveidors')">Proveïdors</button>
@@ -940,6 +1064,70 @@ body.mobile-mode .hero h1 { font-size: 22px; }
 
 <!-- MAIN -->
 <main class="main">
+
+  <!-- VIEW: PORTADA -->
+  <div class="view" id="view-portada">
+
+    <div class="portada-hero">
+      <h1>Saps on va<br><span>el teu diner?</span></h1>
+      <p>Tots els pagaments de l'Ajuntament de Calaf, ordenats, buscables i a l'abast de tothom. Sense tecnicismes. Sense excuses.</p>
+      <button class="portada-btn" onclick="setView('taula')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Explorar la despesa
+      </button>
+    </div>
+
+    <div class="portada-nums" id="portada-nums">
+      <div class="portada-num-card"><div class="portada-num-val" id="pn-factures">—</div><div class="portada-num-lab">factures publicades</div></div>
+      <div class="portada-num-card"><div class="portada-num-val" id="pn-import" style="color:#00897b">—</div><div class="portada-num-lab">euros de despesa</div></div>
+      <div class="portada-num-card"><div class="portada-num-val" id="pn-proveidors" style="color:#ff9800">—</div><div class="portada-num-lab">proveïdors únics</div></div>
+      <div class="portada-num-card"><div class="portada-num-val" id="pn-anys" style="color:#1a1a1a">—</div><div class="portada-num-lab">anys de dades</div></div>
+    </div>
+
+    <hr class="portada-divider">
+
+    <div style="max-width:860px;margin:0 auto 20px">
+      <div class="portada-cards-title">Quin aspecte t'interessa?</div>
+      <div class="portada-cards">
+
+        <button class="portada-card" onclick="setView('proveidors')">
+          <div class="portada-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="portada-card-title">Qui cobra més?</div>
+          <div class="portada-card-desc">Rànquing de les empreses i entitats que reben més diners de l'ajuntament.</div>
+        </button>
+
+        <button class="portada-card" onclick="setView('equipaments')">
+          <div class="portada-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div class="portada-card-title">Quant costa l'escola?</div>
+          <div class="portada-card-desc">Cost real de cada equipament: escola, piscina, llar d'infants, cementiri...</div>
+        </button>
+
+        <button class="portada-card" onclick="setView('govern')">
+          <div class="portada-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+          <div class="portada-card-title">Qui governa i quan cobra?</div>
+          <div class="portada-card-desc">Sous dels regidors, plantilla municipal i vincles empresarials.</div>
+        </button>
+
+        <button class="portada-card" onclick="setView('alertes')" style="border-top-color:#ef4444">
+          <div class="portada-card-icon" style="color:#ef4444"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="portada-card-title" style="color:#ef4444">Hi ha alguna irregularitat?</div>
+          <div class="portada-card-desc">Patrons anòmals detectats automàticament: fragmentació, concentració, recurrència.</div>
+        </button>
+
+        <button class="portada-card" onclick="setView('taula')">
+          <div class="portada-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+          <div class="portada-card-title">Cerca lliure</div>
+          <div class="portada-card-desc">Busca qualsevol empresa, proveïdor o concepte de despesa pels últims 10 anys.</div>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="portada-footer" id="portada-footer">
+      Dades públiques de l'Ajuntament de Calaf · Portal independent sense ànim de lucre
+    </div>
+
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -1555,7 +1743,8 @@ function init() {
   renderAnyView();
   renderCategoriesView();
 
-  document.getElementById('view-taula').classList.add('active');
+  document.getElementById('view-portada').classList.add('active');
+  renderPortada();
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1960,7 +2149,7 @@ function renderCategoriesView() {
 // ─────────────────────────────────────────────────────────────────────────────
 function setView(view) {
   currentView = view;
-  const VIEWS = ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes','alertes','govern','equipaments','contractacio'];
+  const VIEWS = ['portada','taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes','alertes','govern','equipaments','contractacio'];
   VIEWS.forEach(v => {
     const el = document.getElementById('view-' + v);
     if (el) el.classList.toggle('active', v === view);
@@ -1971,6 +2160,7 @@ function setView(view) {
   });
   updateDrawerActive();
 
+  if (view === 'portada')     renderPortada();
   if (view === 'proveidors')  renderRankingProveidors(filtered);
   if (view === 'subvencions') initSubvencions();
   if (view === 'pressupost')  renderPressupost();
@@ -3055,6 +3245,29 @@ function renderAlertes() {
 
 function toggleAlerta(id) {
   document.getElementById(id)?.classList.toggle('open');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PORTADA
+// ─────────────────────────────────────────────────────────────────────────────
+function renderPortada() {
+  if (!ALL_DATA.length) return;
+  const total      = ALL_DATA.reduce((s, r) => s + r.import, 0);
+  const nFact      = ALL_DATA.length;
+  const nProv      = new Set(ALL_DATA.map(r => r.proveidor)).size;
+  const anys       = [...new Set(ALL_DATA.map(r => r.any).filter(Boolean))].sort();
+  const rangAnys   = anys.length > 1 ? `${anys[0]}–${anys[anys.length-1]}` : (anys[0] || '—');
+  const maxDate    = ALL_DATA.map(r => r.data).filter(d => d?.match(/^\d{4}-\d{2}-\d{2}/)).sort().pop();
+
+  const el = (id) => document.getElementById(id);
+  if (el('pn-factures')) el('pn-factures').textContent = nFact.toLocaleString('ca');
+  if (el('pn-import'))   el('pn-import').textContent   = total >= 1e6
+    ? (total/1e6).toFixed(2).replace('.',',') + 'M€'
+    : fmtEur(total);
+  if (el('pn-proveidors')) el('pn-proveidors').textContent = nProv.toLocaleString('ca');
+  if (el('pn-anys'))     el('pn-anys').textContent     = rangAnys;
+  if (el('portada-footer')) el('portada-footer').textContent =
+    `Dades públiques de l'Ajuntament de Calaf · Actualitzat: ${maxDate || '—'} · Portal independent`;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
