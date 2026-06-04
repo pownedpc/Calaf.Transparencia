@@ -766,7 +766,7 @@ body.mobile-mode .hero h1 { font-size: 22px; }
 
 /* ── PORTADA ─────────────────────────────────────────────── */
 #view-portada {
-  display: flex;
+  display: none;
   flex-direction: column;
   min-height: calc(100vh - 57px);
 }
@@ -1090,10 +1090,8 @@ body.mobile-mode .hero h1 { font-size: 22px; }
 </nav>
 
 <!-- MAIN -->
-<main class="main">
-
-  <!-- VIEW: PORTADA -->
-  <div class="view" id="view-portada">
+<!-- VIEW: PORTADA (fora del main) -->
+<div id="view-portada" style="display:none">
     <div class="portada-split">
 
       <!-- ESQUERRA FOSCA -->
@@ -1149,7 +1147,9 @@ body.mobile-mode .hero h1 { font-size: 22px; }
       <span>Actualitzat: <strong id="portada-footer">—</strong></span>
       <a href="https://github.com/pownedpc/Calaf.Transparencia" target="_blank">Codi obert →</a>
     </div>
-  </div>
+</div>
+
+<main class="main" id="main-portal" style="display:none">
 
   <!-- HERO -->
   <section class="hero">
@@ -1765,7 +1765,8 @@ function init() {
   renderAnyView();
   renderCategoriesView();
 
-  document.getElementById('view-portada').classList.add('active');
+  document.getElementById('view-portada').style.display = 'flex';
+  document.getElementById('main-portal').style.display  = 'none';
   renderPortada();
 }
 
@@ -2171,7 +2172,16 @@ function renderCategoriesView() {
 // ─────────────────────────────────────────────────────────────────────────────
 function setView(view) {
   currentView = view;
-  const VIEWS = ['portada','taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes','alertes','govern','equipaments','contractacio'];
+  const isPortada = view === 'portada';
+
+  // Portada viu fora del main — gestió independent
+  const portadaEl = document.getElementById('view-portada');
+  const mainEl    = document.getElementById('main-portal');
+  if (portadaEl) portadaEl.style.display = isPortada ? 'flex' : 'none';
+  if (mainEl)    mainEl.style.display    = isPortada ? 'none' : 'block';
+
+  // Vistes dins del main
+  const VIEWS = ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes','alertes','govern','equipaments','contractacio'];
   VIEWS.forEach(v => {
     const el = document.getElementById('view-' + v);
     if (el) el.classList.toggle('active', v === view);
