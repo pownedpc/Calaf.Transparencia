@@ -1,0 +1,32 @@
+name: Actualitzar contractes PSCP
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  fetch-contractes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repositori
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Executar script de descarrega
+        run: python fetch_contractes.py
+
+      - name: Commit i push si hi ha canvis
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add calaf_contractes.csv json/contractes.json
+          git diff --staged --quiet || git commit -m "auto: actualitzacio contractes PSCP $(date +'%Y-%m-%d')"
+          git push

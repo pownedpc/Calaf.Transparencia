@@ -1142,6 +1142,10 @@ body.is-portada { background: #0d1118 !important; }
       <span class="drawer-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
       <div><div class="drawer-label">Documents convenis</div><div class="drawer-sublabel">PDFs oficials signats</div></div>
     </button>
+    <button class="drawer-item" onclick="setView('contractes');closeDrawer()">
+      <span class="drawer-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+      <div><div class="drawer-label">Contractes adjudicats</div><div class="drawer-sublabel">PSCP AOC i creuament amb factures</div></div>
+    </button>
 
     <div class="drawer-section-label" style="margin-top:8px">Pressupost</div>
     <button class="drawer-item" onclick="setView('pressupost');closeDrawer()">
@@ -1702,6 +1706,41 @@ body.is-portada { background: #0d1118 !important; }
   </div>
 
   <!-- VIEW: CONTRACTACIÓ 2026 -->
+  <div class="view" id="view-contractes">
+    <div style="margin-bottom:20px">
+      <h2 style="font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px">Contractes adjudicats</h2>
+      <p style="font-size:14px;color:#666;margin:0">Contractes publicats al Perfil de Contractant i creuats amb els proveidors de factures municipals.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:20px" id="contractes-stats"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <input id="contractes-search" oninput="renderContractes()" placeholder="Cerca adjudicatari, expedient o objecte..." style="flex:1;min-width:240px;padding:8px 11px;border:1px solid #ddd;border-radius:7px;font-size:13px;background:#fff">
+      <select id="contractes-any" onchange="renderContractes()" style="padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:13px;background:#fff;cursor:pointer">
+        <option value="">Tots els anys</option>
+      </select>
+      <select id="contractes-match" onchange="renderContractes()" style="padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:13px;background:#fff;cursor:pointer">
+        <option value="">Tots</option>
+        <option value="1">Coincideix amb factures</option>
+      </select>
+    </div>
+    <div style="background:#fff;border:1.5px solid #e8e8e8;border-radius:12px;overflow:hidden">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="background:#f8f9fa">
+            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb;white-space:nowrap">Data</th>
+            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Contracte</th>
+            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Adjudicatari</th>
+            <th style="padding:10px 14px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb;white-space:nowrap">Import</th>
+            <th style="padding:10px 14px;text-align:center;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb;white-space:nowrap">Factures</th>
+          </tr>
+        </thead>
+        <tbody id="contractes-tbody"></tbody>
+      </table>
+    </div>
+    <div style="font-size:11px;color:#bbb;text-align:center;padding:12px 0">
+      Font: AOC PSCP via API de dades - Ajuntament de Calaf NIF P0803100G - Coincidencies per NIF o nom normalitzat
+    </div>
+  </div>
+
   <div class="view" id="view-contractacio">
     <div style="margin-bottom:20px">
       <h2 style="font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:4px">Pla de contractació 2026</h2>
@@ -1778,6 +1817,7 @@ body.is-portada { background: #0d1118 !important; }
 // DADES I ESTAT
 // ─────────────────────────────────────────────────────────────────────────────
 let ALL_DATA     = [];
+let ALL_CONTRACTES = [];
 let filtered     = [];
 let sortCol      = 'import';
 let sortAsc      = false;
@@ -1795,6 +1835,7 @@ async function loadData() {
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const text = await resp.text();
     ALL_DATA = parseCSV(text);
+    ALL_CONTRACTES = await loadContractesData();
     init();
   } catch (e) {
     document.getElementById('loading').innerHTML =
@@ -1803,6 +1844,24 @@ async function loadData() {
         Assegura't que el fitxer <code>data.csv</code> és a la mateixa carpeta que aquest <code>index.html</code>.<br><br>
         <small>Error: ${e.message}</small>
       </div>`;
+  }
+}
+
+async function loadContractesData() {
+  try {
+    const resp = await fetch('calaf_contractes.csv');
+    if (!resp.ok) return [];
+    const rows = parseCSV(await resp.text());
+    return rows.map(r => ({
+      ...r,
+      import_amb_iva: parseFloat(r.import_amb_iva) || 0,
+      import_sense_iva: parseFloat(r.import_sense_iva) || 0,
+      valor_estimat: parseFloat(r.valor_estimat) || 0,
+      factures_import: parseFloat(r.factures_import) || 0,
+      factures_count: parseInt(r.factures_count) || 0,
+    }));
+  } catch {
+    return [];
   }
 }
 
@@ -1859,6 +1918,7 @@ function init() {
   const selCat = document.getElementById('filter-cat');
   anys.forEach(y => { const o = document.createElement('option'); o.value = y; o.textContent = y; selAny.appendChild(o); });
   cats.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; selCat.appendChild(o); });
+  initContractesFilters();
 
   // Data actualització — ignorar files sense data vàlida
   const maxDate = ALL_DATA
@@ -2291,7 +2351,7 @@ function setView(view) {
   if (mainEl)    mainEl.style.display    = isPortada ? 'none' : 'block';
 
   // Vistes dins del main
-  const VIEWS = ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes','alertes','govern','equipaments','contractacio'];
+  const VIEWS = ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes','alertes','govern','equipaments','contractes','contractacio'];
   VIEWS.forEach(v => {
     const el = document.getElementById('view-' + v);
     if (el) el.classList.toggle('active', v === view);
@@ -2312,6 +2372,7 @@ function setView(view) {
   if (view === 'alertes')     renderAlertes();
   if (view === 'govern')      renderGovern();
   if (view === 'equipaments') renderEquipaments();
+  if (view === 'contractes')  renderContractes();
   if (view === 'contractacio') renderContractacio();
 
   gcEvent('/e/pestanya/' + view);
@@ -3703,6 +3764,80 @@ function filtrarEquipament(key) {
 // ─────────────────────────────────────────────────────────────────────────────
 // CONTRACTACIÓ 2026
 // ─────────────────────────────────────────────────────────────────────────────
+// CONTRACTES ADJUDICATS AOC / PSCP
+function initContractesFilters() {
+  const sel = document.getElementById('contractes-any');
+  if (!sel || sel.dataset.ready === '1') return;
+  const anys = [...new Set(ALL_CONTRACTES.map(c => c.any).filter(Boolean))].sort((a,b) => String(b).localeCompare(String(a)));
+  anys.forEach(y => {
+    const o = document.createElement('option');
+    o.value = y;
+    o.textContent = y;
+    sel.appendChild(o);
+  });
+  sel.dataset.ready = '1';
+}
+
+function renderContractes() {
+  const q = (document.getElementById('contractes-search')?.value || '').trim().toLowerCase();
+  const any = document.getElementById('contractes-any')?.value || '';
+  const onlyMatch = document.getElementById('contractes-match')?.value === '1';
+  const data = ALL_CONTRACTES.filter(c => {
+    const text = [c.adjudicatari, c.objecte, c.expedient, c.nif_adjudicatari].join(' ').toLowerCase();
+    return (!q || text.includes(q)) &&
+           (!any || String(c.any) === String(any)) &&
+           (!onlyMatch || !!c.factures_match);
+  });
+
+  const statsEl = document.getElementById('contractes-stats');
+  if (statsEl) {
+    const total = ALL_CONTRACTES.reduce((s,c) => s + (c.import_amb_iva || 0), 0);
+    const matches = ALL_CONTRACTES.filter(c => c.factures_match).length;
+    const provs = new Set(ALL_CONTRACTES.map(c => c.nif_adjudicatari || c.adjudicatari).filter(Boolean)).size;
+    statsEl.innerHTML = [
+      [ALL_CONTRACTES.length.toLocaleString('ca'),'Contractes','#4040ff'],
+      [fmtEur(total),'Import adjudicat','#00897b'],
+      [provs.toLocaleString('ca'),'Adjudicataris','#ff9800'],
+      [matches.toLocaleString('ca'),'Creuaments','#d97706'],
+    ].map(([val,lab,col])=>`
+      <div style="background:#fff;border:1.5px solid #e8e8e8;border-radius:10px;padding:12px 14px;text-align:center">
+        <div style="font-size:18px;font-weight:800;color:${col}">${val}</div>
+        <div style="font-size:11px;color:#888;margin-top:2px">${lab}</div>
+      </div>`).join('');
+  }
+
+  const tbody = document.getElementById('contractes-tbody');
+  if (!tbody) return;
+  if (!ALL_CONTRACTES.length) {
+    tbody.innerHTML = `<tr><td colspan="5" style="padding:18px 14px;color:#888;text-align:center">Encara no hi ha dades a calaf_contractes.csv. Executa <code>python fetch_contractes.py</code> o el workflow.</td></tr>`;
+    return;
+  }
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="5" style="padding:18px 14px;color:#888;text-align:center">Cap contracte coincideix amb els filtres.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = data.slice(0, 200).map((c,i) => {
+    const match = c.factures_match ? `
+      <div style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:20px;background:#fffbeb;color:#92400e;font-size:11px;font-weight:700">
+        ${esc(c.factures_match.toUpperCase())} - ${fmtEur(c.factures_import)}
+      </div>` : `<span style="color:#bbb;font-size:11px">-</span>`;
+    const link = c.enllac ? `<a href="${esc(c.enllac)}" target="_blank" rel="noopener" style="color:#4040ff;text-decoration:none;font-size:11px;font-weight:700">PSCP</a>` : '';
+    return `<tr style="border-bottom:1px solid #f3f4f6;background:${i%2===0?'#fff':'#fafbfc'}">
+      <td style="padding:9px 14px;font-size:12px;color:#888;white-space:nowrap;font-weight:600">${esc(c.data_adjudicacio || c.any || '')}</td>
+      <td style="padding:9px 14px">
+        <div style="font-weight:600;color:#1a1a1a">${esc(c.objecte || 'Sense objecte')}</div>
+        <div style="font-size:11px;color:#999;margin-top:1px">${esc(c.expedient || '')} - ${esc(c.procediment || c.fase || '')} ${link}</div>
+      </td>
+      <td style="padding:9px 14px">
+        <div style="font-weight:600">${esc(c.adjudicatari || 'Sense adjudicatari')}</div>
+        <div style="font-size:11px;color:#aaa;margin-top:1px">${esc(c.nif_adjudicatari || '')}</div>
+      </td>
+      <td style="padding:9px 14px;text-align:right;font-weight:700;white-space:nowrap">${fmtEur(c.import_amb_iva || c.import_sense_iva || c.valor_estimat || 0)}</td>
+      <td style="padding:9px 14px;text-align:center">${match}</td>
+    </tr>`;
+  }).join('');
+}
+
 const CONTRACTES_2026 = [
   {trim:'1r',dept:'SSTT',desc:'Serveis convocatoria Pla de Barris',tipus:'Serveis',proc:'Menor',import:14000,durada:3},
   {trim:'1r',dept:'SSTT/Serveis',desc:'Adhesió acord marc vestuari laboral',tipus:'Acord marc',proc:'Acord marc',import:null,durada:null},
@@ -3813,9 +3948,9 @@ function closeDrawer() {
 
 function updateDrawerActive() {
   document.querySelectorAll('.drawer-item').forEach(b => b.classList.remove('active-drawer'));
-  const VIEWS = ['taula','proveidors','anys','categories','conceptes','subvencions','convenis','pressupost','campanyes','alertes','govern'];
-  document.querySelectorAll('.drawer-item').forEach((b, i) => {
-    if (VIEWS[i] === currentView) b.classList.add('active-drawer');
+  document.querySelectorAll('.drawer-item').forEach(b => {
+    const match = (b.getAttribute('onclick') || '').match(/setView\('([^']+)'\)/);
+    if (match && match[1] === currentView) b.classList.add('active-drawer');
   });
 }
 
