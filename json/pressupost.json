@@ -1,0 +1,1005 @@
+{
+  "municipi": "Calaf",
+  "codi_ens": "803120002",
+  "actualitzat": "2026-06-04T22:55:04.790813",
+  "nota": "Pressupost inicial. Execució estimada via creuament categories factures vs programes funcionals.",
+  "anys": [
+    "2026",
+    "2025",
+    "2024",
+    "2023",
+    "2022"
+  ],
+  "execucio": {
+    "2026": [
+      {
+        "codi": "92",
+        "descripcio": "Serveis de caràcter general",
+        "import_pressupostat": 1853615.93,
+        "import_executat": 109174.41,
+        "pct_execucio": 5.9,
+        "categories": [
+          "Serveis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "16",
+        "descripcio": "Benestar comunitari",
+        "import_pressupostat": 788447.96,
+        "import_executat": 526712.24,
+        "pct_execucio": 66.8,
+        "categories": [
+          "Serveis",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "32",
+        "descripcio": "Educació",
+        "import_pressupostat": 542587.38,
+        "import_executat": 327523.23,
+        "pct_execucio": 60.4,
+        "categories": [
+          "Serveis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "34",
+        "descripcio": "Esport",
+        "import_pressupostat": 410199.0,
+        "import_executat": 263356.12,
+        "pct_execucio": 64.2,
+        "categories": [
+          "Serveis",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "01",
+        "descripcio": "Deute públic",
+        "import_pressupostat": 349623.96,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "15",
+        "descripcio": "Habitatge i urbanisme",
+        "import_pressupostat": 318637.02,
+        "import_executat": 2643018.52,
+        "pct_execucio": 829.5,
+        "categories": [
+          "Obra pública",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "24",
+        "descripcio": "Foment de l'ocupació",
+        "import_pressupostat": 227026.35,
+        "import_executat": 109174.41,
+        "pct_execucio": 48.1,
+        "categories": [
+          "Serveis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "33",
+        "descripcio": "Cultura",
+        "import_pressupostat": 196078.36,
+        "import_executat": 218348.82,
+        "pct_execucio": 111.4,
+        "categories": [
+          "Serveis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "17",
+        "descripcio": "Medi ambient",
+        "import_pressupostat": 175384.3,
+        "import_executat": 372530.53,
+        "pct_execucio": 212.4,
+        "categories": [
+          "Serveis",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "23",
+        "descripcio": "Serveis socials i promoció social",
+        "import_pressupostat": 175078.17,
+        "import_executat": 109174.41,
+        "pct_execucio": 62.4,
+        "categories": [
+          "Serveis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "91",
+        "descripcio": "Òrgans de govern",
+        "import_pressupostat": 165495.32,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "13",
+        "descripcio": "Seguretat i mobilitat ciutadana",
+        "import_pressupostat": 147929.3,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "43",
+        "descripcio": "Comerç, turisme i petites i mitjanes empreses",
+        "import_pressupostat": 84249.92,
+        "import_executat": 109174.41,
+        "pct_execucio": 129.6,
+        "categories": [
+          "Serveis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "93",
+        "descripcio": "Administració financera i tributària",
+        "import_pressupostat": 79333.32,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "45",
+        "descripcio": "Infraestructures",
+        "import_pressupostat": 63000.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "49",
+        "descripcio": "Altres actuacions de caràcter econòmic",
+        "import_pressupostat": 61528.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "31",
+        "descripcio": "Sanitat",
+        "import_pressupostat": 34000.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "44",
+        "descripcio": "Transport públic",
+        "import_pressupostat": 1600.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      }
+    ],
+    "2025": [
+      {
+        "codi": "23",
+        "descripcio": "Serveis socials i promoció social",
+        "import_pressupostat": 3238484.62,
+        "import_executat": 10070.35,
+        "pct_execucio": 0.3,
+        "categories": [
+          "Serveis Socials"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "92",
+        "descripcio": "Serveis de caràcter general",
+        "import_pressupostat": 1869642.81,
+        "import_executat": 545991.62,
+        "pct_execucio": 29.2,
+        "categories": [
+          "Assessoria i estudis",
+          "Comunicació",
+          "Lloguers",
+          "Material i subministres",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "16",
+        "descripcio": "Benestar comunitari",
+        "import_pressupostat": 1007705.65,
+        "import_executat": 1537884.86,
+        "pct_execucio": 152.6,
+        "categories": [
+          "Subministraments",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "32",
+        "descripcio": "Educació",
+        "import_pressupostat": 513763.99,
+        "import_executat": 507473.84,
+        "pct_execucio": 98.8,
+        "categories": [
+          "Material i subministres",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "15",
+        "descripcio": "Habitatge i urbanisme",
+        "import_pressupostat": 410153.56,
+        "import_executat": 10349956.35,
+        "pct_execucio": 2523.4,
+        "categories": [
+          "Obra pública",
+          "Assessoria i estudis",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "01",
+        "descripcio": "Deute públic",
+        "import_pressupostat": 264213.97,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "13",
+        "descripcio": "Seguretat i mobilitat ciutadana",
+        "import_pressupostat": 222134.0,
+        "import_executat": 216697.35,
+        "pct_execucio": 97.6,
+        "categories": [
+          "Seguretat"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "24",
+        "descripcio": "Foment de l'ocupació",
+        "import_pressupostat": 192907.94,
+        "import_executat": 50750.0,
+        "pct_execucio": 26.3,
+        "categories": [
+          "Subvencions i convenis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "34",
+        "descripcio": "Esport",
+        "import_pressupostat": 191326.69,
+        "import_executat": 987804.51,
+        "pct_execucio": 516.3,
+        "categories": [
+          "Cultura i Festes",
+          "Manteniment",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "33",
+        "descripcio": "Cultura",
+        "import_pressupostat": 182634.6,
+        "import_executat": 875448.32,
+        "pct_execucio": 479.3,
+        "categories": [
+          "Cultura i Festes"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "91",
+        "descripcio": "Òrgans de govern",
+        "import_pressupostat": 162712.52,
+        "import_executat": 1065.5,
+        "pct_execucio": 0.7,
+        "categories": [
+          "Personal i contractació"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "17",
+        "descripcio": "Medi ambient",
+        "import_pressupostat": 112537.18,
+        "import_executat": 407352.27,
+        "pct_execucio": 362.0,
+        "categories": [
+          "Assessoria i estudis",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "43",
+        "descripcio": "Comerç, turisme i petites i mitjanes empreses",
+        "import_pressupostat": 95509.54,
+        "import_executat": 22722.56,
+        "pct_execucio": 23.8,
+        "categories": [
+          "Comunicació"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "45",
+        "descripcio": "Infraestructures",
+        "import_pressupostat": 70000.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "93",
+        "descripcio": "Administració financera i tributària",
+        "import_pressupostat": 68483.32,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "49",
+        "descripcio": "Altres actuacions de caràcter econòmic",
+        "import_pressupostat": 65782.4,
+        "import_executat": 52075.12,
+        "pct_execucio": 79.2,
+        "categories": [
+          "Comunicació",
+          "Assessoria i estudis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "31",
+        "descripcio": "Sanitat",
+        "import_pressupostat": 29500.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "44",
+        "descripcio": "Transport públic",
+        "import_pressupostat": 1600.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      }
+    ],
+    "2024": [
+      {
+        "codi": "16",
+        "descripcio": "Benestar comunitari",
+        "import_pressupostat": 2547668.63,
+        "import_executat": 2395427.12,
+        "pct_execucio": 94.0,
+        "categories": [
+          "Subministraments",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "92",
+        "descripcio": "Serveis de caràcter general",
+        "import_pressupostat": 1506460.89,
+        "import_executat": 956952.48,
+        "pct_execucio": 63.5,
+        "categories": [
+          "Assessoria i estudis",
+          "Comunicació",
+          "Lloguers",
+          "Material i subministres",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "23",
+        "descripcio": "Serveis socials i promoció social",
+        "import_pressupostat": 626063.1,
+        "import_executat": 1732.28,
+        "pct_execucio": 0.3,
+        "categories": [
+          "Serveis Socials"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "15",
+        "descripcio": "Habitatge i urbanisme",
+        "import_pressupostat": 551489.09,
+        "import_executat": 16024489.38,
+        "pct_execucio": 2905.7,
+        "categories": [
+          "Obra pública",
+          "Assessoria i estudis",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "32",
+        "descripcio": "Educació",
+        "import_pressupostat": 506057.27,
+        "import_executat": 591854.74,
+        "pct_execucio": 117.0,
+        "categories": [
+          "Material i subministres",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "24",
+        "descripcio": "Foment de l'ocupació",
+        "import_pressupostat": 275216.59,
+        "import_executat": 217818.98,
+        "pct_execucio": 79.1,
+        "categories": [
+          "Subvencions i convenis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "01",
+        "descripcio": "Deute públic",
+        "import_pressupostat": 221356.1,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "17",
+        "descripcio": "Medi ambient",
+        "import_pressupostat": 207969.6,
+        "import_executat": 1396570.14,
+        "pct_execucio": 671.5,
+        "categories": [
+          "Assessoria i estudis",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "91",
+        "descripcio": "Òrgans de govern",
+        "import_pressupostat": 162024.74,
+        "import_executat": 467.19,
+        "pct_execucio": 0.3,
+        "categories": [
+          "Personal i contractació"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "33",
+        "descripcio": "Cultura",
+        "import_pressupostat": 159880.0,
+        "import_executat": 898576.04,
+        "pct_execucio": 562.0,
+        "categories": [
+          "Cultura i Festes"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "13",
+        "descripcio": "Seguretat i mobilitat ciutadana",
+        "import_pressupostat": 151275.55,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "34",
+        "descripcio": "Esport",
+        "import_pressupostat": 122725.0,
+        "import_executat": 1422357.57,
+        "pct_execucio": 1159.0,
+        "categories": [
+          "Cultura i Festes",
+          "Manteniment",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "49",
+        "descripcio": "Altres actuacions de caràcter econòmic",
+        "import_pressupostat": 75257.25,
+        "import_executat": 375725.5,
+        "pct_execucio": 499.3,
+        "categories": [
+          "Comunicació",
+          "Assessoria i estudis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "43",
+        "descripcio": "Comerç, turisme i petites i mitjanes empreses",
+        "import_pressupostat": 72389.6,
+        "import_executat": 21124.44,
+        "pct_execucio": 29.2,
+        "categories": [
+          "Comunicació"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "45",
+        "descripcio": "Infraestructures",
+        "import_pressupostat": 70300.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "93",
+        "descripcio": "Administració financera i tributària",
+        "import_pressupostat": 58483.32,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "31",
+        "descripcio": "Sanitat",
+        "import_pressupostat": 20300.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "44",
+        "descripcio": "Transport públic",
+        "import_pressupostat": 1600.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      }
+    ],
+    "2023": [
+      {
+        "codi": "16",
+        "descripcio": "Benestar comunitari",
+        "import_pressupostat": 2451465.79,
+        "import_executat": 3356519.02,
+        "pct_execucio": 136.9,
+        "categories": [
+          "Subministraments",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "92",
+        "descripcio": "Serveis de caràcter general",
+        "import_pressupostat": 1319893.16,
+        "import_executat": 797552.26,
+        "pct_execucio": 60.4,
+        "categories": [
+          "Assessoria i estudis",
+          "Comunicació",
+          "Lloguers",
+          "Material i subministres",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "32",
+        "descripcio": "Educació",
+        "import_pressupostat": 539973.06,
+        "import_executat": 611404.69,
+        "pct_execucio": 113.2,
+        "categories": [
+          "Material i subministres",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "15",
+        "descripcio": "Habitatge i urbanisme",
+        "import_pressupostat": 331698.22,
+        "import_executat": 2906943.24,
+        "pct_execucio": 876.4,
+        "categories": [
+          "Obra pública",
+          "Assessoria i estudis",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "01",
+        "descripcio": "Deute públic",
+        "import_pressupostat": 256547.95,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "33",
+        "descripcio": "Cultura",
+        "import_pressupostat": 254473.64,
+        "import_executat": 1959665.49,
+        "pct_execucio": 770.1,
+        "categories": [
+          "Cultura i Festes",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "13",
+        "descripcio": "Seguretat i mobilitat ciutadana",
+        "import_pressupostat": 215741.25,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "34",
+        "descripcio": "Esport",
+        "import_pressupostat": 184128.51,
+        "import_executat": 1844326.3,
+        "pct_execucio": 1001.7,
+        "categories": [
+          "Cultura i Festes",
+          "Manteniment",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "24",
+        "descripcio": "Foment de l'ocupació",
+        "import_pressupostat": 180338.34,
+        "import_executat": 117541.26,
+        "pct_execucio": 65.2,
+        "categories": [
+          "Subvencions i convenis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "23",
+        "descripcio": "Serveis socials i promoció social",
+        "import_pressupostat": 170625.49,
+        "import_executat": 66976.43,
+        "pct_execucio": 39.3,
+        "categories": [
+          "Serveis Socials"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "17",
+        "descripcio": "Medi ambient",
+        "import_pressupostat": 137901.57,
+        "import_executat": 1461601.02,
+        "pct_execucio": 1059.9,
+        "categories": [
+          "Assessoria i estudis",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "91",
+        "descripcio": "Òrgans de govern",
+        "import_pressupostat": 125700.09,
+        "import_executat": 1305.44,
+        "pct_execucio": 1.0,
+        "categories": [
+          "Personal i contractació"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "43",
+        "descripcio": "Comerç, turisme i petites i mitjanes empreses",
+        "import_pressupostat": 109093.87,
+        "import_executat": 21327.31,
+        "pct_execucio": 19.5,
+        "categories": [
+          "Comunicació"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "49",
+        "descripcio": "Altres actuacions de caràcter econòmic",
+        "import_pressupostat": 91616.6,
+        "import_executat": 187462.05,
+        "pct_execucio": 204.6,
+        "categories": [
+          "Comunicació",
+          "Assessoria i estudis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "93",
+        "descripcio": "Administració financera i tributària",
+        "import_pressupostat": 58483.32,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "45",
+        "descripcio": "Infraestructures",
+        "import_pressupostat": 52000.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "31",
+        "descripcio": "Sanitat",
+        "import_pressupostat": 23191.54,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "44",
+        "descripcio": "Transport públic",
+        "import_pressupostat": 1600.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      }
+    ],
+    "2022": [
+      {
+        "codi": "16",
+        "descripcio": "Benestar comunitari",
+        "import_pressupostat": 1233929.82,
+        "import_executat": 1062389.36,
+        "pct_execucio": 86.1,
+        "categories": [
+          "Subministraments",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "92",
+        "descripcio": "Serveis de caràcter general",
+        "import_pressupostat": 1082898.07,
+        "import_executat": 390566.36,
+        "pct_execucio": 36.1,
+        "categories": [
+          "Assessoria i estudis",
+          "Comunicació",
+          "Lloguers",
+          "Material i subministres",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "15",
+        "descripcio": "Habitatge i urbanisme",
+        "import_pressupostat": 519431.43,
+        "import_executat": 1613035.72,
+        "pct_execucio": 310.5,
+        "categories": [
+          "Assessoria i estudis",
+          "Obra pública",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "32",
+        "descripcio": "Educació",
+        "import_pressupostat": 453726.48,
+        "import_executat": 249120.98,
+        "pct_execucio": 54.9,
+        "categories": [
+          "Material i subministres",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "01",
+        "descripcio": "Deute públic",
+        "import_pressupostat": 280360.84,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "33",
+        "descripcio": "Cultura",
+        "import_pressupostat": 202651.05,
+        "import_executat": 1035586.05,
+        "pct_execucio": 511.0,
+        "categories": [
+          "Cultura i Festes",
+          "Manteniment"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "24",
+        "descripcio": "Foment de l'ocupació",
+        "import_pressupostat": 188560.92,
+        "import_executat": 121889.82,
+        "pct_execucio": 64.6,
+        "categories": [
+          "Subvencions i convenis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "23",
+        "descripcio": "Serveis socials i promoció social",
+        "import_pressupostat": 165000.0,
+        "import_executat": 107073.74,
+        "pct_execucio": 64.9,
+        "categories": [
+          "Serveis Socials"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "34",
+        "descripcio": "Esport",
+        "import_pressupostat": 145837.0,
+        "import_executat": 672420.39,
+        "pct_execucio": 461.1,
+        "categories": [
+          "Cultura i Festes",
+          "Manteniment",
+          "Subministraments"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "91",
+        "descripcio": "Òrgans de govern",
+        "import_pressupostat": 131214.88,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "43",
+        "descripcio": "Comerç, turisme i petites i mitjanes empreses",
+        "import_pressupostat": 120470.43,
+        "import_executat": 15678.15,
+        "pct_execucio": 13.0,
+        "categories": [
+          "Comunicació"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "17",
+        "descripcio": "Medi ambient",
+        "import_pressupostat": 107379.4,
+        "import_executat": 456657.44,
+        "pct_execucio": 425.3,
+        "categories": [
+          "Manteniment",
+          "Assessoria i estudis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "49",
+        "descripcio": "Altres actuacions de caràcter econòmic",
+        "import_pressupostat": 99272.32,
+        "import_executat": 142878.09,
+        "pct_execucio": 143.9,
+        "categories": [
+          "Comunicació",
+          "Assessoria i estudis"
+        ],
+        "te_dades": true
+      },
+      {
+        "codi": "13",
+        "descripcio": "Seguretat i mobilitat ciutadana",
+        "import_pressupostat": 94599.46,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "45",
+        "descripcio": "Infraestructures",
+        "import_pressupostat": 60211.61,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "93",
+        "descripcio": "Administració financera i tributària",
+        "import_pressupostat": 56683.32,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "31",
+        "descripcio": "Sanitat",
+        "import_pressupostat": 16649.36,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      },
+      {
+        "codi": "44",
+        "descripcio": "Transport públic",
+        "import_pressupostat": 2600.0,
+        "import_executat": 0.0,
+        "pct_execucio": 0.0,
+        "categories": [],
+        "te_dades": false
+      }
+    ]
+  }
+}
