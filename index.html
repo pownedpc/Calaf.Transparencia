@@ -222,8 +222,8 @@ body {
 }
 .stat-card {
   background: #0d1118;
-  border-radius: 14px;
-  padding: 24px;
+  border-radius: 12px;
+  padding: 16px 18px;
   position: relative;
   overflow: hidden;
 }
@@ -838,6 +838,111 @@ body.is-portada { background: #0d1118 !important; }
   background: #0d1118;
 }
 
+/* ── PRESSUPOST FULL-SCREEN ─────────────────────────────── */
+#view-pressupost-full {
+  display: none;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f5f5f7;
+}
+body.is-pressupost .header { display: none !important; }
+body.is-pressupost { background: #f5f5f7 !important; }
+
+.pf-header {
+  background: #0d1118;
+  padding: 20px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.pf-logo {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pf-logo span { color: #ff9800; }
+.pf-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,.5);
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color .15s;
+}
+.pf-back:hover { color: #fff; }
+
+.pf-body {
+  flex: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 40px 48px 60px;
+}
+
+.pf-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.pf-anys {
+  display: flex;
+  gap: 4px;
+}
+.pf-any-btn {
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1px solid #e8e8ed;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .15s;
+  background: #fff;
+  color: #666;
+}
+.pf-any-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+
+.pf-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.pf-rodones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0;
+}
+
+.pf-programa-card {
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border-right: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background .15s;
+  cursor: default;
+}
+.pf-programa-card:hover { background: #fafafe; }
+
 /* ── SPLIT ── */
 .portada-split {
   flex: 1;
@@ -1148,7 +1253,7 @@ body.is-portada { background: #0d1118 !important; }
     </button>
 
     <div class="drawer-section-label" style="margin-top:8px">Pressupost</div>
-    <button class="drawer-item" onclick="setView('pressupost');closeDrawer()">
+    <button class="drawer-item" onclick="setView('pressupost-full');closeDrawer()">
       <span class="drawer-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
       <div><div class="drawer-label">Pressupost municipal</div><div class="drawer-sublabel">Ingressos, despeses i partides</div></div>
     </button>
@@ -1261,6 +1366,61 @@ body.is-portada { background: #0d1118 !important; }
 
 </div>
 
+
+<!-- ════ VIEW PRESSUPOST FULL-SCREEN (fora del main) ════ -->
+<div id="view-pressupost-full" style="display:none">
+
+  <!-- Header fosc -->
+  <div class="pf-header">
+    <a class="pf-logo" onclick="setView('portada')"><span>calaf.</span>transparència</a>
+    <button class="pf-back" onclick="setView('taula')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Tornar al portal
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div class="pf-body">
+
+    <!-- Títol + selector any -->
+    <div class="pf-title-row">
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#4040ff;background:#f0f0ff;padding:4px 12px;border-radius:20px;display:inline-block;margin-bottom:12px">Pressupost municipal · Calaf</div>
+        <h1 style="font-family:'DM Sans',sans-serif;font-size:36px;font-weight:300;letter-spacing:-.02em;color:#1a1a1a;margin-bottom:8px">Execució pressupostària</h1>
+        <p style="font-size:14px;color:#888;max-width:520px;line-height:1.6">Pressupost aprovat vs factures pagades per programa funcional. <strong style="color:#ff9800">Estimació</strong> — creuament de categories, pot ser parcial.</p>
+      </div>
+      <div class="pf-anys" id="pf-any-btns"></div>
+    </div>
+
+    <!-- Stats resum -->
+    <div class="pf-stats-row" id="pf-stats"></div>
+
+    <!-- Rodones per programa -->
+    <div style="background:#fff;border:1px solid #e8e8ed;border-radius:16px;overflow:hidden;margin-bottom:24px">
+      <div style="padding:20px 28px 16px;border-bottom:1px solid #f5f5f7;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:#aaa">Execució per programa funcional</div>
+          <div style="font-size:12px;color:#bbb;margin-top:2px">Verd &lt;100% · Taronja &gt;100% · Vermell &gt;150%</div>
+        </div>
+      </div>
+      <div class="pf-rodones-grid" id="pf-rodones"></div>
+      <div style="padding:12px 28px;font-size:11px;color:#bbb;border-top:1px solid #f5f5f7;background:#fafafa">
+        ⚠️ Estimació via creuament categories factures → programes funcionals AOC. No és execució oficial.
+      </div>
+    </div>
+
+    <!-- Barres detall -->
+    <div style="background:#fff;border:1px solid #e8e8ed;border-radius:16px;overflow:hidden;margin-bottom:24px">
+      <div style="padding:20px 28px 16px;border-bottom:1px solid #f5f5f7">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:#aaa">Detall per programa</div>
+      </div>
+      <div id="pf-barres"></div>
+    </div>
+
+  </div>
+</div>
+<!-- ════ FI VIEW PRESSUPOST FULL ════ -->
+
 <main class="main" id="main-portal" style="display:none">
 
   <!-- HERO -->
@@ -1295,7 +1455,7 @@ body.is-portada { background: #0d1118 !important; }
   </div>
 
   <!-- STATS -->
-  <div class="stats-grid" id="stats-grid">
+  <div class="stats-grid" id="stats-grid" style="grid-template-columns:repeat(5,1fr)">
     <div class="stat-card stat-blue">
       <div class="stat-label">Factures</div>
       <div class="stat-value" id="s-registres">—</div>
@@ -1304,7 +1464,7 @@ body.is-portada { background: #0d1118 !important; }
     <div class="stat-card stat-teal">
       <div class="stat-label">Import total</div>
       <div class="stat-value" id="s-import">—</div>
-      <div class="stat-sub" id="s-import-sub">euros (2019–2025)</div>
+      <div class="stat-sub" id="s-import-sub">euros gestionats</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Proveïdors</div>
@@ -1315,6 +1475,12 @@ body.is-portada { background: #0d1118 !important; }
       <div class="stat-label">Concentració top 10</div>
       <div class="stat-value" id="s-concentracio">—</div>
       <div class="stat-sub">de la despesa total</div>
+    </div>
+    <div class="stat-card" id="stat-execucio" onclick="setView('pressupost-full')" style="cursor:pointer;border:1.5px solid rgba(255,255,255,.12);position:relative;transition:background .15s" onmouseover="this.style.background='#1a2035'" onmouseout="this.style.background=''">
+      <div class="stat-label" style="color:rgba(255,255,255,.4)">Execució pressupost</div>
+      <div class="stat-value" id="s-execucio" style="color:#a78bfa">—</div>
+      <div class="stat-sub" style="color:rgba(255,255,255,.25)" id="s-execucio-sub">any en curs</div>
+      <div style="position:absolute;bottom:14px;right:16px;color:rgba(255,255,255,.2);font-size:11px">→ veure</div>
     </div>
   </div>
 
@@ -1399,93 +1565,60 @@ body.is-portada { background: #0d1118 !important; }
   <!-- VIEW: PRESSUPOST -->
   <div class="view" id="view-pressupost">
 
-    <!-- Selector any -->
-    <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center">
-      <span style="font-size:13px;font-weight:600;color:#666">Any:</span>
-      <button class="pres-any-btn btn btn-dark" data-any="2026" onclick="setPresAny(2026)">2026</button>
-      <button class="pres-any-btn btn btn-outline" data-any="2025" onclick="setPresAny(2025)">2025</button>
-      <button class="pres-any-btn btn btn-outline" data-any="2024" onclick="setPresAny(2024)">2024</button>
-      <button class="pres-any-btn btn btn-outline" data-any="2023" onclick="setPresAny(2023)">2023</button>
+  <!-- HEADER PRESSUPOST -->
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:28px;flex-wrap:wrap">
+    <div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#4040ff;background:#f0f0ff;padding:4px 12px;border-radius:20px;display:inline-block;margin-bottom:12px">Pressupost municipal</div>
+      <h2 style="font-size:32px;font-weight:300;letter-spacing:-.02em;color:#1a1a1a;margin-bottom:8px">Pressupost i execució</h2>
+      <p style="font-size:14px;color:#888;max-width:560px">Pressupost inicial aprovat vs factures pagades per categoria. <strong style="color:#ff9800">Execució estimada</strong> — creuament de categories, pot ser parcial.</p>
     </div>
-
-    <!-- Resum + capítol max -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-      <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
-        <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:14px">Resum executiu <span id="pres-any-label">2025</span></h3>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <div style="display:flex;justify-content:space-between"><span style="font-size:13px;color:#444">Total despeses</span><span style="font-weight:700;color:#4040ff" id="pres-total-d">—</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="font-size:13px;color:#444">Total ingressos</span><span style="font-weight:700;color:#00897b" id="pres-total-i">—</span></div>
-          <div style="display:flex;justify-content:space-between;border-top:1px solid #f0f0f0;padding-top:10px"><span style="font-size:13px;color:#444">Superàvit / dèficit</span><span style="font-weight:700" id="pres-superavit">—</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="font-size:13px;color:#444">Plantilla</span><span style="font-weight:700;font-size:13px" id="pres-plantilla">—</span></div>
-        </div>
-      </div>
-      <div style="background:#eff0ff;border:1px solid #c7c7ff;border-radius:10px;padding:20px">
-        <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#4040ff;margin-bottom:14px">Capítol més gran (Despesa)</h3>
-        <div style="font-size:26px;font-weight:800;color:#4040ff;margin-bottom:4px" id="pres-cap-max-import">—</div>
-        <div style="font-size:14px;font-weight:600;color:#333;margin-bottom:4px" id="pres-cap-max-nom">—</div>
-        <div style="font-size:12px;color:#666" id="pres-cap-max-pct">—</div>
-      </div>
-    </div>
-
-    <!-- Despeses per capítol -->
-    <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px">
-      <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:14px">Despeses per capítol</h3>
-      <div id="pres-despeses"></div>
-    </div>
-
-    <!-- Ingressos per capítol -->
-    <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px">
-      <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:14px">Ingressos per capítol</h3>
-      <div id="pres-ingressos"></div>
-    </div>
-
-    <!-- Plantilla -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-      <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
-        <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:10px">Funcionaris</h3>
-        <div style="font-size:32px;font-weight:800" id="pres-func">—</div>
-        <div style="font-size:12px;color:#666;margin-top:4px" id="pres-func-vac">—</div>
-      </div>
-      <div style="background:#fff;border:1px solid #ddd;border-radius:10px;padding:20px">
-        <h3 style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:10px">Laborals</h3>
-        <div style="font-size:32px;font-weight:800" id="pres-lab">—</div>
-        <div style="font-size:12px;color:#666;margin-top:4px" id="pres-lab-vac">—</div>
-      </div>
-    </div>
-
-    <!-- Partides detallades (2023 i 2024) -->
-    <div id="pres-partides-wrap" style="background:#fff;border:1px solid #ddd;border-radius:10px;overflow:hidden;margin-bottom:16px">
-      <div style="padding:16px 20px;background:#f8f9fa;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#666">Partides detallades</span>
-        <input id="pres-search" type="text" placeholder="Cerca partida..." oninput="renderPartides()"
-          style="flex:1;min-width:160px;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;outline:none">
-        <select id="pres-tipus" onchange="renderPartides()"
-          style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;outline:none;background:#fff">
-          <option value="">Despeses i ingressos</option>
-          <option value="despesa">Només despeses</option>
-          <option value="ingres">Només ingressos</option>
-        </select>
-      </div>
-      <table style="width:100%;border-collapse:collapse">
-        <thead>
-          <tr style="background:#f8f9fa">
-            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Codi</th>
-            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Concepte</th>
-            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Tipus</th>
-            <th style="padding:10px 14px;text-align:right;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#888;border-bottom:1px solid #e5e7eb">Import</th>
-          </tr>
-        </thead>
-        <tbody id="pres-partides-body"></tbody>
-      </table>
-      <div style="padding:10px 16px;background:#f8f9fa;border-top:1px solid #e5e7eb;font-size:12px;color:#888" id="pres-partides-count"></div>
-    </div>
-
-    <div style="font-size:12px;color:#aaa;text-align:center;padding:8px">
-      Font: Pressupost Municipal Calaf · BOPB · Dades oficials de l'Ajuntament
+    <div style="display:flex;gap:8px;align-items:center">
+      <span style="font-size:13px;color:#888">Any:</span>
+      <div id="pres-any-btns" style="display:flex;gap:4px"></div>
     </div>
   </div>
 
-  <!-- VIEW: CAMPANYES -->
+  <!-- STATS RESUM -->
+  <div id="pres-resum-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px"></div>
+
+  <!-- RODONES EXECUCIÓ PER PROGRAMA -->
+  <div style="background:#fff;border:1px solid #e8e8ed;border-radius:14px;overflow:hidden;margin-bottom:20px">
+    <div style="padding:20px 24px 16px;border-bottom:1px solid #f5f5f7">
+      <h3 style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:#aaa">Execució per programa funcional</h3>
+    </div>
+    <div id="pres-rodones" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0;padding:8px"></div>
+    <div style="padding:12px 24px;font-size:11px;color:#bbb;border-top:1px solid #f5f5f7">
+      ⚠️ Estimació via creuament categories factures → programes funcionals AOC. No és execució pressupostària oficial.
+    </div>
+  </div>
+
+  <!-- BARRES DETALL -->
+  <div style="background:#fff;border:1px solid #e8e8ed;border-radius:14px;overflow:hidden;margin-bottom:20px">
+    <div style="padding:20px 24px 16px;border-bottom:1px solid #f5f5f7">
+      <h3 style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:#aaa">Detall per programa</h3>
+    </div>
+    <div id="pres-barres-detall" style="padding:0"></div>
+  </div>
+
+  <!-- CAPÍTOLS PRESSUPOST ORIGINAL -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+    <div style="background:#fff;border:1px solid #e8e8ed;border-radius:14px;padding:20px">
+      <h3 style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:#aaa;margin-bottom:16px">Despeses per capítol</h3>
+      <div id="pres-despeses"></div>
+    </div>
+    <div style="background:#fff;border:1px solid #e8e8ed;border-radius:14px;padding:20px">
+      <h3 style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:#aaa;margin-bottom:16px">Ingressos per capítol</h3>
+      <div id="pres-ingressos"></div>
+    </div>
+  </div>
+
+  <div style="font-size:11px;color:#bbb;text-align:center;padding:8px 0">
+    Font: Pressupost AOC Dades Obertes + data.csv factures · Ajuntament de Calaf
+  </div>
+
+</div>
+
+<!-- VIEW: CAMPANYES -->
   <div class="view" id="view-campanyes">
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
@@ -1818,6 +1951,7 @@ body.is-portada { background: #0d1118 !important; }
 // ─────────────────────────────────────────────────────────────────────────────
 let ALL_DATA     = [];
 let ALL_CONTRACTES = [];
+let BORME_ADJUDICATARIS = {};
 let filtered     = [];
 let sortCol      = 'import';
 let sortAsc      = false;
@@ -1836,6 +1970,7 @@ async function loadData() {
     const text = await resp.text();
     ALL_DATA = parseCSV(text);
     ALL_CONTRACTES = await loadContractesData();
+    BORME_ADJUDICATARIS = await loadBormeData();
     init();
   } catch (e) {
     document.getElementById('loading').innerHTML =
@@ -1863,6 +1998,44 @@ async function loadContractesData() {
   } catch {
     return [];
   }
+}
+
+async function loadBormeData() {
+  try {
+    const resp = await fetch('json/borme_adjudicataris.json');
+    if (!resp.ok) return {};
+    const payload = await resp.json();
+    const index = {};
+    (payload.adjudicataris || []).forEach(item => {
+      const nif = normNif(item.nif);
+      const name = normEntityName(item.nom || item.nom_normalitzat);
+      if (nif) index[`nif:${nif}`] = item;
+      if (name) index[`nom:${name}`] = item;
+    });
+    return index;
+  } catch {
+    return {};
+  }
+}
+
+function normNif(value) {
+  return String(value || '').toUpperCase().replace(/[^0-9A-Z]/g, '');
+}
+
+function normEntityName(value) {
+  return String(value || '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toUpperCase()
+    .replace(/\b(SL|S\.L\.|SLU|S\.L\.U\.|SA|S\.A\.|SAU|S\.A\.U\.|SCCL|SCP|CB)\b/g, '')
+    .replace(/[^A-Z0-9]+/g, ' ')
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
+function getBormeInfo(contracte) {
+  const nif = normNif(contracte.nif_adjudicatari);
+  const name = normEntityName(contracte.adjudicatari);
+  return (nif && BORME_ADJUDICATARIS[`nif:${nif}`]) || (name && BORME_ADJUDICATARIS[`nom:${name}`]) || null;
 }
 
 function parseCSV(text) {
@@ -2341,14 +2514,20 @@ function renderCategoriesView() {
 // ─────────────────────────────────────────────────────────────────────────────
 function setView(view) {
   currentView = view;
-  const isPortada = view === 'portada';
+  const isPortada    = view === 'portada';
+  const isPressupost = view === 'pressupost-full';
 
-  // Portada viu fora del main — gestió independent
-  document.body.classList.toggle('is-portada', isPortada);
-  const portadaEl = document.getElementById('view-portada');
-  const mainEl    = document.getElementById('main-portal');
-  if (portadaEl) portadaEl.style.display = isPortada ? 'flex' : 'none';
-  if (mainEl)    mainEl.style.display    = isPortada ? 'none' : 'block';
+  // Portada i pressupost viuen fora del main
+  document.body.classList.toggle('is-portada',    isPortada);
+  document.body.classList.toggle('is-pressupost', isPressupost);
+
+  const portadaEl  = document.getElementById('view-portada');
+  const presFullEl = document.getElementById('view-pressupost-full');
+  const mainEl     = document.getElementById('main-portal');
+
+  if (portadaEl)  portadaEl.style.display  = isPortada    ? 'flex' : 'none';
+  if (presFullEl) presFullEl.style.display = isPressupost ? 'flex' : 'none';
+  if (mainEl)     mainEl.style.display     = (!isPortada && !isPressupost) ? 'block' : 'none';
 
   // Vistes dins del main
   const VIEWS = ['taula','proveidors','anys','categories','subvencions','pressupost','campanyes','convenis','conceptes','alertes','govern','equipaments','contractes','contractacio'];
@@ -2365,7 +2544,7 @@ function setView(view) {
   if (view === 'portada')     renderPortada();
   if (view === 'proveidors')  renderRankingProveidors(filtered);
   if (view === 'subvencions') initSubvencions();
-  if (view === 'pressupost')  renderPressupost();
+  if (view === 'pressupost-full') { initPressupostFull(); }
   if (view === 'campanyes')   { campFiltre = ''; renderCampanyes(); }
   if (view === 'convenis')    renderConvenis();
   if (view === 'conceptes')   renderConceptes();
@@ -2823,6 +3002,331 @@ function renderPressupost() {
 }
 
 function setPresAny(any) { presAny = any; renderPressupost(); }
+
+// ── PRESSUPOST + EXECUCIÓ ────────────────────────────────
+let EXECUCIO_DATA = null;
+let PRES_ANY = null;
+
+// ── PRESSUPOST FULL-SCREEN ───────────────────────────────
+async function initPressupostFull() {
+  if (!EXECUCIO_DATA) {
+    EXECUCIO_DATA = await loadExecucio();
+  }
+
+  const btnsEl = document.getElementById('pf-any-btns');
+  if (btnsEl && EXECUCIO_DATA && EXECUCIO_DATA.anys) {
+    btnsEl.innerHTML = EXECUCIO_DATA.anys.map(a =>
+      `<button class="pf-any-btn${a===PRES_ANY?' active':''}" onclick="setPFAny('${a}')">${a}</button>`
+    ).join('');
+  }
+
+  renderPressupostFull();
+}
+
+function setPFAny(any) {
+  PRES_ANY = any;
+  document.querySelectorAll('.pf-any-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === any);
+  });
+  renderPressupostFull();
+}
+
+function renderPressupostFull() {
+  if (!EXECUCIO_DATA || !PRES_ANY) {
+    const nodata = '<div style="padding:60px;text-align:center;color:#aaa">Executa fetch_pressupost.py per generar json/pressupost.json</div>';
+    ['pf-rodones','pf-barres','pf-stats'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = nodata;
+    });
+    return;
+  }
+
+  const dades = EXECUCIO_DATA.execucio[PRES_ANY] || [];
+  const totalPres   = dades.reduce((s,e) => s + e.import_pressupostat, 0);
+  const totalExec   = dades.reduce((s,e) => s + e.import_executat, 0);
+  const pctGlobal   = totalPres > 0 ? (totalExec/totalPres*100).toFixed(1) : '—';
+  const sobrepassats = dades.filter(e => e.pct_execucio > 120).length;
+
+  // Stats
+  const statsEl = document.getElementById('pf-stats');
+  if (statsEl) {
+    statsEl.innerHTML = [
+      ['Pressupost aprovat', fmtEur(totalPres), '#4040ff'],
+      ['Factures creuades',  fmtEur(totalExec),  '#00c9a3'],
+      ['% execució estimat', pctGlobal + '%',    '#a78bfa'],
+      ['Programes alertes',  sobrepassats,        sobrepassats > 0 ? '#ef4444' : '#00c9a3'],
+    ].map(([lab,val,col]) => `
+      <div style="background:#0d1118;border-radius:12px;padding:20px 24px">
+        <div style="font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:10px">${lab}</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:30px;font-weight:300;letter-spacing:-.02em;color:${col}">${val}</div>
+      </div>`).join('');
+  }
+
+  // Rodones SVG
+  const rodonEl = document.getElementById('pf-rodones');
+  if (rodonEl) {
+    rodonEl.innerHTML = dades.map(e => {
+      const pct = e.pct_execucio;
+      const col = !pct ? '#e0e0e0' : pct > 150 ? '#ef4444' : pct > 100 ? '#ff9800' : '#00c9a3';
+      const colT = !pct ? '#bbb' : pct > 150 ? '#ef4444' : pct > 100 ? '#ff9800' : '#059669';
+      const r = 32, circ = 2 * Math.PI * r;
+      const fill = pct ? Math.min(pct, 200) / 200 : 0;
+      const dash = fill * circ;
+      return `
+        <div class="pf-programa-card">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="${r}" fill="none" stroke="#f0f0f0" stroke-width="7"/>
+            <circle cx="40" cy="40" r="${r}" fill="none" stroke="${col}" stroke-width="7"
+              stroke-dasharray="${dash.toFixed(1)} ${circ.toFixed(1)}"
+              stroke-linecap="round"
+              transform="rotate(-90 40 40)"/>
+            <text x="40" y="45" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="13" font-weight="600" fill="${colT}">
+              ${pct ? pct + '%' : '—'}
+            </text>
+          </svg>
+          <div style="font-size:12px;font-weight:500;color:#1a1a1a;text-align:center;line-height:1.3">${esc(e.descripcio)}</div>
+          <div style="font-size:11px;color:#aaa;text-align:center">${fmtEur(e.import_pressupostat)}</div>
+        </div>`;
+    }).join('');
+  }
+
+  // Barres detall
+  const barresEl = document.getElementById('pf-barres');
+  if (barresEl) {
+    barresEl.innerHTML = dades.map(e => {
+      const pct = e.pct_execucio;
+      const barW = pct ? Math.min(pct / 2, 100) : 0;
+      const col  = !pct ? '#e8e8ed' : pct > 150 ? '#ef4444' : pct > 100 ? '#ff9800' : '#00c9a3';
+      const colT = !pct ? '#bbb'    : pct > 150 ? '#ef4444' : pct > 100 ? '#ff9800' : '#059669';
+      const badge = pct && pct > 120
+        ? `<span style="padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;background:${pct>150?'#fef2f2':'#fffbeb'};color:${pct>150?'#ef4444':'#ff9800'}">${pct>150?'⚠️ +150%':'↑ >100%'}</span>` : '';
+      return `
+        <div style="padding:14px 28px;border-bottom:1px solid #f5f5f7">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;flex-wrap:wrap;gap:8px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-size:11px;color:#ccc;font-weight:600;min-width:28px">${e.codi}</span>
+              <span style="font-size:13px;font-weight:500;color:#1a1a1a">${esc(e.descripcio)}</span>
+              ${badge}
+            </div>
+            <div style="display:flex;gap:20px;font-size:12px;flex-shrink:0">
+              <span style="color:#bbb">${fmtEur(e.import_pressupostat)}</span>
+              ${e.import_executat > 0 ? `<span style="color:#444;font-weight:600">${fmtEur(e.import_executat)}</span>` : ''}
+              <span style="font-weight:700;color:${colT};min-width:48px;text-align:right">${pct ? pct+'%' : '—'}</span>
+            </div>
+          </div>
+          <div style="background:#f0f0f0;border-radius:4px;height:6px">
+            <div style="height:100%;width:${barW}%;background:${col};border-radius:4px;transition:width .6s ease"></div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // Actualitzar 5a stat principal
+  const execStat = document.getElementById('s-execucio');
+  const execSub  = document.getElementById('s-execucio-sub');
+  if (execStat && pctGlobal !== '—') execStat.textContent = pctGlobal + '%';
+  if (execSub)  execSub.textContent = `any ${PRES_ANY}`;
+}
+
+
+async function loadExecucio() {
+  try {
+    const r = await fetch('json/pressupost.json');
+    if (!r.ok) return null;
+    return await r.json();
+  } catch { return null; }
+}
+
+async function initPressupost() {
+  if (!EXECUCIO_DATA) {
+    EXECUCIO_DATA = await loadExecucio();
+  }
+  if (!EXECUCIO_DATA) {
+    document.getElementById('pres-rodones').innerHTML = '<div style="padding:40px;text-align:center;color:#aaa">No s\'hi ha trobat json/pressupost.json — executa fetch_pressupost.py</div>';
+    renderPressupostCapitols();
+    return;
+  }
+  if (!PRES_ANY) PRES_ANY = EXECUCIO_DATA.anys[0];
+
+  // Botons any
+  const btnsEl = document.getElementById('pres-any-btns');
+  if (btnsEl) {
+    btnsEl.innerHTML = EXECUCIO_DATA.anys.map(a =>
+      `<button onclick="setPresAny2('${a}')" style="padding:6px 14px;border-radius:8px;border:1px solid #e8e8ed;font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;background:${a===PRES_ANY?'#1a1a1a':'#fff'};color:${a===PRES_ANY?'#fff':'#666'}">${a}</button>`
+    ).join('');
+  }
+
+  renderPressupostExecucio();
+  renderPressupostCapitols();
+}
+
+function setPresAny2(any) {
+  PRES_ANY = any;
+  initPressupost();
+}
+
+function renderPressupostExecucio() {
+  if (!EXECUCIO_DATA || !PRES_ANY) return;
+  const dades = EXECUCIO_DATA.execucio[PRES_ANY] || [];
+
+  // Stats resum
+  const totalPres = dades.reduce((s,e) => s + e.import_pressupostat, 0);
+  const totalExec = dades.reduce((s,e) => s + e.import_executat, 0);
+  const ambDades  = dades.filter(e => e.te_dades).length;
+  const pctGlobal = totalPres > 0 ? (totalExec/totalPres*100).toFixed(1) : '—';
+  const sobrepassats = dades.filter(e => e.pct_execucio > 120).length;
+
+  const resumEl = document.getElementById('pres-resum-stats');
+  if (resumEl) {
+    resumEl.innerHTML = [
+      ['Pressupost total', fmtEur(totalPres), '#4040ff'],
+      ['Factures creuades', fmtEur(totalExec), '#00c9a3'],
+      ['% execució estimat', pctGlobal + '%', '#a78bfa'],
+      ['Programes alertes', sobrepassats, '#ef4444'],
+    ].map(([lab,val,col]) => `
+      <div style="background:#0d1118;border-radius:12px;padding:20px">
+        <div style="font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px">${lab}</div>
+        <div style="font-size:28px;font-weight:300;letter-spacing:-.02em;color:${col}">${val}</div>
+      </div>`).join('');
+  }
+
+  // Rodones
+  const rodonEl = document.getElementById('pres-rodones');
+  if (rodonEl) {
+    rodonEl.innerHTML = dades.map(e => {
+      const pct = e.pct_execucio;
+      const col = !pct ? '#e8e8ed' : pct > 150 ? '#ef4444' : pct > 100 ? '#ff9800' : '#00c9a3';
+      const colText = !pct ? '#bbb' : pct > 150 ? '#ef4444' : pct > 100 ? '#ff9800' : '#00c9a3';
+      const pctShow = pct ? Math.min(pct, 200) : 0;
+      // SVG cercle
+      const r = 28, circ = 2 * Math.PI * r;
+      const dash = (pctShow / 200) * circ;
+      return `
+        <div style="padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:default" title="${esc(e.descripcio)}: ${pct?pct+'%':'sense dades'}">
+          <svg width="72" height="72" viewBox="0 0 72 72">
+            <circle cx="36" cy="36" r="${r}" fill="none" stroke="#f5f5f7" stroke-width="6"/>
+            <circle cx="36" cy="36" r="${r}" fill="none" stroke="${col}" stroke-width="6"
+              stroke-dasharray="${dash.toFixed(1)} ${circ.toFixed(1)}"
+              stroke-linecap="round"
+              transform="rotate(-90 36 36)"/>
+            <text x="36" y="40" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12" font-weight="600" fill="${colText}">
+              ${pct ? pct+'%' : '—'}
+            </text>
+          </svg>
+          <div style="font-size:11px;font-weight:500;color:#444;text-align:center;line-height:1.3;max-width:120px">${esc(e.descripcio)}</div>
+          <div style="font-size:10px;color:#bbb;text-align:center">${fmtEur(e.import_pressupostat)}</div>
+        </div>`;
+    }).join('');
+  }
+
+  // Barres detall
+  const barresEl = document.getElementById('pres-barres-detall');
+  if (barresEl) {
+    barresEl.innerHTML = dades.map(e => {
+      const pct = e.pct_execucio;
+      const barW = pct ? Math.min(pct/2, 100) : 0;
+      const col = !pct ? '#e8e8ed' : pct > 150 ? '#ef4444' : pct > 100 ? '#ff9800' : '#00c9a3';
+      const alert = pct && pct > 120 ? `<span style="margin-left:6px;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;background:${pct>150?'#fef2f2':'#fffbeb'};color:${pct>150?'#ef4444':'#ff9800'}">${pct>150?'⚠️ +150%':'↑ >100%'}</span>` : '';
+      return `
+        <div style="padding:12px 24px;border-bottom:1px solid #f5f5f7">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:11px;color:#bbb;font-weight:600">${e.codi}</span>
+              <span style="font-size:13px;font-weight:500;color:#1a1a1a">${esc(e.descripcio)}</span>
+              ${alert}
+            </div>
+            <div style="font-size:12px;color:#888;display:flex;gap:16px">
+              <span>${fmtEur(e.import_pressupostat)}</span>
+              ${e.import_executat > 0 ? `<span style="color:#444;font-weight:600">${fmtEur(e.import_executat)}</span>` : ''}
+              <span style="font-weight:700;color:${col}">${pct ? pct+'%' : '—'}</span>
+            </div>
+          </div>
+          <div style="background:#f5f5f7;border-radius:4px;height:5px">
+            <div style="height:100%;width:${barW}%;background:${col};border-radius:4px;transition:width .6s"></div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // Actualitzar 5a stat
+  const execStat = document.getElementById('s-execucio');
+  const execSub  = document.getElementById('s-execucio-sub');
+  if (execStat) execStat.textContent = pctGlobal + '%';
+  if (execSub)  execSub.textContent  = `any ${PRES_ANY}`;
+}
+
+function renderPressupostCapitols() {
+  const p = PRESSUPOSTOS && PRESSUPOSTOS[presAny];
+  if (!p) return;
+  const totalD = p.despeses.reduce((s,d)=>s+d.import,0);
+  const totalI = p.ingressos.reduce((s,d)=>s+d.import,0);
+  renderBarres('pres-despeses', p.despeses, '#4040ff');
+  renderBarres('pres-ingressos', p.ingressos, '#00c9a3');
+}
+
+
+
+async function initExecucio() {
+  EXECUCIO_DATA = await loadExecucio();
+  if (!EXECUCIO_DATA) return;
+
+  const wrap = document.getElementById('execucio-wrap');
+  if (wrap) wrap.style.display = 'block';
+
+  const sel = document.getElementById('execucio-any-sel');
+  if (sel && EXECUCIO_DATA.anys) {
+    sel.innerHTML = EXECUCIO_DATA.anys.map(a =>
+      `<option value="${a}">${a}</option>`
+    ).join('');
+  }
+  renderExecucio();
+}
+
+function renderExecucio() {
+  if (!EXECUCIO_DATA) return;
+  const sel = document.getElementById('execucio-any-sel');
+  const any = sel ? sel.value : (EXECUCIO_DATA.anys && EXECUCIO_DATA.anys[0]);
+  const dades = EXECUCIO_DATA.execucio && EXECUCIO_DATA.execucio[any];
+  const el = document.getElementById('execucio-barres');
+  if (!el || !dades) return;
+
+  const colors = {
+    ok:   '#00c9a3',  // <100%
+    warn: '#ff9800',  // 100-150%
+    over: '#ef4444',  // >150%
+    none: '#e8e8ed',  // sense dades
+  };
+
+  el.innerHTML = dades.map(e => {
+    const pct = e.pct_execucio;
+    const barPct = pct ? Math.min(pct, 200) : 0;
+    const barColor = !pct ? colors.none : pct > 150 ? colors.over : pct > 100 ? colors.warn : colors.ok;
+    const pctLabel = pct ? `${pct}%` : 'sense dades factures';
+    const pctColor = !pct ? '#bbb' : pct > 150 ? '#ef4444' : pct > 100 ? '#ff9800' : '#00c9a3';
+    const alert = pct && pct > 120 ? `<span style="margin-left:6px;font-size:10px;background:${pct>150?'#fef2f2':'#fffbeb'};color:${pct>150?'#ef4444':'#ff9800'};padding:1px 6px;border-radius:10px;font-weight:600">${pct>150?'⚠️ SOBREPASSAT':'↑ ALT'}</span>` : '';
+
+    return `
+      <div style="padding:14px 24px;border-bottom:1px solid #f5f5f7">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:12px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px;min-width:0">
+            <span style="font-size:11px;font-weight:600;color:#bbb;flex-shrink:0">${e.codi}</span>
+            <span style="font-size:13px;font-weight:500;color:#1a1a1a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(e.descripcio)}</span>
+            ${alert}
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;flex-shrink:0;font-size:12px">
+            <span style="color:#888">${fmtEur(e.import_pressupostat)}</span>
+            ${e.import_executat > 0 ? `<span style="color:#666;font-weight:600">${fmtEur(e.import_executat)} fact.</span>` : ''}
+            <span style="font-weight:700;color:${pctColor}">${pctLabel}</span>
+          </div>
+        </div>
+        <div style="background:#f5f5f7;border-radius:4px;height:6px;overflow:hidden">
+          <div style="height:100%;width:${barPct/2}%;background:${barColor};border-radius:4px;transition:width .5s"></div>
+        </div>
+        ${e.categories && e.categories.length ? `<div style="margin-top:6px;font-size:10px;color:#bbb">Categories: ${e.categories.join(' · ')}</div>` : ''}
+      </div>`;
+  }).join('');
+}
+
 
 function renderPartides() {
   const p = PRESSUPOSTOS[presAny];
@@ -3778,6 +4282,21 @@ function initContractesFilters() {
   sel.dataset.ready = '1';
 }
 
+function bormeBadge(info) {
+  if (!info) {
+    return `<span style="display:inline-flex;margin-top:4px;padding:2px 7px;border-radius:20px;background:#f3f4f6;color:#9ca3af;font-size:10px;font-weight:700">BORME pendent</span>`;
+  }
+  if (info.estat === 'amb_dades') {
+    const flags = Array.isArray(info.flags) ? info.flags.length : 0;
+    const carrecs = Array.isArray(info.carrecs) ? info.carrecs.length : 0;
+    const bg = flags ? '#fef2f2' : '#ecfdf5';
+    const col = flags ? '#991b1b' : '#047857';
+    const label = flags ? `BORME ${flags} alerta${flags === 1 ? '' : 's'}` : `BORME ${carrecs} carrec${carrecs === 1 ? '' : 's'}`;
+    return `<span style="display:inline-flex;margin-top:4px;padding:2px 7px;border-radius:20px;background:${bg};color:${col};font-size:10px;font-weight:800">${esc(label)}</span>`;
+  }
+  return `<span style="display:inline-flex;margin-top:4px;padding:2px 7px;border-radius:20px;background:#f3f4f6;color:#6b7280;font-size:10px;font-weight:700">BORME pendent</span>`;
+}
+
 function renderContractes() {
   const q = (document.getElementById('contractes-search')?.value || '').trim().toLowerCase();
   const any = document.getElementById('contractes-any')?.value || '';
@@ -3794,11 +4313,13 @@ function renderContractes() {
     const total = ALL_CONTRACTES.reduce((s,c) => s + (c.import_amb_iva || 0), 0);
     const matches = ALL_CONTRACTES.filter(c => c.factures_match).length;
     const provs = new Set(ALL_CONTRACTES.map(c => c.nif_adjudicatari || c.adjudicatari).filter(Boolean)).size;
+    const bormeAmbDades = ALL_CONTRACTES.filter(c => getBormeInfo(c)?.estat === 'amb_dades').length;
     statsEl.innerHTML = [
       [ALL_CONTRACTES.length.toLocaleString('ca'),'Contractes','#4040ff'],
       [fmtEur(total),'Import adjudicat','#00897b'],
       [provs.toLocaleString('ca'),'Adjudicataris','#ff9800'],
       [matches.toLocaleString('ca'),'Creuaments','#d97706'],
+      [bormeAmbDades.toLocaleString('ca'),'BORME verificats','#7c3aed'],
     ].map(([val,lab,col])=>`
       <div style="background:#fff;border:1.5px solid #e8e8e8;border-radius:10px;padding:12px 14px;text-align:center">
         <div style="font-size:18px;font-weight:800;color:${col}">${val}</div>
@@ -3817,6 +4338,7 @@ function renderContractes() {
     return;
   }
   tbody.innerHTML = data.slice(0, 200).map((c,i) => {
+    const borme = getBormeInfo(c);
     const match = c.factures_match ? `
       <div style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:20px;background:#fffbeb;color:#92400e;font-size:11px;font-weight:700">
         ${esc(c.factures_match.toUpperCase())} - ${fmtEur(c.factures_import)}
@@ -3831,6 +4353,7 @@ function renderContractes() {
       <td style="padding:9px 14px">
         <div style="font-weight:600">${esc(c.adjudicatari || 'Sense adjudicatari')}</div>
         <div style="font-size:11px;color:#aaa;margin-top:1px">${esc(c.nif_adjudicatari || '')}</div>
+        ${bormeBadge(borme)}
       </td>
       <td style="padding:9px 14px;text-align:right;font-weight:700;white-space:nowrap">${fmtEur(c.import_amb_iva || c.import_sense_iva || c.valor_estimat || 0)}</td>
       <td style="padding:9px 14px;text-align:center">${match}</td>

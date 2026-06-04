@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portada · Calaf Transparència</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:   #4040ff;
+  --orange: #ff9800;
+  --green:  #00c9a3;
+  --dark:   #0d1118;
+  --mid:    #666;
+  --light:  #e8e8f0;
+  --bg:     #fafbfc;
+  --white:  #ffffff;
+}
+
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--bg);
+}
+
+/* ════ PORTADA ════ */
+#view-portada {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.portada-split {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ── ESQUERRA FOSCA ── */
+.portada-left {
+  background: var(--dark);
+  padding: 80px 64px 80px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.portada-left::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 20%; bottom: 20%;
+  width: 1px;
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(64,64,255,.5) 40%,
+    rgba(64,64,255,.5) 60%,
+    transparent
+  );
+}
+
+.portada-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  margin-bottom: 36px;
+}
+
+.portada-left h1 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(38px, 4vw, 58px);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+
+.portada-left h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,.45);
+}
+
+.portada-left p {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgba(255,255,255,.4);
+  max-width: 360px;
+  margin-bottom: 52px;
+}
+
+.portada-left p strong {
+  color: rgba(255,255,255,.7);
+  font-weight: 500;
+}
+
+.portada-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: rgba(255,255,255,.8);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: border-color .2s, color .2s, background .2s;
+  align-self: flex-start;
+}
+
+.portada-cta:hover {
+  border-color: rgba(255,255,255,.6);
+  color: var(--white);
+  background: rgba(255,255,255,.04);
+}
+
+.portada-cta svg { transition: transform .2s; }
+.portada-cta:hover svg { transform: translateX(4px); }
+
+/* ── DRETA BLANCA ── */
+.portada-right {
+  background: #d8d8de;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 56px 80px 64px;
+}
+
+.portada-stats {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px 32px;
+}
+
+.pstat {}
+
+.pstat-value {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -.03em;
+  display: block;
+  margin-bottom: 10px;
+  color: var(--dark);
+}
+
+.pstat-value.blue   { color: var(--blue); }
+.pstat-value.green  { color: var(--green); }
+.pstat-value.orange { color: var(--orange); }
+
+.pstat-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #aaa;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.pstat-bar {
+  height: 1px;
+  width: 32px;
+  background: var(--bar-color, #ddd);
+  border-radius: 1px;
+}
+
+.pstat:nth-child(1) .pstat-bar { --bar-color: var(--blue); }
+.pstat:nth-child(2) .pstat-bar { --bar-color: var(--dark); }
+.pstat:nth-child(3) .pstat-bar { --bar-color: var(--green); }
+.pstat:nth-child(4) .pstat-bar { --bar-color: var(--orange); }
+
+/* ── FOOTER ── */
+.portada-footer {
+  background: #d8d8de;
+  border-top: 1px solid var(--light);
+  padding: 18px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.portada-footer strong { color: var(--dark); font-weight: 500; }
+.portada-footer a {
+  color: var(--blue);
+  text-decoration: none;
+}
+.portada-footer a:hover { text-decoration: underline; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 800px) {
+  .portada-split { grid-template-columns: 1fr; }
+
+  .portada-left {
+    padding: 56px 32px 48px;
+    min-height: 55vh;
+  }
+  .portada-left::after { display: none; }
+
+  .portada-right {
+    padding: 48px 32px;
+  }
+
+  .portada-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 24px;
+  }
+
+  .pstat-value { font-size: 36px; }
+
+  .portada-footer {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+    padding: 16px 24px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     #view-portada — integrar a index.html
+     ════════════════════════════════ -->
+<div id="view-portada">
+
+  <div class="portada-split">
+
+    <!-- ESQUERRA -->
+    <div class="portada-left">
+      <div class="portada-eyebrow">Observatori independent · Calaf</div>
+
+      <h1>
+        Saps on va<br>
+        el teu diner?<br>
+        <em>Aquí ho veus.</em>
+      </h1>
+
+      <p>
+        Totes les factures de l'Ajuntament de Calaf, obertes i consultables per qualsevol veí.
+        <strong>Dades oficials, sense filtre.</strong>
+      </p>
+
+      <button class="portada-cta" onclick="setView('taula')">
+        Explorar la despesa
+        <svg viewBox="0 0 20 20" width="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 10h12M12 5l5 5-5 5"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- DRETA -->
+    <div class="portada-right">
+      <div class="portada-stats">
+
+        <div class="pstat">
+          <span class="pstat-value blue" id="stat-factures">—</span>
+          <span class="pstat-label">Factures totals</span>
+          <div class="pstat-bar"></div>
+        </div>
+
+        <div class="pstat">
+          <span class="pstat-value" id="stat-import">—</span>
+          <span class="pstat-label">Euros gestionats</span>
+          <div class="pstat-bar"></div>
+        </div>
+
+        <div class="pstat">
+          <span class="pstat-value green" id="stat-proveidors">—</span>
+          <span class="pstat-label">Proveïdors únics</span>
+          <div class="pstat-bar"></div>
+        </div>
+
+        <div class="pstat">
+          <span class="pstat-value orange" id="stat-anys">—</span>
+          <span class="pstat-label">Rang d'anys</span>
+          <div class="pstat-bar"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="portada-footer">
+    <span>Dades públiques · <strong>Ajuntament de Calaf</strong></span>
+    <span>Actualitzat: <strong id="portada-data-csv">—</strong></span>
+    <a href="https://github.com/pownedpc/Calaf.Transparencia" target="_blank">Codi obert →</a>
+  </div>
+
+</div>
+<!-- ════ FI VIEW PORTADA ════ -->
+
+
+<!--
+════════════════════════════════════════════
+  JS — afegir a l'index.html
+════════════════════════════════════════════
+
+function renderPortada() {
+  if (!ALL_DATA || ALL_DATA.length === 0) return;
+
+  document.getElementById('stat-factures').textContent =
+    ALL_DATA.length.toLocaleString('ca-ES');
+
+  const total = ALL_DATA.reduce((s, r) => s + (parseFloat(r.import) || 0), 0);
+  document.getElementById('stat-import').textContent =
+    (total / 1_000_000).toFixed(1).replace('.', ',') + 'M€';
+
+  const provUnics = new Set(ALL_DATA.map(r => r.proveidor || r.nif_tercer)).size;
+  document.getElementById('stat-proveidors').textContent =
+    provUnics.toLocaleString('ca-ES');
+
+  const anys = ALL_DATA.map(r => parseInt(r.any)).filter(Boolean);
+  document.getElementById('stat-anys').textContent =
+    Math.min(...anys) + '–' + Math.max(...anys);
+
+  const dates = ALL_DATA.map(r => r.data).filter(Boolean).sort().reverse();
+  if (dates.length)
+    document.getElementById('portada-data-csv').textContent = dates[0];
+}
+
+// setView():   case 'portada': renderPortada(); break;
+// View inicial: setView('portada')
+// Logo header:  onclick="setView('portada')"
+
+// Google Font — afegir al <head>:
+// <link rel="preconnect" href="https://fonts.googleapis.com">
+// <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+// <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+════════════════════════════════════════════
+-->
+
+<script>
+function setView(v) { alert('→ setView("' + v + '")'); }
+document.getElementById('stat-factures').textContent  = '15.491';
+document.getElementById('stat-import').textContent    = '32,1M€';
+document.getElementById('stat-proveidors').textContent = '923';
+document.getElementById('stat-anys').textContent      = '2016–2026';
+document.getElementById('portada-data-csv').textContent = '31 març 2026';
+</script>
+
+</body>
+</html>

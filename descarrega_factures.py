@@ -140,19 +140,29 @@ def playwright_descarregar_tot(dest_dir, any_filtre=None, force=False):
         page = context.new_page()
 
         print("\n🌐 Playwright: navegant al portal...")
-        page.goto(FACTURES_URL, wait_until="networkidle")
+        page.goto(FACTURES_URL, wait_until="networkidle", timeout=30000)
+        page.wait_for_timeout(3000)  # Espera extra JS
 
-        # Trobar carpetes d'any
-        any_links = page.query_selector_all("a[href*='/transparency/']")
+        # Debug: mostra tots els links
+        tots_links = page.query_selector_all("a")
+        print(f"   🔍 Links trobats: {len(tots_links)}")
+        for link in tots_links[:15]:
+            text = link.inner_text().strip()[:40]
+            href = link.get_attribute("href") or ""
+            if text:
+                print(f"      → '{text}' → {href[:60]}")
+
+        # Trobar carpetes d'any - cerca ampliada
+        any_links = page.query_selector_all("a")
         anys = {}
         for link in any_links:
             text = link.inner_text().strip()
+            href = link.get_attribute("href") or ""
             match = re.search(r"(20\d{2})", text)
-            if match:
+            if match and href and href != "#":
                 any_str = match.group(1)
                 if any_filtre and any_str != str(any_filtre):
                     continue
-                href = link.get_attribute("href")
                 anys[any_str] = urljoin(BASE_URL, href)
 
         print(f"   Anys trobats: {list(anys.keys())}")
@@ -248,31 +258,39 @@ def file_sha256(path):
 
 # ─── DESCOBERTA ────────────────────────────────────────────────────────────────
 
-def descobrir_anys(session, any_filtre=None):
+def descobrir_anys(session, url=FACTURES_URL, any_filtre=None):
     """
     Descobreix les carpetes d'any dins el Registre de Factures.
     Retorna: {any: uuid_url}
     """
     print(f"\n📂 Explorant Registre de Factures...")
-    soup = get_soup(session, FACTURES_URL)
+    soup = get_soup(session, url)
     if not soup:
         return {}
 
+    # Debug: mostra tots els links trobats
+    tots_links = soup.find_all("a", href=True)
+    print(f"   🔍 Links trobats a la pàgina: {len(tots_links)}")
+    for link in tots_links[:10]:
+        print(f"      → '{link.get_text(strip=True)[:40]}' → {link['href'][:80]}")
+
     anys = {}
-    for link in soup.find_all("a", href=re.compile(r"/transparency/[0-9a-f-]{36}/")):
+    # Cerca ampliada: qualsevol link que contingui un any al text
+    for link in tots_links:
         text = link.get_text(strip=True)
-        # Cerquem carpetes que comencin per any: "2025_Registre Factures", "2024", etc.
+        href = link["href"]
         match = re.search(r"(20\d{2})", text)
-        if match:
+        if match and href and href != "#":
             any_str = match.group(1)
             if any_filtre and any_str != str(any_filtre):
                 continue
-            url = urljoin(BASE_URL, link["href"])
-            anys[any_str] = url
-            print(f"   📅 Any {any_str}: {url}")
+            url_any = urljoin(url, href)
+            anys[any_str] = url_any
+            print(f"   📅 Any {any_str}: {url_any}")
 
     if not anys:
         print("   ⚠️  No s'han trobat carpetes d'any.")
+        print("   💡 Prova amb: python descarrega_factures.py --playwright --any 2026")
     return anys
 
 

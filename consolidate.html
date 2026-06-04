@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calaf Transparència · Consolidador</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f0f2f5;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding: 32px 16px;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .logo {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: #ff9800; }
+
+  .badge {
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .drop-zone {
+    border: 2.5px dashed #bbb;
+    border-radius: 16px;
+    background: #fff;
+    padding: 56px 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 24px;
+  }
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: #4040ff;
+    background: #f5f5ff;
+  }
+  .drop-zone svg { color: #4040ff; margin-bottom: 16px; }
+  .drop-zone h2 { font-size: 18px; margin-bottom: 8px; }
+  .drop-zone p { color: #666; font-size: 14px; }
+
+  #file-input { display: none; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-primary { background: #4040ff; color: #fff; }
+  .btn-primary:hover { background: #3333dd; }
+  .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+  .btn-secondary { background: #1a1a1a; color: #fff; }
+  .btn-secondary:hover { background: #333; }
+  .btn-ghost { background: #eee; color: #333; }
+  .btn-ghost:hover { background: #ddd; }
+
+  .file-list {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    margin-bottom: 24px;
+    display: none;
+  }
+  .file-list-header {
+    padding: 14px 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 600;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .file-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 13px;
+    gap: 10px;
+  }
+  .file-item:last-child { border-bottom: none; }
+  .file-icon { font-size: 16px; flex-shrink: 0; }
+  .file-name { flex: 1; font-weight: 500; }
+  .file-meta { color: #888; font-size: 12px; }
+  .file-status {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .status-pending  { background: #f3f4f6; color: #666; }
+  .status-ok       { background: #dcfce7; color: #166534; }
+  .status-warn     { background: #fef9c3; color: #854d0e; }
+  .status-error    { background: #fee2e2; color: #991b1b; }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .progress-wrap {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: none;
+  }
+  .progress-label {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .progress-bar-bg {
+    background: #e5e7eb;
+    border-radius: 8px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    background: #4040ff;
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.3s;
+    width: 0%;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+    display: none;
+  }
+  .stat-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+  }
+  .stat-label { font-size: 12px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .stat-value { font-size: 28px; font-weight: 700; color: #1a1a1a; }
+  .stat-sub { font-size: 12px; color: #666; margin-top: 4px; }
+  .stat-blue .stat-value { color: #4040ff; }
+  .stat-teal .stat-value { color: #00897b; }
+  .stat-orange .stat-value { color: #ff9800; }
+
+  .log-box {
+    background: #1a1a1a;
+    color: #a3e635;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 12px;
+    max-height: 220px;
+    overflow-y: auto;
+    margin-bottom: 24px;
+    display: none;
+    line-height: 1.7;
+  }
+  .log-warn { color: #fbbf24; }
+  .log-err  { color: #f87171; }
+  .log-ok   { color: #86efac; }
+  .log-info { color: #7dd3fc; }
+
+  .download-section {
+    background: #fff;
+    border-radius: 12px;
+    border: 2px solid #4040ff;
+    padding: 24px;
+    text-align: center;
+    display: none;
+  }
+  .download-section h3 { font-size: 18px; margin-bottom: 8px; }
+  .download-section p  { color: #666; font-size: 14px; margin-bottom: 20px; }
+
+  .help {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 20px 24px;
+    margin-top: 24px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.7;
+  }
+  .help h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: #1a1a1a; }
+  .help code {
+    background: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="logo"><span>calaf</span>.transparència</div>
+    <div class="badge">EINA LOCAL · NO ES PUJA RES</div>
+  </header>
+
+  <!-- Drop zone -->
+  <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 16v-8m0 0-3 3m3-3 3 3M6 20h12a2 2 0 0 0 2-2V8l-6-6H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2z" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h2>Arrossega els fitxers Excel aquí</h2>
+    <p>O fes clic per seleccionar fitxers · Accepta .xlsx, .xls i .ods · Tots els trimestres alhora</p>
+  </div>
+  <input type="file" id="file-input" multiple accept=".xlsx,.xls,.ods">
+
+  <!-- Llista de fitxers -->
+  <div class="file-list" id="file-list">
+    <div class="file-list-header">
+      <span id="file-count">0 fitxers seleccionats</span>
+      <button class="btn btn-ghost" onclick="clearFiles()" style="padding:4px 12px;font-size:12px;">Netejar</button>
+    </div>
+    <div id="file-items"></div>
+  </div>
+
+  <!-- Botons d'acció -->
+  <div class="actions" id="actions" style="display:none;">
+    <button class="btn btn-primary" id="btn-process" onclick="processFiles()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+      Consolidar i generar CSV
+    </button>
+    <button class="btn btn-ghost" onclick="document.getElementById('file-input').click()">
+      + Afegir més fitxers
+    </button>
+  </div>
+
+  <!-- Barra de progrés -->
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-label" id="progress-label">Processant...</div>
+    <div class="progress-bar-bg"><div class="progress-bar" id="progress-bar"></div></div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid" id="stats-grid">
+    <div class="stat-card stat-blue">
+      <div class="stat-label">Registres</div>
+      <div class="stat-value" id="stat-registres">—</div>
+      <div class="stat-sub">factures processades</div>
+    </div>
+    <div class="stat-card stat-teal">
+      <div class="stat-label">Import total</div>
+      <div class="stat-value" id="stat-import">—</div>
+      <div class="stat-sub">euros</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Proveïdors</div>
+      <div class="stat-value" id="stat-proveidors">—</div>
+      <div class="stat-sub">entitats úniques</div>
+    </div>
+    <div class="stat-card stat-orange">
+      <div class="stat-label">Anulades</div>
+      <div class="stat-value" id="stat-anulades">—</div>
+      <div class="stat-sub">excloses</div>
+    </div>
+  </div>
+
+  <!-- Log -->
+  <div class="log-box" id="log-box"></div>
+
+  <!-- Descàrrega -->
+  <div class="download-section" id="download-section">
+    <h3>✓ CSV generat correctament</h3>
+    <p id="download-desc">—</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-secondary" id="btn-download" onclick="downloadCSV()">
+        ↓ Descarregar data.csv
+      </button>
+      <button class="btn btn-ghost" onclick="copyCSV()">
+        Copiar al porta-retalls
+      </button>
+    </div>
+  </div>
+
+  <!-- Ajuda -->
+  <div class="help">
+    <h4>Com usar-ho</h4>
+    Selecciona tots els fitxers Excel de les carpetes anuals (2019-2025).
+    L'eina detecta automàticament l'estructura de cada fitxer, normalitza els imports,
+    filtra les factures anulades i genera un únic <code>data.csv</code> per pujar a GitHub.
+    <br><br>
+    <strong>Cap dada surt d'aquest ordinador.</strong> Tot es processa al navegador.
+  </div>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// ESTAT GLOBAL
+// ─────────────────────────────────────────────────────────────────────────────
+let selectedFiles = [];
+let csvContent = null;
+let totalAnulades = 0;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DRAG & DROP + SELECCIÓ
+// ─────────────────────────────────────────────────────────────────────────────
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  addFiles([...e.dataTransfer.files]);
+});
+
+fileInput.addEventListener('change', () => {
+  addFiles([...fileInput.files]);
+  fileInput.value = '';
+});
+
+function addFiles(newFiles) {
+  const valid = newFiles.filter(f => /\.(xlsx|xls|ods)$/i.test(f.name));
+  valid.forEach(f => {
+    if (!selectedFiles.find(x => x.name === f.name && x.size === f.size)) {
+      selectedFiles.push(f);
+    }
+  });
+  renderFileList();
+}
+
+function clearFiles() {
+  selectedFiles = [];
+  csvContent = null;
+  renderFileList();
+  document.getElementById('download-section').style.display = 'none';
+  document.getElementById('stats-grid').style.display = 'none';
+  document.getElementById('log-box').style.display = 'none';
+  document.getElementById('log-box').innerHTML = '';
+}
+
+function renderFileList() {
+  const list = document.getElementById('file-list');
+  const items = document.getElementById('file-items');
+  const count = document.getElementById('file-count');
+  const actions = document.getElementById('actions');
+
+  if (selectedFiles.length === 0) {
+    list.style.display = 'none';
+    actions.style.display = 'none';
+    return;
+  }
+
+  list.style.display = 'block';
+  actions.style.display = 'flex';
+  count.textContent = `${selectedFiles.length} fitxer${selectedFiles.length !== 1 ? 's' : ''} seleccionat${selectedFiles.length !== 1 ? 's' : ''}`;
+
+  items.innerHTML = selectedFiles.map((f, i) => {
+    const icon = f.name.endsWith('.ods') ? '📊' : '📗';
+    const size = (f.size / 1024).toFixed(0) + ' KB';
+    const year = detectYear(f.name);
+    const trim = detectTrimestre(f.name);
+    const meta = [year || '?', trim || ''].filter(Boolean).join(' · ');
+    return `<div class="file-item" id="fi-${i}">
+      <span class="file-icon">${icon}</span>
+      <span class="file-name">${f.name}</span>
+      <span class="file-meta">${meta} · ${size}</span>
+      <span class="file-status status-pending" id="fst-${i}">pendent</span>
+    </div>`;
+  }).join('');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HELPERS D'INFERÈNCIA
+// ─────────────────────────────────────────────────────────────────────────────
+function detectYear(filename) {
+  // Prioritat: any al nom del fitxer (últim 4 dígits 20xx)
+  const matches = filename.match(/20[12]\d/g);
+  if (matches) return parseInt(matches[matches.length - 1]);
+  // Fallback: primer 4 dígits
+  const m = filename.match(/^(\d{8})/);
+  if (m) return parseInt(m[1].substring(0, 4));
+  return null;
+}
+
+function detectTrimestre(filename) {
+  const m = filename.match(/(\d)[rnt][\s_]?[Tt]rim|(\d)T[_\s]/i);
+  if (m) return `Q${m[1] || m[2]}`;
+  const m2 = filename.match(/(\d)T_/i);
+  if (m2) return `Q${m2[1]}`;
+  return '';
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LOG
+// ─────────────────────────────────────────────────────────────────────────────
+function log(msg, type = '') {
+  const box = document.getElementById('log-box');
+  box.style.display = 'block';
+  const cls = type === 'warn' ? 'log-warn' : type === 'err' ? 'log-err' : type === 'ok' ? 'log-ok' : type === 'info' ? 'log-info' : '';
+  box.innerHTML += `<div class="${cls}">${msg}</div>`;
+  box.scrollTop = box.scrollHeight;
+}
+
+function clearLog() {
+  const box = document.getElementById('log-box');
+  box.innerHTML = '';
+  box.style.display = 'none';
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PROCESSAMENT PRINCIPAL
+// ─────────────────────────────────────────────────────────────────────────────
+async function processFiles() {
+  if (selectedFiles.length === 0) return;
+
+  clearLog();
+  document.getElementById('download-section').style.display = 'none';
+  document.getElementById('stats-grid').style.display = 'none';
+  document.getElementById('btn-process').disabled = true;
+  document.getElementById('progress-wrap').style.display = 'block';
+
+  totalAnulades = 0;
+  const allRows = [];
+
+  for (let i = 0; i < selectedFiles.length; i++) {
+    const f = selectedFiles[i];
+    setProgress((i / selectedFiles.length) * 100, `Processant: ${f.name}`);
+    setFileStatus(i, 'processing', '⟳ processant');
+
+    try {
+      const rows = await parseFile(f, i);
+      if (rows.length > 0) {
+        allRows.push(...rows);
+        setFileStatus(i, 'ok', `✓ ${rows.length} reg.`);
+        log(`✓ ${f.name} → ${rows.length} registres`, 'ok');
+      } else {
+        setFileStatus(i, 'warn', '⚠ 0 reg.');
+        log(`⚠ ${f.name} → cap registre vàlid`, 'warn');
+      }
+    } catch (e) {
+      setFileStatus(i, 'error', '✗ error');
+      log(`✗ ${f.name} → Error: ${e.message}`, 'err');
+    }
+
+    await sleep(10); // cedir al UI
+  }
+
+  setProgress(100, 'Finalitzant...');
+  await sleep(100);
+
+  if (allRows.length === 0) {
+    log('Cap registre processat. Comprova els fitxers.', 'err');
+    document.getElementById('btn-process').disabled = false;
+    document.getElementById('progress-wrap').style.display = 'none';
+    return;
+  }
+
+  // Ordenar per any desc, import desc
+  allRows.sort((a, b) => (b.any - a.any) || (b.import - a.import));
+
+  // Generar CSV
+  csvContent = generateCSV(allRows);
+
+  // Stats
+  const totalImport = allRows.reduce((s, r) => s + r.import, 0);
+  const uniqueProvs = new Set(allRows.map(r => r.proveidor)).size;
+
+  document.getElementById('stat-registres').textContent = allRows.length.toLocaleString('ca');
+  document.getElementById('stat-import').textContent = formatImport(totalImport);
+  document.getElementById('stat-proveidors').textContent = uniqueProvs.toLocaleString('ca');
+  document.getElementById('stat-anulades').textContent = totalAnulades.toLocaleString('ca');
+  document.getElementById('stats-grid').style.display = 'grid';
+
+  document.getElementById('download-desc').textContent =
+    `${allRows.length} registres · ${uniqueProvs} proveïdors · ${formatImport(totalImport)} € · ${totalAnulades} anulades excloses`;
+  document.getElementById('download-section').style.display = 'block';
+
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('btn-process').disabled = false;
+
+  log(`─────────────────────────────────────────`, 'info');
+  log(`Total: ${allRows.length} registres, ${uniqueProvs} proveïdors, ${formatImport(totalImport)} €`, 'info');
+  log(`Anulades excloses: ${totalAnulades}`, 'info');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PARSE UN FITXER
+// ─────────────────────────────────────────────────────────────────────────────
+async function parseFile(file, idx) {
+  const buf = await file.arrayBuffer();
+  const wb = XLSX.read(buf, { type: 'array', cellDates: true });
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const raw = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+
+  if (raw.length === 0) return [];
+
+  // Detectar fila de capçalera: busquem "Import total" o "Nom" en les primeres 6 files
+  let headerRow = -1;
+  for (let r = 0; r < Math.min(6, raw.length); r++) {
+    const rowStr = raw[r].map(c => String(c).toLowerCase());
+    if (rowStr.some(c => c.includes('import total') || c.includes('import'))) {
+      headerRow = r;
+      break;
+    }
+  }
+
+  if (headerRow === -1) {
+    log(`  ⚠ ${file.name}: no s'ha trobat capçalera, s'intenta fila 0`, 'warn');
+    headerRow = 0;
+  }
+
+  const headers = raw[headerRow].map(c => String(c).trim());
+
+  // Mapeig de columnes per nom
+  const ci = {
+    data:       findCol(headers, ['Data']),
+    num_doc:    findCol(headers, ["N. de document", "N. d'entrada", "N.document"]),
+    import:     findCol(headers, ['Import total', 'Import']),
+    situacio:   findCol(headers, ['Situació', 'Situacio', 'Situaci']),
+    operacio:   findCol(headers, ['Operació', 'Operacio']),
+    nif:        findCol(headers, ['Tercer']),
+    nom:        findCol(headers, ['Nom']),
+    descripcio: findCol(headers, ['Descripció de la aplic.', 'Descripció de la partida', 'Descripció', 'Descripcio']),
+  };
+
+  if (ci.import === -1 || ci.nom === -1) {
+    throw new Error(`Columnes bàsiques no trobades. Headers: ${headers.join(' | ')}`);
+  }
+
+  const year = detectYear(file.name) || 0;
+  const trim = detectTrimestre(file.name);
+  const rows = [];
+
+  for (let r = headerRow + 1; r < raw.length; r++) {
+    const row = raw[r];
+
+    // Saltar files completament buides
+    if (row.every(c => c === '' || c === null || c === undefined)) continue;
+
+    // Detectar anulades: busquem "ANUL" en qualsevol cel·la de la fila
+    // o específicament a la columna Situació
+    let isAnulada = false;
+    if (ci.situacio !== -1) {
+      isAnulada = String(row[ci.situacio] || '').toUpperCase().includes('ANUL');
+    }
+    // Fallback: si qualsevol cel·la de les primeres columnes conté "AN - Anulada"
+    if (!isAnulada) {
+      isAnulada = row.slice(0, 8).some(c => String(c).toUpperCase().includes('ANUL'));
+    }
+
+    if (isAnulada) {
+      totalAnulades++;
+      continue;
+    }
+
+    const importVal = cleanImport(row[ci.import]);
+    if (importVal <= 0) continue;
+
+    const nom = String(row[ci.nom] || '').trim().toUpperCase();
+    if (!nom || nom === '' || nom === 'NOM' || nom === 'UNDEFINED') continue;
+
+    const descripcio = ci.descripcio !== -1 ? String(row[ci.descripcio] || '').trim() : '';
+    const situacio   = ci.situacio  !== -1 ? String(row[ci.situacio]  || '').replace('$1 - ', '').trim() : 'Comptabilitzada';
+    const operacio   = ci.operacio  !== -1 ? String(row[ci.operacio]  || '').trim() : '';
+    const nif        = ci.nif       !== -1 ? String(row[ci.nif]       || '').trim() : '';
+    const numDoc     = ci.num_doc   !== -1 ? String(row[ci.num_doc]   || '').trim() : '';
+    const data       = formatDate(row[ci.data]);
+
+    rows.push({
+      data,
+      any: year,
+      trimestre: trim,
+      num_document: numDoc,
+      import: importVal,
+      situacio,
+      codi_operacio: operacio,
+      nif_tercer: nif,
+      proveidor: nom,
+      descripcio,
+      categoria: inferCategoria(descripcio),
+      font: file.name,
+    });
+  }
+
+  return rows;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────────────────────────────────
+function findCol(headers, candidates) {
+  for (const c of candidates) {
+    const idx = headers.findIndex(h =>
+      h.toLowerCase().replace(/\s+/g, ' ').includes(c.toLowerCase())
+    );
+    if (idx !== -1) return idx;
+  }
+  return -1;
+}
+
+function cleanImport(val) {
+  if (val === null || val === undefined || val === '') return 0;
+  if (typeof val === 'number') return Math.abs(val);
+  let s = String(val).trim();
+  // Treure símbols no numèrics
+  s = s.replace(/[^\d,.\-]/g, '');
+  // Format europeu: punt = miler, coma = decimal
+  if (s.includes(',') && s.includes('.')) {
+    // decidir quin és el decimal
+    const lastComma = s.lastIndexOf(',');
+    const lastDot   = s.lastIndexOf('.');
+    if (lastComma > lastDot) {
+      // Europeu: 1.234,56
+      s = s.replace(/\./g, '').replace(',', '.');
+    } else {
+      // Anglosaxó: 1,234.56
+      s = s.replace(/,/g, '');
+    }
+  } else if (s.includes(',')) {
+    // Pot ser decimal europeu (1234,56) o miler (1,234)
+    const parts = s.split(',');
+    if (parts[parts.length - 1].length === 3 && parts.length > 1) {
+      s = s.replace(/,/g, ''); // miler
+    } else {
+      s = s.replace(',', '.'); // decimal
+    }
+  }
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : Math.abs(n);
+}
+
+function formatDate(val) {
+  if (!val) return '';
+  if (val instanceof Date) {
+    return val.toISOString().substring(0, 10);
+  }
+  if (typeof val === 'string') {
+    const m = val.match(/^(\d{4}-\d{2}-\d{2})/);
+    if (m) return m[1];
+    // DD/MM/YYYY
+    const m2 = val.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
+    if (m2) return `${m2[3]}-${m2[2]}-${m2[1]}`;
+  }
+  return '';
+}
+
+function formatImport(n) {
+  if (n >= 1000000) return (n / 1000000).toFixed(2) + 'M';
+  if (n >= 1000)    return Math.round(n).toLocaleString('ca');
+  return n.toFixed(2);
+}
+
+// Categories
+const CATEGORIES = [
+  ['Manteniment',              ['MANTENIMENT','CONSERVACIÓ','CONSERVACIO','REPARACIÓ','REPARACIO','NETEJA','JARDIN','LLUMINARI','ENLLUMENAT','VIA PÚBLICA','CEMENTIRI','PARCS']],
+  ['Serveis Socials',          ['SOCIAL','FAMÍLIA','FAMILIA','BENESTAR','DEPENDÈNCIA','DEPENDENCIA','AJUT','AJUTS','BEQUES','INSERCIÓ']],
+  ['Seguretat',                ['SEGURETAT','POLICIA','BOMBERS','EMERGÈNCIES','PROTECCIÓ CIVIL','DEIXALLERIA']],
+  ['Cultura i Festes',         ['CULTUR','FEST','ACTIVITAT','ESPORT','BIBLIOTE','MÚSICA','MUSICA','TEATRE','CINEMA','PATRIMONI','ESPLAI','JOVENTUT']],
+  ['Obra pública',             ['OBRA','CONSTRUC','INFRAESTRUC','URBANITZ','REHABILIT','PAVIMENT','CLAVEGUERAM','CANALITZ']],
+  ['Subministraments',         ['ELECTRICITAT','ENERGIA','ELECTRICA','AIGUA','GAS','TELEFON','TELECOMUNICAC','SUBMINISTR','CARBURANT','COMBUSTIBLE']],
+  ['Personal i contractació',  ['PERSONAL','NÒMINA','NOMINA','RETRIBUCI','ASSEGURANÇA SOCIAL','SEGURETAT SOCIAL']],
+  ['Assessoria i estudis',     ['ASSESSOR','CONSULTORI','ESTUDI','INFORME','REDACCIÓ','REDACCIO','PROJECTE','ARQUITECT','ENGINYER','TREBALLS TÈCNICS','TREBALLS TECNICS']],
+  ['Comunicació',              ['PUBLICITAT','PUBLICACIÓ','PUBLICACIO','COMUNICACIÓ','COMUNICACIO','IMPRÈS','IMPRES','PREMSA','PUBLICACION']],
+  ['Subvencions i convenis',   ['SUBVENCIÓ','SUBVENCIO','CONVENI','TRANSFERÈNCIA','TRANSFERENCIA','APORTACIÓ','APORTACIO']],
+  ['Assegurances',             ['ASSEGURANÇA','ASSEGURANCA','SEGUR ']],
+  ['Lloguers',                 ['LLOGUER','ARRENDAMENT']],
+  ['Vehicles i transport',     ['VEHICLE','TRANSPORT','RENTING','CAMIÓ','CAMIO','SATÈL','SATEL']],
+  ['Material i subministres',  ['MATERIAL','PRODUCTES','VESTUARI','ALIMENTI']],
+];
+
+function inferCategoria(descripcio) {
+  if (!descripcio) return 'Altres';
+  const d = descripcio.toUpperCase();
+  for (const [cat, kws] of CATEGORIES) {
+    if (kws.some(kw => d.includes(kw))) return cat;
+  }
+  return 'Altres';
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GENERACIÓ CSV
+// ─────────────────────────────────────────────────────────────────────────────
+function generateCSV(rows) {
+  const cols = ['data','any','trimestre','num_document','import','situacio','codi_operacio','nif_tercer','proveidor','descripcio','categoria','font'];
+  const escape = v => {
+    const s = String(v === null || v === undefined ? '' : v);
+    if (s.includes(',') || s.includes('"') || s.includes('\n')) {
+      return '"' + s.replace(/"/g, '""') + '"';
+    }
+    return s;
+  };
+  const lines = [cols.join(',')];
+  for (const row of rows) {
+    lines.push(cols.map(c => escape(row[c] ?? '')).join(','));
+  }
+  return lines.join('\n');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DESCÀRREGA
+// ─────────────────────────────────────────────────────────────────────────────
+function downloadCSV() {
+  if (!csvContent) return;
+  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'data.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function copyCSV() {
+  if (!csvContent) return;
+  navigator.clipboard.writeText(csvContent).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiat!';
+    setTimeout(() => { btn.textContent = orig; }, 2000);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// UI HELPERS
+// ─────────────────────────────────────────────────────────────────────────────
+function setProgress(pct, label) {
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = label;
+}
+
+function setFileStatus(idx, type, text) {
+  const el = document.getElementById(`fst-${idx}`);
+  if (!el) return;
+  el.className = `file-status status-${type === 'ok' ? 'ok' : type === 'warn' ? 'warn' : type === 'error' ? 'error' : 'pending'}`;
+  el.textContent = text;
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+</body>
+</html>
