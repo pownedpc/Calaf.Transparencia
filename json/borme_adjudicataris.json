@@ -1,34 +1,10 @@
 {
   "font": "BORME public BquantFinance/licitaciones-espana v2026.02",
-  "actualitzat": "2026-06-04T15:08:25.443981+00:00",
-  "total_adjudicataris": 26,
-  "amb_dades": 9,
-  "pendents": 17,
+  "actualitzat": "2026-07-01T08:08:45.091126+00:00",
+  "total_adjudicataris": 14,
+  "amb_dades": 5,
+  "pendents": 9,
   "adjudicataris": [
-    {
-      "nif": "B25601816",
-      "nom": "TALLERS VIDAL AMILL SL",
-      "nom_normalitzat": "TALLERS VIDAL AMILL",
-      "contractes_count": 1,
-      "contractes_import": 105541.72,
-      "estat": "amb_dades",
-      "flags": [],
-      "carrecs": [
-        {
-          "nom": "",
-          "carrec": "Auditor",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Socio único",
-          "data": ""
-        }
-      ],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "BORME local"
-    },
     {
       "nif": "B65929747",
       "nom": "PRODIUR SPORTS SL",
@@ -46,178 +22,6 @@
         {
           "nom": "",
           "carrec": "ADM.UNICO",
-          "data": ""
-        }
-      ],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "BORME local"
-    },
-    {
-      "nif": "B61077020",
-      "nom": "APLICACIONS MULTIMEDIA INTERACTIVES SL",
-      "nom_normalitzat": "APLICACIONS MULTIMEDIA INTERACTIVES",
-      "contractes_count": 1,
-      "contractes_import": 15156.67,
-      "estat": "amb_dades",
-      "flags": [],
-      "carrecs": [
-        {
-          "nom": "",
-          "carrec": "APOD.SOL/MAN",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APOD.SOL/MAN",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "ADM.SOLIDAR.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "ADM.SOLIDAR.",
-          "data": ""
-        }
-      ],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "BORME local"
-    },
-    {
-      "nif": "A58768946",
-      "nom": "APLICLOR WATER SOLUTIONS SA",
-      "nom_normalitzat": "APLICLOR WATER SOLUTIONS",
-      "contractes_count": 1,
-      "contractes_import": 13116.4,
-      "estat": "amb_dades",
-      "flags": [],
-      "carrecs": [
-        {
-          "nom": "",
-          "carrec": "AUDIT.CUENT.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "AUDIT.CUENT.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "ADM.UNICO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "AUDIT.CUENT.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "ADM.UNICO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "REPR.143 RRM",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "AUDIT.CUENT.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "PRESIDENTE",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "SECR.NO CONS",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        }
-      ],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "BORME local"
-    },
-    {
-      "nif": "B66312513",
-      "nom": "ECOPIME PROJECTS, SL",
-      "nom_normalitzat": "ECOPIME PROJECTS",
-      "contractes_count": 1,
-      "contractes_import": 7840.8,
-      "estat": "amb_dades",
-      "flags": [],
-      "carrecs": [
-        {
-          "nom": "",
-          "carrec": "ADM.SOLIDAR.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "ADM.SOLIDAR.",
           "data": ""
         }
       ],
@@ -350,47 +154,12 @@
       "carrecs": [
         {
           "nom": "",
-          "carrec": "APODERAD.SOL",
+          "carrec": "ADM.SOLIDAR.",
           "data": ""
         },
         {
           "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "DTOR.GENERAL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
+          "carrec": "ADM.SOLIDAR.",
           "data": ""
         },
         {
@@ -400,7 +169,42 @@
         },
         {
           "nom": "",
-          "carrec": "APODERAD.SOL",
+          "carrec": "APOD.SOL/MAN",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "APOD.SOL/MAN",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "APOD.SOL/MAN",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "APOD.SOL/MAN",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "APOD.SOL/MAN",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "APOD.SOL/MAN",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "APOD.SOL/MAN",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "APOD.SOL/MAN",
           "data": ""
         },
         {
@@ -410,7 +214,12 @@
         },
         {
           "nom": "",
-          "carrec": "APODERAD.SOL",
+          "carrec": "ADM.SOLIDAR.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "APOD.SOL/MAN",
           "data": ""
         },
         {
@@ -420,22 +229,17 @@
         },
         {
           "nom": "",
-          "carrec": "APODERAD.SOL",
+          "carrec": "APOD.SOL/MAN",
           "data": ""
         },
         {
           "nom": "",
-          "carrec": "DTOR.FINANC.",
+          "carrec": "DTOR.MARKET.",
           "data": ""
         },
         {
           "nom": "",
-          "carrec": "DTOR. VENTAS",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "DTOR. VENTAS",
+          "carrec": "APODERADO",
           "data": ""
         },
         {
@@ -455,9 +259,9 @@
     },
     {
       "nif": "A62420815",
-      "nom": "ELECTRA CALDENSE ENERGIA, SA",
+      "nom": "ELECTRA CALDENSE ENERGIA SA",
       "nom_normalitzat": "ELECTRA CALDENSE ENERGIA",
-      "contractes_count": 2,
+      "contractes_count": 1,
       "contractes_import": 0.0,
       "estat": "amb_dades",
       "flags": [],
@@ -474,17 +278,22 @@
         },
         {
           "nom": "",
-          "carrec": "ADM.SOLIDAR.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "ADM.SOLIDAR.",
-          "data": ""
-        },
-        {
-          "nom": "",
           "carrec": "AUDIT.CUENT.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "AMPLIAR A",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "ADM.SOLIDAR.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "ADM.SOLIDAR.",
           "data": ""
         },
         {
@@ -500,6 +309,16 @@
         {
           "nom": "",
           "carrec": "APODERAD.SOL",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "APODERADO",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "AUDIT.CUENT.",
           "data": ""
         },
         {
@@ -520,21 +339,6 @@
         {
           "nom": "",
           "carrec": "REPR.143 RRM",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "AUDIT.CUENT.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "AMPLIAR A",
           "data": ""
         }
       ],
@@ -657,19 +461,6 @@
       "font": "BORME local"
     },
     {
-      "nif": "B08719619",
-      "nom": "TRANSPARENTA CICLE INTEGRAL DE L'AIGUA, SL",
-      "nom_normalitzat": "TRANSPARENTA CICLE INTEGRAL DE L AIGUA",
-      "contractes_count": 3,
-      "contractes_import": 765867.66,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
       "nif": "A08203887",
       "nom": "TALLERES AUTOLICA, S.A.",
       "nom_normalitzat": "TALLERES AUTOLICA S A",
@@ -709,32 +500,6 @@
       "font": "pendent"
     },
     {
-      "nif": "B67293225",
-      "nom": "ENGISIC SOLUCIONS I CONSULTING S.L.",
-      "nom_normalitzat": "ENGISIC SOLUCIONS I CONSULTING S L",
-      "contractes_count": 1,
-      "contractes_import": 41745.0,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "B66879057",
-      "nom": "INSTAL·LACIONS ALTA SEGARRA SLU",
-      "nom_normalitzat": "INSTAL LACIONS ALTA SEGARRA",
-      "contractes_count": 1,
-      "contractes_import": 31958.22,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
       "nif": "B25337270",
       "nom": "Prosetel 95 SLU",
       "nom_normalitzat": "PROSETEL 95",
@@ -748,20 +513,7 @@
       "font": "pendent"
     },
     {
-      "nif": "A08588170",
-      "nom": "SOLITIUM CONTROL GROUP, S.A",
-      "nom_normalitzat": "SOLITIUM CONTROL GROUP S A",
-      "contractes_count": 1,
-      "contractes_import": 19355.16,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "008K",
+      "nif": "5100",
       "nom": "RAIMON GUITART GARCIA",
       "nom_normalitzat": "RAIMON GUITART GARCIA",
       "contractes_count": 1,
@@ -774,11 +526,11 @@
       "font": "pendent"
     },
     {
-      "nif": "B17678194",
-      "nom": "NEOPOLIS CONSULTORIA SOCIOPOLITICA SL",
-      "nom_normalitzat": "NEOPOLIS CONSULTORIA SOCIOPOLITICA",
+      "nif": "B08719619",
+      "nom": "TRANSPARENTA CICLE INTEGRAL DE L'AIGUA SL",
+      "nom_normalitzat": "TRANSPARENTA CICLE INTEGRAL DE L AIGUA",
       "contractes_count": 1,
-      "contractes_import": 10799.25,
+      "contractes_import": 12281.5,
       "estat": "pendent_borme",
       "flags": [],
       "carrecs": [],
@@ -787,11 +539,11 @@
       "font": "pendent"
     },
     {
-      "nif": "8121",
-      "nom": "AMPARO FERNANDEZ ROMERO",
-      "nom_normalitzat": "AMPARO FERNANDEZ ROMERO",
-      "contractes_count": 1,
-      "contractes_import": 4500.0,
+      "nif": "B58265240",
+      "nom": "FERRER&OJEDA",
+      "nom_normalitzat": "FERRER OJEDA",
+      "contractes_count": 2,
+      "contractes_import": 5784.78,
       "estat": "pendent_borme",
       "flags": [],
       "carrecs": [],
@@ -800,46 +552,7 @@
       "font": "pendent"
     },
     {
-      "nif": "8639",
-      "nom": "MARC PUJOL PUNTÍ",
-      "nom_normalitzat": "MARC PUJOL PUNTI",
-      "contractes_count": 1,
-      "contractes_import": 2964.5,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "B08658601",
-      "nom": "BUREAU VERITAS INSPECCION Y TESTING SLU",
-      "nom_normalitzat": "BUREAU VERITAS INSPECCION Y TESTING",
-      "contractes_count": 1,
-      "contractes_import": 2762.43,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "A08015166",
-      "nom": "C Y G CARANDINI, S.A.U",
-      "nom_normalitzat": "C Y G CARANDINI U",
-      "contractes_count": 1,
-      "contractes_import": 2467.53,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "143T",
+      "nif": "3714",
       "nom": "JUDIT MORERA MEZÓ",
       "nom_normalitzat": "JUDIT MORERA MEZO",
       "contractes_count": 1,
@@ -857,19 +570,6 @@
       "nom_normalitzat": "ETECNIC MOVILIDAD ELECTRICA",
       "contractes_count": 1,
       "contractes_import": 1470.15,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "B58265240",
-      "nom": "FERRER&OJEDA",
-      "nom_normalitzat": "FERRER OJEDA",
-      "contractes_count": 1,
-      "contractes_import": 1193.98,
       "estat": "pendent_borme",
       "flags": [],
       "carrecs": [],
