@@ -1,63 +1,10 @@
 {
   "font": "BORME public BquantFinance/licitaciones-espana v2026.02",
-  "actualitzat": "2026-08-01T06:25:31.419727+00:00",
-  "total_adjudicataris": 44,
-  "amb_dades": 14,
-  "pendents": 30,
+  "actualitzat": "2026-09-01T09:07:28.689651+00:00",
+  "total_adjudicataris": 23,
+  "amb_dades": 7,
+  "pendents": 16,
   "adjudicataris": [
-    {
-      "nif": "B25601816",
-      "nom": "TALLERS VIDAL AMILL SL",
-      "nom_normalitzat": "TALLERS VIDAL AMILL",
-      "contractes_count": 1,
-      "contractes_import": 105541.72,
-      "estat": "amb_dades",
-      "flags": [],
-      "carrecs": [
-        {
-          "nom": "",
-          "carrec": "Auditor",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Socio único",
-          "data": ""
-        }
-      ],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "BORME local"
-    },
-    {
-      "nif": "B63879365",
-      "nom": "AQUASOS SERVEIS INTEGRALS SLU",
-      "nom_normalitzat": "AQUASOS SERVEIS INTEGRALS",
-      "contractes_count": 1,
-      "contractes_import": 34949.64,
-      "estat": "amb_dades",
-      "flags": [],
-      "carrecs": [
-        {
-          "nom": "",
-          "carrec": "ADM.UNICO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "SOCIO UNICO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "AMPLIAR A",
-          "data": ""
-        }
-      ],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "BORME local"
-    },
     {
       "nif": "B65929747",
       "nom": "PRODIUR SPORTS SL",
@@ -83,30 +30,6 @@
       "font": "BORME local"
     },
     {
-      "nif": "B65579799",
-      "nom": "CASTELL 3 CONSTRUCCIONS SL",
-      "nom_normalitzat": "CASTELL 3 CONSTRUCCIONS",
-      "contractes_count": 1,
-      "contractes_import": 22430.98,
-      "estat": "amb_dades",
-      "flags": [],
-      "carrecs": [
-        {
-          "nom": "",
-          "carrec": "ADM.SOLIDAR.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "ADM.SOLIDAR.",
-          "data": ""
-        }
-      ],
-      "capital_social": "20000.0",
-      "data_constitucio": "24.05.11.",
-      "font": "BORME local"
-    },
-    {
       "nif": "W0072130H",
       "nom": "ZURICH INSURANCE EUROPE AG, SUCURSAL EN ESPAÑA",
       "nom_normalitzat": "ZURICH INSURANCE EUROPE AG SUCURSAL EN ESPANA",
@@ -122,6 +45,86 @@
         },
         {
           "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apoderado",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apoderado",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "R.L.C.Perma.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "Apo.Sol.",
+          "data": ""
+        },
+        {
+          "nom": "",
           "carrec": "Apoderado",
           "data": ""
         },
@@ -132,87 +135,7 @@
         },
         {
           "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apo.Sol.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apo.Sol.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apo.Sol.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apo.Sol.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apo.Sol.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apo.Sol.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apo.Sol.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apo.Sol.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apo.Sol.",
+          "carrec": "Apo.Manc.",
           "data": ""
         }
       ],
@@ -270,11 +193,6 @@
         },
         {
           "nom": "",
-          "carrec": "AUDIT.CUENT.",
-          "data": ""
-        },
-        {
-          "nom": "",
           "carrec": "ADM.UNICO",
           "data": ""
         },
@@ -285,12 +203,17 @@
         },
         {
           "nom": "",
-          "carrec": "ADM.UNICO",
+          "carrec": "APODERAD.SOL",
           "data": ""
         },
         {
           "nom": "",
-          "carrec": "APODERAD.SOL",
+          "carrec": "AUDIT.CUENT.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "ADM.UNICO",
           "data": ""
         },
         {
@@ -390,120 +313,6 @@
       ],
       "capital_social": "3000.0",
       "data_constitucio": "5.06.14.",
-      "font": "BORME local"
-    },
-    {
-      "nif": "G08171407",
-      "nom": "Fiatc Mutua de Seguros y Reaseguros",
-      "nom_normalitzat": "FIATC MUTUA DE SEGUROS Y REASEGUROS",
-      "contractes_count": 1,
-      "contractes_import": 6084.93,
-      "estat": "amb_dades",
-      "flags": [],
-      "carrecs": [
-        {
-          "nom": "",
-          "carrec": "APOD.SOL/MAN",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APOD.SOL/MAN",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        }
-      ],
-      "capital_social": null,
-      "data_constitucio": null,
       "font": "BORME local"
     },
     {
@@ -621,255 +430,32 @@
       "font": "BORME local"
     },
     {
-      "nif": "A79206223",
-      "nom": "LYRECO ESPAÑA SA",
-      "nom_normalitzat": "LYRECO ESPANA",
-      "contractes_count": 2,
-      "contractes_import": 1478.99,
-      "estat": "amb_dades",
-      "flags": [],
-      "carrecs": [
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "DTOR.GENERAL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERADO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "AUDIT.CUENT.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "APODERAD.SOL",
-          "data": ""
-        }
-      ],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "BORME local"
-    },
-    {
-      "nif": "1836",
-      "nom": "David",
-      "nom_normalitzat": "DAVID",
-      "contractes_count": 1,
-      "contractes_import": 1350.0,
-      "estat": "amb_dades",
-      "flags": [],
-      "carrecs": [
-        {
-          "nom": "",
-          "carrec": "PRESIDENTE",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "SECR.NO CONS",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "VICEPRESIDEN",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "MBRO.COM.EJE",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "REPR.143 RRM",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "MBRO.COM.EJE",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "PRESIDENTE",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "CONSEJERO",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "REPR.143 RRM",
-          "data": ""
-        }
-      ],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "BORME local"
-    },
-    {
       "nif": "A62420815",
       "nom": "ELECTRA CALDENSE ENERGIA, SA",
       "nom_normalitzat": "ELECTRA CALDENSE ENERGIA",
-      "contractes_count": 2,
+      "contractes_count": 1,
       "contractes_import": 0.0,
       "estat": "amb_dades",
       "flags": [],
       "carrecs": [
         {
           "nom": "",
+          "carrec": "APODERADO",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "ADM.SOLIDAR.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "ADM.SOLIDAR.",
+          "data": ""
+        },
+        {
+          "nom": "",
           "carrec": "AUDIT.CUENT.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "ADM.SOLIDAR.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "ADM.SOLIDAR.",
           "data": ""
         },
         {
@@ -879,7 +465,12 @@
         },
         {
           "nom": "",
-          "carrec": "APODERADO",
+          "carrec": "ADM.SOLIDAR.",
+          "data": ""
+        },
+        {
+          "nom": "",
+          "carrec": "ADM.SOLIDAR.",
           "data": ""
         },
         {
@@ -889,7 +480,7 @@
         },
         {
           "nom": "",
-          "carrec": "APODERAD.SOL",
+          "carrec": "AUDIT.CUENT.",
           "data": ""
         },
         {
@@ -919,176 +510,13 @@
         },
         {
           "nom": "",
-          "carrec": "ADM.SOLIDAR.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "ADM.SOLIDAR.",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "AUDIT.CUENT.",
+          "carrec": "APODERAD.SOL",
           "data": ""
         }
       ],
       "capital_social": null,
       "data_constitucio": null,
       "font": "BORME local"
-    },
-    {
-      "nif": "A81948077",
-      "nom": "ENDESA ENERGIA SAU",
-      "nom_normalitzat": "ENDESA ENERGIA",
-      "contractes_count": 3,
-      "contractes_import": 0.0,
-      "estat": "amb_dades",
-      "flags": [],
-      "carrecs": [
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        },
-        {
-          "nom": "",
-          "carrec": "Apoderado",
-          "data": ""
-        }
-      ],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "BORME local"
-    },
-    {
-      "nif": "B08719619",
-      "nom": "Transparenta Cicle Integral de l’Aigua S.L.",
-      "nom_normalitzat": "TRANSPARENTA CICLE INTEGRAL DE L AIGUA S L",
-      "contractes_count": 5,
-      "contractes_import": 791570.48,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "B66355900",
-      "nom": "GESTIÓ D'OBRES I SERVEIS SOSTENIBLES, SL",
-      "nom_normalitzat": "GESTIO D OBRES I SERVEIS SOSTENIBLES",
-      "contractes_count": 2,
-      "contractes_import": 416843.0,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "B66879057",
-      "nom": "INSTAL·LACIONS ALTA SEGARRA, SLU",
-      "nom_normalitzat": "INSTAL LACIONS ALTA SEGARRA",
-      "contractes_count": 5,
-      "contractes_import": 333327.97,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
     },
     {
       "nif": "B61951406",
@@ -1096,32 +524,6 @@
       "nom_normalitzat": "MULE CALAF",
       "contractes_count": 1,
       "contractes_import": 276608.53,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "B63181440",
-      "nom": "ADTEL SISTEMAS DE TELECOMUNICACION, S.L",
-      "nom_normalitzat": "ADTEL SISTEMAS DE TELECOMUNICACION S L",
-      "contractes_count": 1,
-      "contractes_import": 90374.9,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "F08670077",
-      "nom": "Taller Auria, SCCL",
-      "nom_normalitzat": "TALLER AURIA",
-      "contractes_count": 2,
-      "contractes_import": 85658.01,
       "estat": "pendent_borme",
       "flags": [],
       "carrecs": [],
@@ -1143,6 +545,19 @@
       "font": "pendent"
     },
     {
+      "nif": "F08670077",
+      "nom": "Taller Àuria, SCCL",
+      "nom_normalitzat": "TALLER AURIA",
+      "contractes_count": 1,
+      "contractes_import": 67508.01,
+      "estat": "pendent_borme",
+      "flags": [],
+      "carrecs": [],
+      "capital_social": null,
+      "data_constitucio": null,
+      "font": "pendent"
+    },
+    {
       "nif": "A50878842",
       "nom": "ESPUBLICO SERVICIOS PARA LA ADMINISTRACION, S.A.",
       "nom_normalitzat": "ESPUBLICO SERVICIOS PARA LA ADMINISTRACION S A",
@@ -1156,24 +571,11 @@
       "font": "pendent"
     },
     {
-      "nif": "B67293225",
-      "nom": "ENGISIC SOLUCIONS I CONSULTING S.L.",
-      "nom_normalitzat": "ENGISIC SOLUCIONS I CONSULTING S L",
+      "nif": "B66879057",
+      "nom": "INSTAL·LACIONS ALTA SEGARRA SLU",
+      "nom_normalitzat": "INSTAL LACIONS ALTA SEGARRA",
       "contractes_count": 1,
-      "contractes_import": 41745.0,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "A08588170",
-      "nom": "SOLITIUM CONTROL GROUP, S.A",
-      "nom_normalitzat": "SOLITIUM CONTROL GROUP S A",
-      "contractes_count": 2,
-      "contractes_import": 26829.33,
+      "contractes_import": 31958.22,
       "estat": "pendent_borme",
       "flags": [],
       "carrecs": [],
@@ -1195,19 +597,6 @@
       "font": "pendent"
     },
     {
-      "nif": "B25681693",
-      "nom": "SpecialsCheck, S.L.U.",
-      "nom_normalitzat": "SPECIALSCHECK U",
-      "contractes_count": 1,
-      "contractes_import": 16924.27,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
       "nif": "5100",
       "nom": "RAIMON GUITART GARCIA",
       "nom_normalitzat": "RAIMON GUITART GARCIA",
@@ -1221,11 +610,11 @@
       "font": "pendent"
     },
     {
-      "nif": "J64824451",
-      "nom": "CLAPAROLS ARQUITECTES SCP",
-      "nom_normalitzat": "CLAPAROLS ARQUITECTES",
+      "nif": "B08719619",
+      "nom": "TRANSPARENTA CICLE INTEGRAL DE L'AIGUA SL",
+      "nom_normalitzat": "TRANSPARENTA CICLE INTEGRAL DE L AIGUA",
       "contractes_count": 1,
-      "contractes_import": 10890.0,
+      "contractes_import": 12281.5,
       "estat": "pendent_borme",
       "flags": [],
       "carrecs": [],
@@ -1247,89 +636,11 @@
       "font": "pendent"
     },
     {
-      "nif": "B64461312",
-      "nom": "GRUP VIADA MATARÓ, S.L.",
-      "nom_normalitzat": "GRUP VIADA MATARO S L",
-      "contractes_count": 1,
-      "contractes_import": 9629.18,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "9721",
-      "nom": "Roc Barnils Virgili",
-      "nom_normalitzat": "ROC BARNILS VIRGILI",
-      "contractes_count": 1,
-      "contractes_import": 9562.1,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "A28119220",
-      "nom": "OCCIDENT GCO SAU DE SEGUROS Y REASEGUROS",
-      "nom_normalitzat": "OCCIDENT GCO DE SEGUROS Y REASEGUROS",
-      "contractes_count": 1,
-      "contractes_import": 7380.95,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
       "nif": "B58265240",
       "nom": "FERRER&OJEDA",
       "nom_normalitzat": "FERRER OJEDA",
       "contractes_count": 2,
       "contractes_import": 5784.78,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "8121",
-      "nom": "AMPARO FERNANDEZ ROMERO",
-      "nom_normalitzat": "AMPARO FERNANDEZ ROMERO",
-      "contractes_count": 1,
-      "contractes_import": 4500.0,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "B55667562",
-      "nom": "ETECNIC MOVILIDAD ELÉCTRICA, SL",
-      "nom_normalitzat": "ETECNIC MOVILIDAD ELECTRICA",
-      "contractes_count": 2,
-      "contractes_import": 4410.45,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "A08015166",
-      "nom": "C Y G CARANDINI, S.A.U",
-      "nom_normalitzat": "C Y G CARANDINI U",
-      "contractes_count": 2,
-      "contractes_import": 3184.12,
       "estat": "pendent_borme",
       "flags": [],
       "carrecs": [],
@@ -1377,19 +688,6 @@
       "font": "pendent"
     },
     {
-      "nif": "B59987529",
-      "nom": "BENITO URBAN, S.L.U.",
-      "nom_normalitzat": "BENITO URBAN U",
-      "contractes_count": 1,
-      "contractes_import": 2279.76,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
       "nif": "N0090688C",
       "nom": "AIG EUROPE, SA",
       "nom_normalitzat": "AIG EUROPE",
@@ -1416,24 +714,11 @@
       "font": "pendent"
     },
     {
-      "nif": "W0049001A",
-      "nom": "ARAG S.E. Sucursal en España",
-      "nom_normalitzat": "ARAG S E SUCURSAL EN ESPANA",
+      "nif": "B55667562",
+      "nom": "ETECNIC MOVILIDAD ELÉCTRICA, SL",
+      "nom_normalitzat": "ETECNIC MOVILIDAD ELECTRICA",
       "contractes_count": 1,
-      "contractes_import": 1193.98,
-      "estat": "pendent_borme",
-      "flags": [],
-      "carrecs": [],
-      "capital_social": null,
-      "data_constitucio": null,
-      "font": "pendent"
-    },
-    {
-      "nif": "A95758389",
-      "nom": "IBERDROLA CLIENTES SA",
-      "nom_normalitzat": "IBERDROLA CLIENTES",
-      "contractes_count": 1,
-      "contractes_import": 0.0,
+      "contractes_import": 1470.15,
       "estat": "pendent_borme",
       "flags": [],
       "carrecs": [],
