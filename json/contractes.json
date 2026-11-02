@@ -4,7 +4,7 @@
   "ajuntament_dir3": "L01080313",
   "font": "AOC PSCP - API CKAN/DataStore",
   "resource_id": "7448c675-8880-464e-9980-1b92119e59c8",
-  "actualitzat": "2026-10-26T11:53:03.962368+00:00",
+  "actualitzat": "2026-11-02T14:13:47.603428+00:00",
   "total_api": 191,
   "total": 191,
   "import_amb_iva": 12537674.9,
@@ -227,8 +227,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/900aee0e-7086-4e1d-9237-c0cac95d3dfb/300735604",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 26752.69,
-      "factures_count": 20
+      "factures_import": 30927.19,
+      "factures_count": 21
     },
     {
       "data_adjudicacio": "2026-03-26",
@@ -381,8 +381,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/28904893-67a3-430c-bfef-b2ef6c6339ff/300681985",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 1266.49,
-      "factures_count": 1
+      "factures_import": 21965.66,
+      "factures_count": 248
     },
     {
       "data_adjudicacio": "2026-01-19",
@@ -1569,8 +1569,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/0f79d6bb-5ea6-46b0-8a61-97ae725eac35/300379441",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 66360.0,
-      "factures_count": 13
+      "factures_import": 71976.0,
+      "factures_count": 15
     },
     {
       "data_adjudicacio": "2024-12-05",
@@ -1635,8 +1635,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/63fecf0f-4840-4b12-bf95-eb5dbdf2827c/300318283",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 48571.67,
-      "factures_count": 496
+      "factures_import": 49051.25,
+      "factures_count": 499
     },
     {
       "data_adjudicacio": "2024-11-18",
@@ -3351,8 +3351,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/aa1e023a-a30a-55d9-70ae-81c45ad49754/116379931",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 49756.53,
-      "factures_count": 10
+      "factures_import": 51333.01,
+      "factures_count": 11
     },
     {
       "data_adjudicacio": "2023-01-26",
@@ -3945,8 +3945,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/9f1a2fd2-7a58-bcb2-c003-a218098d28db/97646207",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 49756.53,
-      "factures_count": 10
+      "factures_import": 51333.01,
+      "factures_count": 11
     },
     {
       "data_adjudicacio": "2022-03-01",
@@ -3967,8 +3967,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/c5da2a07-3ac7-909b-6762-20f17c6fbacc/96924554",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 66360.0,
-      "factures_count": 13
+      "factures_import": 71976.0,
+      "factures_count": 15
     },
     {
       "data_adjudicacio": "2022-01-20",
