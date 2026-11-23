@@ -4,7 +4,7 @@
   "ajuntament_dir3": "L01080313",
   "font": "AOC PSCP - API CKAN/DataStore",
   "resource_id": "7448c675-8880-464e-9980-1b92119e59c8",
-  "actualitzat": "2026-11-16T14:18:45.182056+00:00",
+  "actualitzat": "2026-11-23T16:51:29.682511+00:00",
   "total_api": 191,
   "total": 191,
   "import_amb_iva": 12537674.9,
@@ -227,8 +227,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/900aee0e-7086-4e1d-9237-c0cac95d3dfb/300735604",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 30927.19,
-      "factures_count": 21
+      "factures_import": 41360.49,
+      "factures_count": 24
     },
     {
       "data_adjudicacio": "2026-03-26",
@@ -1173,8 +1173,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/74bd4ef6-667d-4d70-8f3c-ed10361b4aa1/300528723",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 3569.5,
-      "factures_count": 5
+      "factures_import": 7623.0,
+      "factures_count": 8
     },
     {
       "data_adjudicacio": "2025-04-17",
@@ -1569,8 +1569,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/0f79d6bb-5ea6-46b0-8a61-97ae725eac35/300379441",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 71976.0,
-      "factures_count": 15
+      "factures_import": 77322.0,
+      "factures_count": 16
     },
     {
       "data_adjudicacio": "2024-12-05",
@@ -2097,8 +2097,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/e3f8c40b-9096-44de-ac14-91dc77eeb3b4/300241760",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 104181.0,
-      "factures_count": 5
+      "factures_import": 109928.5,
+      "factures_count": 7
     },
     {
       "data_adjudicacio": "2024-07-08",
@@ -3967,8 +3967,8 @@
       "enllac": "https://contractaciopublica.cat/ca/detall-publicacio/c5da2a07-3ac7-909b-6762-20f17c6fbacc/96924554",
       "font": "AOC PSCP",
       "factures_match": "nom",
-      "factures_import": 71976.0,
-      "factures_count": 15
+      "factures_import": 77322.0,
+      "factures_count": 16
     },
     {
       "data_adjudicacio": "2022-01-20",
